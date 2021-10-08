@@ -1,0 +1,26 @@
+{
+  "name": "@jinxyang/react-lib",
+  "version": "1.0.0",
+  "description": "@jinxyang/react-lib",
+  "module": "./esm/index.js",
+  "files": [
+    "esm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jinxyang/react-lib.git"
+  },
+  "keywords": [
+    "react",
+    "react-cli",
+    "react-lib",
+    "react-template"
+  ],
+  "author": "Jinxyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jinxyang/react-lib/issues"
+  },
+  "homepage": "https://github.com/jinxyang/react-lib#readme",
+  "sideEffects": false
+}
