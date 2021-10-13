@@ -18,9 +18,9 @@ const appleTheme = {
   name: 'Apple',
   size: 14,
   gap: 16,
-  radius: 8,
+  radius: 12,
   colors: {
-    primary: '#fe9f06',
+    primary: '#0684ff',
     blue: '#0684ff',
     green: '#2fd158',
     red: '#ff453b',

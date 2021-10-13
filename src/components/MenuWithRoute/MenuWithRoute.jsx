@@ -54,7 +54,7 @@ const MenuWithRoute = ({
   return (
     <Menu>
       {list.map(({ id, name, title, path, icon, children = [] }) => {
-        if (children.length) {
+        if (!name) {
           return (
             <Menu.Folder key={id} title={title} icon={icon}>
               {children.map(({ id, name, path, title, icon }) => (
