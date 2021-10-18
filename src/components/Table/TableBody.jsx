@@ -24,6 +24,8 @@ const TableBody = ({
   loading = false,
   background = false,
   history = {},
+  onSelect = null,
+  onAction = () => {},
 }) => {
   return (
     <StyledBody>
@@ -40,6 +42,8 @@ const TableBody = ({
               background={background}
               loading={loading}
               history={history}
+              onSelect={onSelect}
+              onAction={onAction}
               key={index}
             />
           ) : (

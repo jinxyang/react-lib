@@ -24,7 +24,8 @@ const useFetchMerge = (fetches = [], callback = () => {}) => {
     }
     callback(state, result)
     return result
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state])
 
   return [state, start]
 }

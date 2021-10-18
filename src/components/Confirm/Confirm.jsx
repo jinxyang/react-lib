@@ -35,6 +35,7 @@ const Confirm = ({
       show={show}
       title={title}
       width={width}
+      hideClose={cancelProps?.disabled || okProps.loading}
       onClose={onCancel}
       footer={
         footer || (

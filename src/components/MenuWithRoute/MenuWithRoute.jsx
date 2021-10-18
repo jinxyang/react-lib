@@ -14,7 +14,6 @@ const MenuWithRoute = ({
   const folders = React.useMemo(() => {
     return list.filter(({ children }) => !!children)
   }, [list])
-
   const currentMenu = React.useMemo(() => {
     return (
       routes.find(({ path }) => {
@@ -33,7 +32,7 @@ const MenuWithRoute = ({
   }, [currentMenu.name, folders])
 
   const handleItemClick = (path) => {
-    history.push(path)
+    location.pathname !== path && history.push(path)
   }
 
   const handleFolderClick = (title) => {
@@ -62,9 +61,7 @@ const MenuWithRoute = ({
                   active={name === currentMenu.name}
                   icon={icon}
                   key={id}
-                  onClick={() =>
-                    name !== currentMenu.name && handleItemClick(path)
-                  }
+                  onClick={() => handleItemClick(path)}
                 >
                   {title}
                 </Menu.Item>
@@ -77,7 +74,7 @@ const MenuWithRoute = ({
             active={name === currentMenu.name}
             icon={icon}
             key={id}
-            onClick={() => name !== currentMenu.name && handleItemClick(path)}
+            onClick={() => handleItemClick(path)}
           >
             {title}
           </Menu.Item>

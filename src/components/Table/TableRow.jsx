@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import styles from '../../styles'
 
 import TableCol from './TableCol'
+import TableSelectionCol from './TableSelectionCol'
 import TableVerticalCol, { StyledVerticalCol } from './TableVerticalCol'
 import TableRowExtra from './TableRowExtra'
 
@@ -39,18 +40,26 @@ const TableRow = ({
   background = false,
   loading = false,
   history = {},
+  onSelect = null,
+  onAction = () => {},
 }) => {
   return (
     <StyledRow $background={background}>
       <StyledInner $vertical={vertical}>
+        {onSelect && (
+          <TableSelectionCol
+            value={!!data.SELECTED}
+            onChange={(v) => onSelect(data, v)}
+          />
+        )}
         {columns.map(({ label, key, render, align, width }, index) =>
           vertical ? (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history }) : data[key]}
+              {render ? render(data, { history, onAction }) : data[key]}
             </TableVerticalCol>
           ) : (
             <TableCol key={index} align={align} width={width}>
-              {render ? render(data, { history }) : data[key]}
+              {render ? render(data, { history, onAction }) : data[key]}
             </TableCol>
           ),
         )}
@@ -61,6 +70,7 @@ const TableRow = ({
           data={data}
           loading={loading}
           history={history}
+          onAction={onAction}
         />
       )}
     </StyledRow>

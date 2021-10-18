@@ -56,6 +56,7 @@ const Modal = ({
   show = false,
   title = '',
   width = '',
+  hideClose = false,
   onClose = () => {},
   footer,
   children,
@@ -67,7 +68,7 @@ const Modal = ({
           {title && (
             <StyledHeader>
               <strong>{title}</strong>
-              <CloseOutlined onClick={onClose} />
+              {!hideClose && <CloseOutlined onClick={onClose} />}
             </StyledHeader>
           )}
           <StyledContent>{children}</StyledContent>

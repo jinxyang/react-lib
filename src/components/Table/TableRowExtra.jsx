@@ -24,7 +24,13 @@ const StyledContent = styled.div`
   border-radius: 0 0 ${styles.getRadius()} ${styles.getRadius()};
 `
 
-const TableExtra = ({ columns = [], data = {}, history = {}, theme = {} }) => {
+const TableExtra = ({
+  columns = [],
+  data = {},
+  history = {},
+  onAction = () => {},
+  theme = {},
+}) => {
   const [open, setOpen] = React.useState(false)
   return (
     <StyledExtra>
@@ -41,7 +47,7 @@ const TableExtra = ({ columns = [], data = {}, history = {}, theme = {} }) => {
         <StyledContent>
           {columns.map(({ label, key, render }, index) => (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history }) : data[key]}
+              {render ? render(data, { history, onAction }) : data[key]}
             </TableVerticalCol>
           ))}
         </StyledContent>

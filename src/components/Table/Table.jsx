@@ -25,13 +25,25 @@ const Table = ({
   loading = false,
   background = false,
   pagination = null,
+  onSelect = null,
   onPageChange = () => {},
+  onAction = () => {},
   history,
   children,
 }) => {
+  const allSelected = React.useMemo(
+    () => (list.length ? list.every(({ SELECTED }) => !!SELECTED) : false),
+    [list],
+  )
   return (
     <StyledTable>
-      {!vertical && <TableHead columns={columns} />}
+      {!vertical && (
+        <TableHead
+          columns={columns}
+          allSelected={allSelected}
+          onSelect={onSelect}
+        />
+      )}
       <TableBody
         vertical={vertical}
         columns={columns}
@@ -40,6 +52,8 @@ const Table = ({
         loading={loading}
         background={background}
         history={history}
+        onSelect={onSelect}
+        onAction={onAction}
       />
       {!!list.length && !loading && (children || pagination) && (
         <TableFoot>

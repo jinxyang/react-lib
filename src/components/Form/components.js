@@ -6,6 +6,7 @@ import Radio from '../Radio'
 import RangePicker from '../RangePicker'
 import Select from '../Select'
 import Switch from '../Switch'
+import TreeSelect from '../TreeSelect'
 
 export default {
   Input,
@@ -16,4 +17,5 @@ export default {
   Switch,
   DatePicker,
   RangePicker,
+  TreeSelect,
 }

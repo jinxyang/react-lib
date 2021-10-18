@@ -143,7 +143,7 @@ const Form = (
                       labelWidth={labelWidth}
                       labelLeft={labelLeft}
                       hideLabel={hideLabel}
-                      {...props}
+                      {...(typeof props === 'function' ? props(values) : props)}
                       onChange={(value) => handleChange(key, value)}
                       onError={(message) => handleError(key, message)}
                     />
@@ -156,7 +156,9 @@ const Form = (
         </Container.Item>
         {mode !== 'flex' && (
           <Container.Item>
-            <StyledFooter $labelWidth={hideLabel ? 0 : labelWidth}>
+            <StyledFooter
+              $labelWidth={hideLabel || !labelInline ? 0 : labelWidth}
+            >
               {children}
             </StyledFooter>
           </Container.Item>

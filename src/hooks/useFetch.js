@@ -37,16 +37,17 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         url = '',
         method = 'GET',
         params = {},
-        headers = {},
+        headers,
         data = {},
         transformResponse = async (response) => await response.json(),
         ...others
       } = service(...payload)
 
-      const newHeaders = new Headers({
-        'Content-Type': 'application/json; charset=utf-8',
-        ...headers,
-      })
+      const newHeaders = new Headers(
+        headers || {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      )
       const token = localStorage.getItem('token')
       if (token) newHeaders.append('Authorization', token)
 
@@ -57,7 +58,8 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         signal: controller.current.signal,
       }
       if (method.toUpperCase() !== 'GET') {
-        requestInitial.body = JSON.stringify(data)
+        requestInitial.body =
+          data instanceof FormData ? data : JSON.stringify(data)
       }
       const newRequest = new Request(
         api.default + url + `?${stringify(params)}`,

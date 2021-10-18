@@ -5,6 +5,10 @@ import { Dropdown, Menu } from 'antd'
 import styles from '../../styles'
 import MoreIcon from '../icons/MoreIcon'
 
+const StyledAction = styled.div`
+  padding: 0 ${styles.getGap(0.5)};
+`
+
 const StyledIcon = styled.div`
   display: flex;
   padding: ${styles.getGap(0.5)};
@@ -16,16 +20,25 @@ const StyledIcon = styled.div`
   }
 `
 
-const Actions = ({ data = {}, list = [], utils = {} }) => {
+const Actions = ({ data = {}, list = [], utils = {}, options = {} }) => {
   return (
     <Dropdown
       overlay={
         <Menu>
-          <Menu.Item key="1">1st menu item</Menu.Item>
+          {list.map(({ label, key, props = {} }, index) => (
+            <Menu.Item
+              key={index}
+              {...props}
+              onClick={() => utils.onAction(key, data)}
+            >
+              <StyledAction>{label}</StyledAction>
+            </Menu.Item>
+          ))}
         </Menu>
       }
-      placement="bottomCenter"
+      placement="bottomRight"
       trigger={['click']}
+      {...options}
     >
       <StyledIcon>
         <MoreIcon size={18} />
