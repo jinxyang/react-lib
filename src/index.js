@@ -51,6 +51,7 @@ export { default as useFetchMerge } from './hooks/useFetchMerge'
 export { default as useLocalStorage } from './hooks/useLocalStorage'
 export { default as useMediaQuery } from './hooks/useMediaQuery'
 export { default as useMessage } from './hooks/useMessage'
+export { default as useStateRef } from './hooks/useStateRef'
 // utils
 export { default as validator } from './utils/validator'
 export { default as switchDarkMode } from './utils/switchDarkMode'
