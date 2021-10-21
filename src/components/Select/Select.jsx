@@ -1,12 +1,17 @@
 import React from 'react'
 import { Select } from 'antd'
 
-const ProSelect = ({ value = [], onChange = () => {}, ...props }) => {
+const ProSelect = ({
+  value = [],
+  simpleValue = false,
+  onChange = () => {},
+  ...props
+}) => {
   return (
     <Select
       {...props}
-      value={value[0]}
-      onChange={(...value) => onChange(value)}
+      value={Array.isArray(value) ? value[0] : value}
+      onChange={(...value) => onChange(simpleValue ? value[0] : value)}
     />
   )
 }
