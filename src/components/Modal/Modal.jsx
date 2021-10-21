@@ -41,12 +41,15 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: ${styles.getGap(0.8)} ${styles.getGap()};
-  background-color: ${styles.getBack()};
 
-  strong {
-    font-weight: bold;
-    font-size: 1.1em;
-  }
+  /* background-color: ${styles.getBack()}; */
+`
+
+const StyledTitle = styled.p`
+  margin: 0;
+  padding-right: ${styles.getGap(1.5)};
+  font-weight: bold;
+  font-size: 1.1em;
 `
 const StyledContent = styled.div`
   padding: ${styles.getGap()};
@@ -67,7 +70,7 @@ const Modal = ({
         <StyledWrap $width={width}>
           {title && (
             <StyledHeader>
-              <strong>{title}</strong>
+              <StyledTitle>{title}</StyledTitle>
               {!hideClose && <CloseOutlined onClick={onClose} />}
             </StyledHeader>
           )}

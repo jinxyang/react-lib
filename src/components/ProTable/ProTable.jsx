@@ -8,20 +8,23 @@ import Filter from '../Filter'
 import Table from '../Table'
 import useFetch from '../../hooks/useFetch'
 
-const ProTable = ({
-  service = () => {},
-  list = [],
-  filters = [],
-  columns = [],
-  extraColumns = [],
-  queriesFormatter = (v) => v,
-  onAction = () => {},
-  onChange = () => {},
-  onSelect = null,
-  vertical = false,
-  noPagination = false,
-  children,
-}) => {
+const ProTable = (
+  {
+    service = () => {},
+    list = [],
+    filters = [],
+    columns = [],
+    extraColumns = [],
+    queriesFormatter = (v) => v,
+    onAction = () => {},
+    onChange = () => {},
+    onSelect = null,
+    vertical = false,
+    noPagination = false,
+    children,
+  },
+  ref,
+) => {
   const [{ data, loading }, getList] = useFetch(
     service,
     ({ code, data }) => !code && onChange(data.list),
@@ -33,38 +36,56 @@ const ProTable = ({
     getList(queriesFormatter({}))
   }
 
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      reload: () => {
+        getList(queriesFormatter(queries))
+      },
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [queries],
+  )
+
   React.useEffect(() => {
     getList(queriesFormatter({}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
-    <App>
+    <App fill={false}>
       <Container column={true}>
-        <Container.Item>
-          <Filter fields={filters} values={queries} onChange={setQueries}>
-            <Space>
-              <Button
-                htmlType="submit"
-                type="primary"
-                icon={<SearchOutlined />}
-                loading={loading}
-                onClick={() => getList(queriesFormatter(queries))}
-              >
-                查询
-              </Button>
-              <Button
-                type="default"
-                icon={<ReloadOutlined />}
-                disabled={loading}
-                onClick={handleClear}
-              >
-                重置
-              </Button>
-              {children}
-            </Space>
-          </Filter>
-        </Container.Item>
+        {!!filters.length ||
+          (children && (
+            <Container.Item>
+              <Filter fields={filters} values={queries} onChange={setQueries}>
+                <Space>
+                  {!!filters.length && (
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      icon={<SearchOutlined />}
+                      loading={loading}
+                      onClick={() => getList(queriesFormatter(queries))}
+                    >
+                      查询
+                    </Button>
+                  )}
+                  {!!filters.length && (
+                    <Button
+                      type="default"
+                      icon={<ReloadOutlined />}
+                      disabled={loading}
+                      onClick={handleClear}
+                    >
+                      重置
+                    </Button>
+                  )}
+                  {children}
+                </Space>
+              </Filter>
+            </Container.Item>
+          ))}
         <Container.Item>
           <Table
             columns={columns}
@@ -86,4 +107,4 @@ const ProTable = ({
   )
 }
 
-export default ProTable
+export default React.forwardRef(ProTable)
