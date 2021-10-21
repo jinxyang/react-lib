@@ -55,37 +55,36 @@ const ProTable = (
   return (
     <App fill={false}>
       <Container column={true}>
-        {!!filters.length ||
-          (children && (
-            <Container.Item>
-              <Filter fields={filters} values={queries} onChange={setQueries}>
-                <Space>
-                  {!!filters.length && (
-                    <Button
-                      htmlType="submit"
-                      type="primary"
-                      icon={<SearchOutlined />}
-                      loading={loading}
-                      onClick={() => getList(queriesFormatter(queries))}
-                    >
-                      查询
-                    </Button>
-                  )}
-                  {!!filters.length && (
-                    <Button
-                      type="default"
-                      icon={<ReloadOutlined />}
-                      disabled={loading}
-                      onClick={handleClear}
-                    >
-                      重置
-                    </Button>
-                  )}
-                  {children}
-                </Space>
-              </Filter>
-            </Container.Item>
-          ))}
+        {(!!filters.length || children) && (
+          <Container.Item>
+            <Filter fields={filters} values={queries} onChange={setQueries}>
+              <Space>
+                {!!filters.length && (
+                  <Button
+                    htmlType="submit"
+                    type="primary"
+                    icon={<SearchOutlined />}
+                    loading={loading}
+                    onClick={() => getList(queriesFormatter(queries))}
+                  >
+                    查询
+                  </Button>
+                )}
+                {!!filters.length && (
+                  <Button
+                    type="default"
+                    icon={<ReloadOutlined />}
+                    disabled={loading}
+                    onClick={handleClear}
+                  >
+                    重置
+                  </Button>
+                )}
+                {children}
+              </Space>
+            </Filter>
+          </Container.Item>
+        )}
         <Container.Item>
           <Table
             columns={columns}
