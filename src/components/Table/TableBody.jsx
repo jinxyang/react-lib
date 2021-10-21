@@ -10,47 +10,45 @@ const StyledBody = styled.section`
   display: grid;
   flex: 1;
   gap: ${styles.getGap(0.75)};
-
-  /* overflow-y: scroll; */
   border-radius: ${({ theme }) => theme.radiusString};
   content-visibility: auto;
 `
 
+const getRows = (list = [], props) => {
+  return list.map((data, index) => [
+    <TableRow {...props} data={data} key={index} />,
+    data.children && getRows(data.children, props),
+  ])
+}
+
 const TableBody = ({
-  vertical = false,
-  columns = [],
-  extraColumns = [],
   list = [],
   loading = false,
-  background = false,
-  history = {},
-  onSelect = null,
   onAction = () => {},
+  ...props
 }) => {
   return (
     <StyledBody>
-      {!loading && !list.length ? (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      ) : (
-        (loading && !list.length ? [{}, {}, {}] : list).map((item, index) =>
-          !loading ? (
-            <TableRow
-              vertical={vertical}
-              columns={columns}
-              extraColumns={extraColumns}
-              data={item}
-              background={background}
-              loading={loading}
-              history={history}
-              onSelect={onSelect}
-              onAction={onAction}
-              key={index}
-            />
-          ) : (
+      {do {
+        if (list.length) {
+          return getRows(list, { ...props, loading, onAction })
+        } else if (loading) {
+          return [{}, {}, {}].map((_, index) => (
             <Skeleton key={index} height="54px" duration="1.5s" />
-          ),
-        )
-      )}
+          ))
+        } else {
+          return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+        }
+      }}
+      {/* {!loading && !list.length ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ) : loading && !list.length ? (
+        [{}, {}, {}].map((_, index) => (
+          <Skeleton key={index} height="54px" duration="1.5s" />
+        ))
+      ) : (
+        getRows(list, { ...props, loading, onAction })
+      )} */}
     </StyledBody>
   )
 }

@@ -20,22 +20,30 @@ const StyledIcon = styled.div`
   }
 `
 
+const getItems = (list = [], data = {}, utils = {}) => {
+  return list
+    .map((item, index) => {
+      const column = typeof item === 'function' ? item(data) : item
+      if (!column) return null
+      const { label, key, props = {} } = column
+      return (
+        <Menu.Item
+          key={index}
+          {...props}
+          onClick={() => utils.onAction(key, data)}
+        >
+          <StyledAction>{label}</StyledAction>
+        </Menu.Item>
+      )
+    })
+    .filter(Boolean)
+}
+
 const Actions = ({ data = {}, list = [], utils = {}, options = {} }) => {
-  return (
+  const items = getItems(list, data, utils)
+  return items.length ? (
     <Dropdown
-      overlay={
-        <Menu>
-          {list.map(({ label, key, props = {} }, index) => (
-            <Menu.Item
-              key={index}
-              {...props}
-              onClick={() => utils.onAction(key, data)}
-            >
-              <StyledAction>{label}</StyledAction>
-            </Menu.Item>
-          ))}
-        </Menu>
-      }
+      overlay={<Menu>{items}</Menu>}
       placement="bottomRight"
       trigger={['click']}
       {...options}
@@ -44,7 +52,7 @@ const Actions = ({ data = {}, list = [], utils = {}, options = {} }) => {
         <MoreIcon size={18} />
       </StyledIcon>
     </Dropdown>
-  )
+  ) : null
 }
 
 const actionRender =
