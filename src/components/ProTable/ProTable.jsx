@@ -15,6 +15,7 @@ const ProTable = (
     filters = [],
     columns = [],
     extraColumns = [],
+    defaultQueries = {},
     queriesFormatter = (v) => v,
     onAction = () => {},
     onChange = () => {},
@@ -29,7 +30,7 @@ const ProTable = (
     service,
     ({ code, data }) => !code && onChange(data.list),
   )
-  const [queries, setQueries] = React.useState({})
+  const [queries, setQueries] = React.useState(defaultQueries)
 
   const handleClear = () => {
     setQueries({})
