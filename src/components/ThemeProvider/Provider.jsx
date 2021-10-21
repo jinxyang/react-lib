@@ -49,7 +49,7 @@ const Provider = ({ theme = 'apple', darkMode = false, children }) => {
       },
       ...(darkMode ? dark : light),
     }
-    console.log(compoundTheme)
+    console.log('Theme: ', compoundTheme)
     return compoundTheme
   }, [theme, darkMode])
 

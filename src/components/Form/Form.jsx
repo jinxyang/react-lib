@@ -85,7 +85,7 @@ const Form = (
   const handleError = React.useCallback(
     (key, message) => {
       if (message !== errors[key]) {
-        setErrors({ ...errors, [key]: message })
+        setErrors((errors) => ({ ...errors, [key]: message }))
       }
     },
     [errors],
