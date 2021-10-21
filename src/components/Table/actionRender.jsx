@@ -20,7 +20,7 @@ const StyledIcon = styled.div`
   }
 `
 
-const getItems = (list = [], data = {}, utils = {}) => {
+const getItems = (list = [], data = {}, utils = {}, onAction = () => {}) => {
   return list
     .map((item, index) => {
       const column = typeof item === 'function' ? item(data) : item
@@ -30,7 +30,7 @@ const getItems = (list = [], data = {}, utils = {}) => {
         <Menu.Item
           key={index}
           {...props}
-          onClick={() => utils.onAction(key, data)}
+          onClick={() => onAction(key, data, utils)}
         >
           <StyledAction>{label}</StyledAction>
         </Menu.Item>
@@ -39,8 +39,14 @@ const getItems = (list = [], data = {}, utils = {}) => {
     .filter(Boolean)
 }
 
-const Actions = ({ data = {}, list = [], utils = {}, options = {} }) => {
-  const items = getItems(list, data, utils)
+const Actions = ({
+  data = {},
+  list = [],
+  utils = {},
+  onAction = () => {},
+  options = {},
+}) => {
+  const items = getItems(list, data, utils, onAction)
   return items.length ? (
     <Dropdown
       overlay={<Menu>{items}</Menu>}
@@ -57,8 +63,16 @@ const Actions = ({ data = {}, list = [], utils = {}, options = {} }) => {
 
 const actionRender =
   (list = [], options = {}) =>
-  (data, utils = {}) => {
-    return <Actions data={data} list={list} utils={utils} options={options} />
+  (data, utils = {}, onAction = () => {}) => {
+    return (
+      <Actions
+        data={data}
+        list={list}
+        utils={utils}
+        onAction={onAction}
+        options={options}
+      />
+    )
   }
 
 export default actionRender

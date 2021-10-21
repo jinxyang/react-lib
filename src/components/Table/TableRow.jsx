@@ -55,11 +55,11 @@ const TableRow = ({
         {columns.map(({ label, key, render, align, width }, index) =>
           vertical ? (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history, onAction }) : data[key]}
+              {render ? render(data, { history }, onAction) : data[key]}
             </TableVerticalCol>
           ) : (
             <TableCol key={index} align={align} width={width}>
-              {render ? render(data, { history, onAction }) : data[key]}
+              {render ? render(data, { history }, onAction) : data[key]}
             </TableCol>
           ),
         )}
