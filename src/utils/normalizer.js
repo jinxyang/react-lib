@@ -5,8 +5,7 @@ const normalizer = (array, prop, options = {}) => {
     }
 
     const newItem = options?.formatter?.(item)
-
-    return newItem ? { ...map, [newItem[prop]]: newItem } : map
+    return newItem ? { ...map, [options.prop || item[prop]]: newItem } : map
   }, {})
 }
 

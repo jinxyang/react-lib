@@ -49,7 +49,6 @@ export { default as StyledBlur } from './components/styled/StyledBlur'
 export { default as styles } from './styles'
 // hooks
 export { default as useFetch } from './hooks/useFetch'
-export { default as useFetchMerge } from './hooks/useFetchMerge'
 export { default as useLocalStorage } from './hooks/useLocalStorage'
 export { default as useMediaQuery } from './hooks/useMediaQuery'
 export { default as useMessage } from './hooks/useMessage'
