@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import AntIcon from '../AntIcon'
+
 const StyledLink = styled.a`
   position: relative;
   z-index: 10;
@@ -39,7 +41,7 @@ const MenuItem = ({
 }) => {
   return (
     <StyledLink $active={active} onClick={onClick}>
-      {icon}
+      {icon && <AntIcon name={icon} style={{ fontSize: '1.2em' }} />}
       {icon && <Gap />}
       {children}
     </StyledLink>

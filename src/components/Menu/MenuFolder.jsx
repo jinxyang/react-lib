@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import AntIcon from '../AntIcon'
 import { StyledList, StyledItem } from './styled'
 
 const StyledTitle = styled.p`
@@ -22,7 +23,7 @@ const MenuFolder = ({ title = '', icon = '', children }) => {
   return (
     <>
       <StyledTitle>
-        {icon}
+        {icon && <AntIcon name={icon} />}
         {icon && <Gap />}
         {title}
       </StyledTitle>
