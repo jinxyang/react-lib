@@ -1,5 +1,6 @@
 // components
 export { default as ThemeProvider } from './components/ThemeProvider'
+export { default as AntIcon } from './components/AntIcon'
 export { default as App } from './components/App'
 export { default as Avatar } from './components/Avatar'
 export { default as Breadcrumb } from './components/Breadcrumb'
@@ -43,8 +44,9 @@ export { default as ArrowIcon } from './components/icons/ArrowIcon'
 export { default as MoreIcon } from './components/icons/MoreIcon'
 export { default as AppSettingIcon } from './components/icons/AppSettingIcon'
 // components - sc
-export { default as StyledCenter } from './components/styled/StyledCenter'
 export { default as StyledBlur } from './components/styled/StyledBlur'
+export { default as StyledCenter } from './components/styled/StyledCenter'
+export { default as StyledTitle } from './components/styled/StyledTitle'
 // styles
 export { default as styles } from './styles'
 // hooks
