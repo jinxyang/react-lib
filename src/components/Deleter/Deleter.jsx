@@ -1,6 +1,8 @@
 import React from 'react'
 
-import { Confirm, useFetch } from '@jinxyang/react-lib'
+import Confirm from '../Confirm'
+import useFetch from '../../hooks/useFetch'
+import useMessage from '../../hooks/useMessage'
 
 const Deleter = ({
   url = null,
@@ -10,6 +12,7 @@ const Deleter = ({
   onDeleted = () => {},
   onCancel = () => {},
 }) => {
+  const message = useMessage()
   const service = React.useCallback(() => {
     return {
       method: 'delete',
@@ -18,7 +21,10 @@ const Deleter = ({
   }, [url])
 
   const [{ loading }, clean] = useFetch(service, ({ code }) => {
-    !code && onDeleted()
+    if (!code) {
+      message.info('删除成功')
+      onDeleted()
+    }
   })
 
   return (
