@@ -1,17 +1,18 @@
-const toTree = (
-  list,
-  parentKey,
-  options = { formatter: (v) => v },
-  value = '',
-) => {
+const defaultOptions = {
+  idKey: 'id',
+  childrenKey: 'children',
+  formatter: (v) => v,
+}
+
+const toTree = (list, parentKey, customOptions = {}, value = '') => {
+  const options = { ...defaultOptions, ...customOptions }
   return list
-    .map(options.formatter)
     .filter((item) => item && item[parentKey] === value)
-    .map(({ children, ...item }) => {
-      const childList = toTree(list, parentKey, options, item.id)
+    .map((item) => {
+      const childList = toTree(list, parentKey, options, item[options.idKey])
       return {
-        ...item,
-        ...(childList.length ? { children: childList } : {}),
+        ...options.formatter(item),
+        ...(childList.length ? { [options.childrenKey]: childList } : {}),
       }
     })
 }
