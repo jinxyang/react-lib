@@ -1,13 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Dropdown, Menu } from 'antd'
+import {
+  PlusOutlined,
+  SearchOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons'
 
 import styles from '../../styles'
 import MoreIcon from '../icons/MoreIcon'
 
-const StyledAction = styled.div`
-  padding: 0 ${styles.getGap(0.5)};
-`
+const keyIcons = {
+  create: <PlusOutlined />,
+  preview: <SearchOutlined />,
+  update: <EditOutlined />,
+  delete: <DeleteOutlined />,
+}
 
 const StyledIcon = styled.div`
   display: flex;
@@ -29,10 +38,11 @@ const getItems = (list = [], data = {}, utils = {}, onAction = () => {}) => {
       return (
         <Menu.Item
           key={index}
+          icon={keyIcons[key]}
           {...props}
           onClick={() => onAction(key, data, utils)}
         >
-          <StyledAction>{label}</StyledAction>
+          {label}
         </Menu.Item>
       )
     })
