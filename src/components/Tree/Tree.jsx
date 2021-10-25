@@ -1,24 +1,24 @@
 import React from 'react'
-import { TreeSelect } from 'antd'
+import { Tree } from 'antd'
 
 const getTreeNode = (list = []) =>
   list.map(({ label, value, props = {}, children }) => (
-    <TreeSelect.TreeNode {...props} key={value} value={value} title={label}>
+    <Tree.TreeNode {...props} key={value} value={value} title={label}>
       {children && getTreeNode(children)}
-    </TreeSelect.TreeNode>
+    </Tree.TreeNode>
   ))
 
-const ProTreeSelect = ({
+const ProTree = ({
   value = '',
   options = [],
   onChange = () => {},
   ...props
 }) => {
   return (
-    <TreeSelect {...props} value={value} onChange={onChange}>
+    <Tree {...props} value={value} onSelect={onChange} onCheck={onChange}>
       {getTreeNode(options)}
-    </TreeSelect>
+    </Tree>
   )
 }
 
-export default ProTreeSelect
+export default ProTree

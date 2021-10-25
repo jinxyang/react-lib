@@ -28,6 +28,7 @@ export { default as Scroll } from './components/Scroll'
 export { default as Table } from './components/Table'
 export { default as Tag } from './components/Tag'
 export { default as Textarea } from './components/Textarea'
+export { default as Tree } from './components/Tree'
 export { default as TreeSelect } from './components/TreeSelect'
 // components - shapes
 export { default as Square } from './components/Square'

@@ -9,6 +9,7 @@ import Password from '../Password'
 import Select from '../Select'
 import Switch from '../Switch'
 import Textarea from '../Textarea'
+import Tree from '../Tree'
 import TreeSelect from '../TreeSelect'
 
 export default {
@@ -23,5 +24,6 @@ export default {
   Select,
   Switch,
   Textarea,
+  Tree,
   TreeSelect,
 }
