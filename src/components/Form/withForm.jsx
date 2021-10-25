@@ -12,8 +12,9 @@ const StyledWrap = styled.label`
 const StyledHeader = styled.div`
   display: flex;
   flex: 0 0 auto;
-  align-items: center;
+  align-items: flex-start;
   margin-right: ${({ theme }) => theme.gapString};
+  padding-top: 5px;
   padding-bottom: ${({ $labelInline }) => ($labelInline ? 0 : '6px')};
 `
 const StyledLabel = styled.span`

@@ -15,7 +15,13 @@ const ProTree = ({
   ...props
 }) => {
   return (
-    <Tree {...props} value={value} onSelect={onChange} onCheck={onChange}>
+    <Tree
+      {...props}
+      checkedKeys={value}
+      selectedKeys={value}
+      onSelect={onChange}
+      onCheck={onChange}
+    >
       {getTreeNode(options)}
     </Tree>
   )
