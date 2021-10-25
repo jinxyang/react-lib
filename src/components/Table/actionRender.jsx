@@ -64,10 +64,11 @@ const Actions = ({
 const actionRender =
   (list = [], options = {}) =>
   (data, utils = {}, onAction = () => {}) => {
+    const actionList = typeof list === 'function' ? list(data) : list
     return (
       <Actions
         data={data}
-        list={list}
+        list={actionList ?? []}
         utils={utils}
         onAction={onAction}
         options={options}
