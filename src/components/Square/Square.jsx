@@ -16,9 +16,9 @@ const StyledContent = styled.div`
   height: 100%;
 `
 
-const Square = ({ as = 'div', children }) => {
+const Square = ({ as = 'div', style = {}, children }) => {
   return (
-    <StyledSquare as={as}>
+    <StyledSquare as={as} style={style}>
       <StyledContent>{children}</StyledContent>
     </StyledSquare>
   )
