@@ -10,14 +10,12 @@ const StyledBody = styled.section`
   display: grid;
   flex: 1;
   gap: ${styles.getGap(0.75)};
-  border-radius: ${({ theme }) => theme.radiusString};
-  content-visibility: auto;
 `
 
-const getRows = (list = [], props) => {
+const getRows = (list = [], props, indent = 0) => {
   return list.map((data, index) => [
-    <TableRow {...props} data={data} key={index} />,
-    data.children && getRows(data.children, props),
+    <TableRow {...props} data={data} indent={indent} key={index} />,
+    data.children && getRows(data.children, props, indent + 1),
   ])
 }
 
@@ -40,15 +38,6 @@ const TableBody = ({
           return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         }
       }}
-      {/* {!loading && !list.length ? (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-      ) : loading && !list.length ? (
-        [{}, {}, {}].map((_, index) => (
-          <Skeleton key={index} height="54px" duration="1.5s" />
-        ))
-      ) : (
-        getRows(list, { ...props, loading, onAction })
-      )} */}
     </StyledBody>
   )
 }

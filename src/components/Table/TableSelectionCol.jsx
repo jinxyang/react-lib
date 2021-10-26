@@ -4,18 +4,30 @@ import { Checkbox } from 'antd'
 
 import styles from '../../styles'
 
-const StyledCol = styled.div`
+const StyledSelectionCol = styled.div`
+  position: absolute;
+  top: 50%;
+  left: ${({ $indent }) => styles.getGap((1 - $indent) * -2)};
   display: flex;
   flex: 0 0 auto;
-  align-items: center;
-  padding: ${styles.getGap(0.5)};
+  justify-content: center;
+  width: ${styles.getGap(2)};
+  transform: translate(0, -50%);
+
+  .ant-checkbox {
+    top: 0;
+  }
 `
 
-const TableSelectionCol = ({ value = false, onChange = () => {} }) => {
+const TableSelectionCol = ({
+  indent = 0,
+  value = false,
+  onChange = () => {},
+}) => {
   return (
-    <StyledCol>
+    <StyledSelectionCol $indent={indent}>
       <Checkbox checked={value} onChange={(e) => onChange(e.target.checked)} />
-    </StyledCol>
+    </StyledSelectionCol>
   )
 }
 

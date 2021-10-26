@@ -4,29 +4,28 @@ import { get } from 'lodash'
 
 import styles from '../../styles'
 
-import TableCol from './TableCol'
-import TableSelectionCol from './TableSelectionCol'
+import TableCol, { StyledColInner } from './TableCol'
 import TableVerticalCol, { StyledVerticalCol } from './TableVerticalCol'
-import TableRowExtra from './TableRowExtra'
+import TableRowExtra, { StyledExtraContent } from './TableRowExtra'
 
 const StyledRow = styled.div`
-  background-color: ${({ theme, $background }) =>
-    $background ? theme.colors.transparent[0] : theme.foreground};
-  border-radius: ${({ theme }) => theme.radiusString};
-  transition: background-color 150ms;
+  padding-left: ${({ $indent }) => ($indent ? styles.getGap(2) : 0)};
 
   &:hover {
-    background-color: ${({ theme, $background }) =>
-      $background ? theme.colors.transparent[1] : theme.foregroundHover};
+    ${StyledColInner} {
+      background-color: ${({ theme }) => theme.colors.transparent[1]};
+    }
+
+    ${StyledExtraContent} {
+      background-color: ${({ theme }) => theme.colors.transparent[2]};
+    }
   }
 `
-const StyledInner = styled.div`
+const StyledRowInner = styled.div`
   display: flex;
   flex-direction: ${({ $vertical }) => ($vertical ? 'column' : 'row')};
-  gap: ${styles.getGap(0.5)};
   width: 100%;
-  padding: ${({ $vertical }) => styles.getGap($vertical ? 1 : 0.5)};
-  overflow: hidden;
+  padding: ${({ $vertical }) => ($vertical ? styles.getGap() : 0)};
 
   & > ${StyledVerticalCol} {
     flex-direction: column;
@@ -41,36 +40,46 @@ const TableRow = ({
   background = false,
   loading = false,
   history = {},
+  indent = 0,
   onSelect = null,
   onAction = () => {},
 }) => {
   return (
-    <StyledRow $background={background}>
-      <StyledInner $vertical={vertical}>
-        {onSelect && (
-          <TableSelectionCol
-            value={!!data.SELECTED}
-            onChange={(v) => onSelect(data, v)}
-          />
-        )}
+    <StyledRow $background={background} $indent={!!onSelect}>
+      <StyledRowInner $vertical={vertical}>
         {columns.map(({ label, key, render, align, width }, index) =>
           vertical ? (
-            <TableVerticalCol key={index} label={label}>
+            <TableVerticalCol
+              key={index}
+              label={label}
+              isFirst={index === 0}
+              isLast={index === columns.length - 1}
+            >
               {render ? render(data, { history }, onAction) : get(data, key)}
             </TableVerticalCol>
           ) : (
-            <TableCol key={index} align={align} width={width}>
+            <TableCol
+              key={index}
+              align={align}
+              width={width}
+              indent={index === 0 ? indent : 0}
+              isFirst={index === 0}
+              isLast={index === columns.length - 1}
+              selected={!!data.SELECTED}
+              onSelect={onSelect && ((v) => onSelect(data, v))}
+            >
               {render ? render(data, { history }, onAction) : get(data, key)}
             </TableCol>
           ),
         )}
-      </StyledInner>
+      </StyledRowInner>
       {!loading && !!extraColumns.length && (
         <TableRowExtra
           columns={extraColumns}
           data={data}
           loading={loading}
           history={history}
+          indent={indent}
           onAction={onAction}
         />
       )}

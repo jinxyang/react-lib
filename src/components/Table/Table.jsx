@@ -31,18 +31,14 @@ const Table = ({
   history,
   children,
 }) => {
-  const allSelected = React.useMemo(
+  const selected = React.useMemo(
     () => (list.length ? list.every(({ SELECTED }) => !!SELECTED) : false),
     [list],
   )
   return (
     <StyledTable>
       {!vertical && (
-        <TableHead
-          columns={columns}
-          allSelected={allSelected}
-          onSelect={onSelect}
-        />
+        <TableHead columns={columns} selected={selected} onSelect={onSelect} />
       )}
       <TableBody
         vertical={vertical}

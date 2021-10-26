@@ -8,8 +8,10 @@ import ArrowIcon from '../icons/ArrowIcon'
 
 const StyledExtra = styled.article`
   position: relative;
+  margin-left: ${({ $indent }) => styles.getGap($indent * 2)};
+  padding: 0 ${styles.getGap(0.6)} 0;
 `
-const StyledAction = styled.div`
+const StyledExtraButton = styled.div`
   position: absolute;
   top: 0;
   left: 50%;
@@ -19,23 +21,25 @@ const StyledAction = styled.div`
   cursor: pointer;
   user-select: none;
 `
-const StyledContent = styled.div`
+export const StyledExtraContent = styled.div`
   padding: ${styles.getGap(0.5)} ${styles.getGap()};
-  background-color: ${({ theme }) => theme.colors.transparent[0]};
+  background-color: ${({ theme }) => theme.colors.transparent[1]};
   border-radius: 0 0 ${styles.getRadius()} ${styles.getRadius()};
+  transition: background-color 150ms;
 `
 
 const TableExtra = ({
   columns = [],
   data = {},
   history = {},
-  onAction = () => {},
+  indent = 0,
   theme = {},
+  onAction = () => {},
 }) => {
   const [open, setOpen] = React.useState(false)
   return (
-    <StyledExtra>
-      <StyledAction onClick={() => setOpen(!open)}>
+    <StyledExtra $indent={indent}>
+      <StyledExtraButton onClick={() => setOpen(!open)}>
         <ArrowIcon
           size={24}
           thickness={2}
@@ -43,15 +47,15 @@ const TableExtra = ({
           angle={15}
           color={theme.colors.gray[theme.darkMode ? 12 : 2]}
         />
-      </StyledAction>
+      </StyledExtraButton>
       {open && (
-        <StyledContent>
+        <StyledExtraContent>
           {columns.map(({ label, key, render }, index) => (
             <TableVerticalCol key={index} label={label}>
               {render ? render(data, { history, onAction }) : get(data, key)}
             </TableVerticalCol>
           ))}
-        </StyledContent>
+        </StyledExtraContent>
       )}
     </StyledExtra>
   )
