@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { get } from 'lodash'
 
 import styles from '../../styles'
 
@@ -55,11 +56,11 @@ const TableRow = ({
         {columns.map(({ label, key, render, align, width }, index) =>
           vertical ? (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history }, onAction) : data[key]}
+              {render ? render(data, { history }, onAction) : get(data, key)}
             </TableVerticalCol>
           ) : (
             <TableCol key={index} align={align} width={width}>
-              {render ? render(data, { history }, onAction) : data[key]}
+              {render ? render(data, { history }, onAction) : get(data, key)}
             </TableCol>
           ),
         )}

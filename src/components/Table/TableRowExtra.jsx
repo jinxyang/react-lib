@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components'
+import { get } from 'lodash'
 
 import styles from '../../styles'
 import TableVerticalCol from './TableVerticalCol'
@@ -47,7 +48,7 @@ const TableExtra = ({
         <StyledContent>
           {columns.map(({ label, key, render }, index) => (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history, onAction }) : data[key]}
+              {render ? render(data, { history, onAction }) : get(data, key)}
             </TableVerticalCol>
           ))}
         </StyledContent>
