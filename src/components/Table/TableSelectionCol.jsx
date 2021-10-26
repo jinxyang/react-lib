@@ -1,12 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import Checkbox from '../Checkbox'
+import { Checkbox } from 'antd'
 
 import styles from '../../styles'
 
 const StyledCol = styled.div`
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   padding: ${styles.getGap(0.5)};
 `
@@ -14,7 +14,7 @@ const StyledCol = styled.div`
 const TableSelectionCol = ({ value = false, onChange = () => {} }) => {
   return (
     <StyledCol>
-      <Checkbox value={value} onChange={onChange} />
+      <Checkbox checked={value} onChange={(e) => onChange(e.target.checked)} />
     </StyledCol>
   )
 }
