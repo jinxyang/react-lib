@@ -41,8 +41,6 @@ const StyledHeader = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: ${styles.getGap(0.8)} ${styles.getGap()};
-
-  /* background-color: ${styles.getBack()}; */
 `
 
 const StyledTitle = styled.p`

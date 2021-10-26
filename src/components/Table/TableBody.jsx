@@ -29,7 +29,7 @@ const TableBody = ({
     <StyledBody>
       {do {
         if (list.length) {
-          return getRows(list, { ...props, loading, onAction })
+          return getRows(list, { ...props, list, loading, onAction })
         } else if (loading) {
           return [{}, {}, {}].map((_, index) => (
             <Skeleton key={index} height="54px" duration="1.5s" />

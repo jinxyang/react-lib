@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const StyledSquare = styled.div`
   position: relative;
+  width: 100%;
 
   &::after {
     content: '';
@@ -16,9 +17,9 @@ const StyledContent = styled.div`
   height: 100%;
 `
 
-const Square = ({ as = 'div', style = {}, children }) => {
+const Square = ({ as = 'div', children, ...props }) => {
   return (
-    <StyledSquare as={as} style={style}>
+    <StyledSquare as={as} {...props}>
       <StyledContent>{children}</StyledContent>
     </StyledSquare>
   )

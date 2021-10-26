@@ -34,6 +34,7 @@ const StyledRowInner = styled.div`
 
 const TableRow = ({
   vertical = false,
+  list = [],
   columns = [],
   extraColumns = [],
   data = {},
@@ -55,7 +56,9 @@ const TableRow = ({
               isFirst={index === 0}
               isLast={index === columns.length - 1}
             >
-              {render ? render(data, { history }, onAction) : get(data, key)}
+              {render
+                ? render(data, { list, history }, onAction)
+                : get(data, key)}
             </TableVerticalCol>
           ) : (
             <TableCol
@@ -68,7 +71,9 @@ const TableRow = ({
               selected={!!data.SELECTED}
               onSelect={onSelect && ((v) => onSelect(data, v))}
             >
-              {render ? render(data, { history }, onAction) : get(data, key)}
+              {render
+                ? render(data, { list, history }, onAction)
+                : get(data, key)}
             </TableCol>
           ),
         )}
