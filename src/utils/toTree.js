@@ -10,10 +10,10 @@ const toTree = (list = [], parentKey, customOptions = {}, value = '') => {
   return list
     .filter((item) => item && item[parentKey] === value)
     .sort(options.sorter)
-    .map((item) => {
+    .map((item, index) => {
       const childList = toTree(list, parentKey, options, item[options.idKey])
       return {
-        ...options.formatter(item),
+        ...options.formatter(item, index),
         ...(childList.length ? { [options.childrenKey]: childList } : {}),
       }
     })

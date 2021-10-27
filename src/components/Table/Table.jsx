@@ -26,6 +26,7 @@ const Table = ({
   background = false,
   pagination = null,
   onSelect = null,
+  style = {},
   onPageChange = () => {},
   onAction = () => {},
   history,
@@ -36,7 +37,7 @@ const Table = ({
     [list],
   )
   return (
-    <StyledTable>
+    <StyledTable style={style}>
       {!vertical && (
         <TableHead columns={columns} selected={selected} onSelect={onSelect} />
       )}
