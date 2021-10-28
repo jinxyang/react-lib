@@ -10,8 +10,12 @@ const StyledSpace = styled.div`
   align-items: flex-start;
 `
 
-const Space = ({ gap = 0.5, children }) => {
-  return <StyledSpace $gap={gap}>{children}</StyledSpace>
+const Space = ({ gap = 0.5, children, ...props }) => {
+  return (
+    <StyledSpace $gap={gap} {...props}>
+      {children}
+    </StyledSpace>
+  )
 }
 
 export default Space

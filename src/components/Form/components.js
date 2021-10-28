@@ -1,5 +1,6 @@
 import { InputNumber } from 'antd'
 import Checkbox from '../Checkbox'
+import Cropper from '../Cropper'
 import DatePicker from '../DatePicker'
 import IconSelect from '../IconSelect'
 import Input from '../Input'
@@ -14,6 +15,7 @@ import TreeSelect from '../TreeSelect'
 
 export default {
   Checkbox,
+  Cropper,
   DatePicker,
   IconSelect,
   Input,

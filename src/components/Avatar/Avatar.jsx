@@ -9,8 +9,7 @@ const Avatar = ({
   alt = 'Avatar',
   size = '100%',
   circle = false,
-  background = false,
-  ...props
+  ...imageProps
 }) => {
   return (
     <Image
@@ -19,8 +18,7 @@ const Avatar = ({
       width={size}
       height={size}
       shape={circle ? 'circle' : 'square'}
-      background={background}
-      {...props}
+      {...imageProps}
     />
   )
 }

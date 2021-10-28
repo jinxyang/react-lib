@@ -9,6 +9,7 @@ const StyledImage = styled.span`
   width: ${({ $width }) => $width || '100%'};
   height: ${({ $height }) => $height || '100%'};
   overflow: hidden;
+  vertical-align: middle;
   background-color: ${({ theme, $background }) =>
     $background ? theme.colors.transparent[2] : 'transparent'};
   border-radius: ${({ $shape, $radius }) =>

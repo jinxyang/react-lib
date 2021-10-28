@@ -20,8 +20,8 @@ const StyledIcon = styled.div`
   background: ${({ theme, $active }) =>
     $active ? theme.colors.primary.default : theme.colors.transparent[1]};
   border-radius: ${styles.getRadius(0.5)};
-  transition: all 150ms;
   cursor: pointer;
+  transition: all 150ms;
 
   &:hover {
     opacity: 0.8;
