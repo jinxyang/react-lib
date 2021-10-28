@@ -28,6 +28,7 @@ const Preview = ({
   data = {},
   columns = [],
   history,
+  header,
   children,
 }) => {
   console.log(data, columns)
@@ -49,6 +50,12 @@ const Preview = ({
       )}
       <Container.Item>
         <Container column={true}>
+          {header && (
+            <Container.Item>
+              {' '}
+              <StyledItem>{header}</StyledItem>{' '}
+            </Container.Item>
+          )}
           {columns.map((item, index) => (
             <Container.Item key={index}>
               <StyledItem>
