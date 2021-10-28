@@ -7,6 +7,7 @@ const StyledArrowIcon = styled.span`
   flex: 0 0 auto;
   width: ${({ theme, $size }) => ($size || theme.size) + 'px'};
   height: ${({ theme, $size }) => ($size || theme.size) + 'px'};
+  vertical-align: middle;
   transform: ${({ $rotate }) => `rotate(${$rotate}deg) `};
 
   /* transition: transform 150ms; */

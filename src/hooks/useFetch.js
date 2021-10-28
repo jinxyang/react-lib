@@ -20,7 +20,7 @@ const sleep = (delay = 0) =>
 const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
   const controller = useRef(null)
   const [state, setState] = useState(defaultState)
-  const { actions } = useAppContext()
+  const { state: appState, actions } = useAppContext()
   const message = useMessage()
 
   const abort = useCallback(() => controller.current?.abort(), [])
@@ -49,7 +49,8 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         },
       )
       const token = localStorage.getItem('token')
-      if (token) newHeaders.append('Authorization', token)
+      token && newHeaders.append('Authorization', token)
+      appState.from && newHeaders.append('from', appState.from)
 
       const requestInitial = {
         ...others,
