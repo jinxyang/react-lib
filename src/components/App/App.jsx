@@ -29,9 +29,10 @@ const App = ({
   opacity = 1,
   fill = true,
   children,
+  ...props
 }) => {
   return (
-    <StyledApp as={as} $fill={fill}>
+    <StyledApp as={as} $fill={fill} {...props}>
       <StyledBlur $color={color} $opacity={opacity} />
       <StyledContent $fill={fill} $gap={gap}>
         {children}

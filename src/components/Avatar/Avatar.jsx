@@ -2,7 +2,7 @@ import React from 'react'
 
 import Image from '../Image'
 
-const defaultSrc = '/static/default_avatar.png'
+import defaultAvatar from './default_avatar.png'
 
 const Avatar = ({
   src = '',
@@ -10,15 +10,17 @@ const Avatar = ({
   size = '100%',
   circle = false,
   background = false,
+  ...props
 }) => {
   return (
     <Image
-      src={src || defaultSrc}
+      src={src || defaultAvatar}
       alt={alt}
       width={size}
       height={size}
       shape={circle ? 'circle' : 'square'}
       background={background}
+      {...props}
     />
   )
 }

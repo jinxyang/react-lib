@@ -29,6 +29,7 @@ const Image = ({
   shape = 'square', // circle
   radius = 1,
   background = false,
+  ...props
 }) => {
   return (
     <StyledImage
@@ -37,6 +38,7 @@ const Image = ({
       $shape={shape}
       $radius={radius}
       $background={background}
+      {...props}
     >
       <img src={src} alt={alt} />
     </StyledImage>
