@@ -106,7 +106,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         return newState
       }
     },
-    [state, service, callback, delay, actions, message],
+    [state, service, appState.from, callback, delay, actions, message],
   )
 
   useEffect(() => {
