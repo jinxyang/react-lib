@@ -5,6 +5,8 @@ import Portal from '../Portal'
 import Scroll from '../Scroll'
 import styles from '../../styles'
 
+import useClick from '../../hooks/useClick'
+
 const StyledMask = styled.div`
   ${styles.zIndex.mask};
 
@@ -32,8 +34,23 @@ const StyledContent = styled.div`
   overflow: hidden;
 `
 
-const Mask = ({ show = false, fixed = true, children }) => {
+const Mask = ({
+  show = false,
+  fixed = true,
+  closable = true,
+  onClose = () => {},
+  children,
+}) => {
+  const ref = React.useRef(null)
   const [innerShow, setShow] = React.useState(false)
+
+  const clickHandles = React.useMemo(() => {
+    return {
+      escape: onClose,
+    }
+  }, [onClose])
+
+  useClick(clickHandles, show && closable)
 
   React.useEffect(() => {
     if (show) {
@@ -48,7 +65,7 @@ const Mask = ({ show = false, fixed = true, children }) => {
   return (
     innerShow && (
       <Portal>
-        <StyledMask $fixed={fixed}>
+        <StyledMask ref={ref} $fixed={fixed}>
           <StyledBackground $show={show && innerShow} />
           {show && (
             <StyledContent>

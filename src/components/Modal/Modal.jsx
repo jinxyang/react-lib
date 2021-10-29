@@ -63,7 +63,7 @@ const Modal = ({
   children,
 }) => {
   return (
-    <Mask show={show}>
+    <Mask show={show} closable={!hideClose} onClose={onClose}>
       <StyledModal $show={show}>
         <StyledWrap $width={width}>
           {title && (
