@@ -5,8 +5,6 @@ import Portal from '../Portal'
 import Scroll from '../Scroll'
 import styles from '../../styles'
 
-import useKeypress from '../../hooks/useKeypress'
-
 const StyledMask = styled.div`
   ${styles.zIndex.mask};
 
@@ -41,19 +39,7 @@ const Mask = ({
   style = {},
   children,
 }) => {
-  const ref = React.useRef(null)
   const [innerShow, setShow] = React.useState(false)
-
-  const clickHandles = React.useMemo(() => {
-    return {
-      escape: onClose,
-    }
-  }, [onClose])
-
-  const listenKey = React.useMemo(() => {
-    return show && closable
-  }, [closable, show])
-  useKeypress(clickHandles, listenKey)
 
   const handleClick = (event) => {
     const isContent = event.target.dataset.mask === 'content'
@@ -73,7 +59,7 @@ const Mask = ({
   return (
     innerShow && (
       <Portal>
-        <StyledMask ref={ref} $fixed={fixed} onMouseDownCapture={handleClick}>
+        <StyledMask $fixed={fixed} onMouseDownCapture={handleClick}>
           <StyledBackground $show={show && innerShow} />
           {show && (
             <Scroll
