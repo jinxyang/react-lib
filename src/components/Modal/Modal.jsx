@@ -63,7 +63,12 @@ const Modal = ({
   children,
 }) => {
   return (
-    <Mask show={show} closable={!hideClose} onClose={onClose}>
+    <Mask
+      show={show}
+      closable={!hideClose}
+      style={{ justifyContent: 'center' }}
+      onClose={onClose}
+    >
       <StyledModal $show={show}>
         <StyledWrap $width={width}>
           {title && (

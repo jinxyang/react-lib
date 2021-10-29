@@ -13,8 +13,12 @@ const StyledScroll = styled.div`
   }
 `
 
-const Scroll = ({ y = false, children }) => {
-  return <StyledScroll $y={y}>{children}</StyledScroll>
+const Scroll = ({ y = false, children, ...props }) => {
+  return (
+    <StyledScroll $y={y} {...props}>
+      {children}
+    </StyledScroll>
+  )
 }
 
 export default Scroll
