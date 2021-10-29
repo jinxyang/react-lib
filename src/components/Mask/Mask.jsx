@@ -66,7 +66,7 @@ const Mask = ({
     innerShow && (
       <Portal>
         <StyledMask ref={ref} $fixed={fixed}>
-          <StyledBackground $show={show && innerShow} />
+          <StyledBackground $show={show && innerShow} onClick={onClose} />
           {show && (
             <StyledContent>
               <Scroll y={true}>{children}</Scroll>
