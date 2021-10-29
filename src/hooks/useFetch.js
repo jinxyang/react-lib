@@ -62,8 +62,11 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         requestInitial.body =
           data instanceof FormData ? data : JSON.stringify(data)
       }
+      const [apiType, apiPath] = url.includes('::')
+        ? url.split('::')
+        : [null, url]
       const newRequest = new Request(
-        api.default + url + `?${stringify(params)}`,
+        api[apiType || 'default'] + apiPath + `?${stringify(params)}`,
         requestInitial,
       )
 
