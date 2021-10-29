@@ -42,7 +42,9 @@ const TableRow = ({
   loading = false,
   history = {},
   indent = 0,
+  utils = {},
   onSelect = null,
+  onChange = () => {},
   onAction = () => {},
 }) => {
   return (
@@ -57,7 +59,7 @@ const TableRow = ({
               isLast={index === columns.length - 1}
             >
               {render
-                ? render(data, { list, history }, onAction)
+                ? render(data, { ...utils, list, history, onChange }, onAction)
                 : get(data, key)}
             </TableVerticalCol>
           ) : (
@@ -72,7 +74,7 @@ const TableRow = ({
               onSelect={onSelect && ((v) => onSelect(data, v))}
             >
               {render
-                ? render(data, { list, history }, onAction)
+                ? render(data, { ...utils, list, history, onChange }, onAction)
                 : get(data, key)}
             </TableCol>
           ),

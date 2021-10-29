@@ -19,6 +19,7 @@ const ProTable = (
     queriesFormatter = (v) => v,
     onAction = () => {},
     onChange = () => {},
+    utils = {},
     onSelect = null,
     vertical = false,
     noPagination = false,
@@ -95,6 +96,8 @@ const ProTable = (
             loading={loading}
             background={true}
             pagination={!noPagination && data.pagination}
+            utils={utils}
+            onListChange={onChange}
             onPageChange={(current, pageSize) => {
               getList(queriesFormatter({ current, pageSize, ...queries }))
             }}

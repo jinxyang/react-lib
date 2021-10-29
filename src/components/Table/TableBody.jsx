@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Empty } from 'antd'
+import { cloneDeep } from 'lodash'
 
 import { Skeleton } from '@jinxyang/react-lib'
 import styles from '../../styles'
@@ -19,17 +20,12 @@ const getRows = (list = [], props, indent = 0) => {
   ])
 }
 
-const TableBody = ({
-  list = [],
-  loading = false,
-  onAction = () => {},
-  ...props
-}) => {
+const TableBody = ({ list = [], loading = false, ...props }) => {
   return (
     <StyledBody>
       {do {
         if (list.length) {
-          return getRows(list, { ...props, list, loading, onAction })
+          return getRows(list, { ...props, list: cloneDeep(list), loading })
         } else if (loading) {
           return [{}, {}, {}].map((_, index) => (
             <Skeleton key={index} height="54px" duration="1.5s" />

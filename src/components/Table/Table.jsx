@@ -27,6 +27,8 @@ const Table = ({
   pagination = null,
   onSelect = null,
   style = {},
+  utils = {},
+  onListChange = () => {},
   onPageChange = () => {},
   onAction = () => {},
   history,
@@ -49,7 +51,9 @@ const Table = ({
         loading={loading}
         background={background}
         history={history}
+        utils={utils}
         onSelect={onSelect}
+        onChange={onListChange}
         onAction={onAction}
       />
       {!!list.length && !loading && (children || pagination) && (

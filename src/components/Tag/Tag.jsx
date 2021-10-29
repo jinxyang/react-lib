@@ -17,12 +17,30 @@ const StyledTag = styled.span`
         : theme.colors[$color].light[1]
       : theme.colors.transparent[1]};
   border-radius: ${styles.getRadius(0.5)};
+  cursor: ${({ $click }) => ($click ? 'pointer' : 'default')};
   user-select: none;
+
+  &:hover {
+    opacity: ${({ $loading, $disabled, $click }) =>
+      $loading || $disabled || $click ? 0.8 : 1};
+  }
 `
 
-const Tag = ({ color = '', children, onClick = () => {} }) => {
+const Tag = ({
+  color = '',
+  loading = false,
+  disabled = false,
+  onClick,
+  children,
+}) => {
   return (
-    <StyledTag $color={color} onClick={onClick}>
+    <StyledTag
+      $color={color}
+      $loading={loading}
+      $disabled={disabled}
+      $click={onClick}
+      onClick={onClick || (() => {})}
+    >
       {children}
     </StyledTag>
   )
