@@ -41,8 +41,13 @@ const ProTable = (
   React.useImperativeHandle(
     ref,
     () => ({
-      reload: () => {
-        getList(queriesFormatter(queries))
+      reload: (queriesOrFormatter) => {
+        const newQueries = queriesOrFormatter
+          ? typeof queriesOrFormatter === 'function'
+            ? queriesOrFormatter(queries)
+            : queriesOrFormatter
+          : queriesFormatter(queries)
+        getList(newQueries)
       },
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
