@@ -27,6 +27,7 @@ export const StyledColInner = styled.div`
   margin-left: ${({ $indent }) => styles.getGap($indent * 2)};
   padding: ${styles.getGap(0.5)} ${styles.getGap(1)};
   text-align: ${({ $align }) => $align};
+  word-break: break-all;
   background-color: ${({ theme }) => theme.colors.transparent[0]};
   border-radius: ${({ $radiusList }) => $radiusList.join(' ')};
   transition: background-color 150ms;
