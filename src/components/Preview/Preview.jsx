@@ -31,7 +31,6 @@ const Preview = ({
   header,
   children,
 }) => {
-  console.log(data, columns)
   return (
     <Container column={true}>
       {(title || children) && (
