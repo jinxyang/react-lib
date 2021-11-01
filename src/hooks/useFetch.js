@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
-import { stringify } from 'query-string'
+import { stringify, parse } from 'query-string'
 
 import { api } from 'config'
 import { useAppContext } from 'contexts'
@@ -65,8 +65,11 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       const [apiType, apiPath] = url.includes('::')
         ? url.split('::')
         : [null, url]
+      const [path, queries = ''] = apiPath.split('?')
       const newRequest = new Request(
-        api[apiType || 'default'] + apiPath + `?${stringify(params)}`,
+        api[apiType || 'default'] +
+          path +
+          `?${stringify({ ...parse(queries), ...params })}`,
         requestInitial,
       )
 
