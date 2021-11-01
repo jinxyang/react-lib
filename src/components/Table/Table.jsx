@@ -1,8 +1,9 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-import { Pagination } from 'antd'
+// import { Pagination } from 'antd'
 
+import Pagination from '../Pagination'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
 import TableFoot from './TableFoot'

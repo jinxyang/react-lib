@@ -4,6 +4,7 @@ import { get } from 'lodash'
 
 import styles from '../../styles'
 
+import Skeleton from '../Skeleton'
 import TableCol, { StyledColInner } from './TableCol'
 import TableVerticalCol, { StyledVerticalCol } from './TableVerticalCol'
 import TableRowExtra, { StyledExtraContent } from './TableRowExtra'
@@ -47,7 +48,9 @@ const TableRow = ({
   onChange = () => {},
   onAction = () => {},
 }) => {
-  return (
+  return loading ? (
+    <Skeleton height="50px" duration="1.5s" />
+  ) : (
     <StyledRow $background={background} $indent={!!onSelect}>
       <StyledRowInner $vertical={vertical}>
         {columns.map(({ label, key, render, align, width }, index) =>
