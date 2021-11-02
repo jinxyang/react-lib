@@ -1,9 +1,12 @@
 import { useRef, useState, useCallback, useEffect } from 'react'
 import { stringify, parse } from 'query-string'
 
-import { api } from 'config'
+import { api as allApi } from 'config'
 import { useAppContext } from 'contexts'
 import useMessage from '../hooks/useMessage'
+
+const apiType = process.env.API
+const api = apiType ? allApi[apiType] : allApi
 
 const defaultState = {
   loading: false,
