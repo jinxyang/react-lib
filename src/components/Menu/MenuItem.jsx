@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import styles from '../../styles'
 import AntIcon from '../AntIcon'
 
 const StyledLink = styled.a`
@@ -30,7 +31,7 @@ const StyledLink = styled.a`
 `
 
 const Gap = styled.span`
-  padding: 0 ${({ theme }) => theme.gap / 2 + 'px'};
+  padding: 0 ${styles.getGap(0.25)};
 `
 
 const MenuItem = ({

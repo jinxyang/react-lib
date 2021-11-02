@@ -4,14 +4,19 @@ import styled from 'styled-components'
 import AntIcon from '../AntIcon'
 import { StyledList, StyledItem } from './styled'
 
+import styles from '../../styles'
+
 const StyledTitle = styled.p`
   margin: 0;
   margin-bottom: ${({ theme }) => theme.gap / 2 + 'px'};
   padding: ${({ theme }) => `0 ${theme.gapString}`};
-  color: ${({ theme }) => theme.font.color};
-  font-size: 0.9em;
+  color: ${({ theme }) => theme.colors.transparent[6]};
+  font-size: 0.95em;
   cursor: default;
-  opacity: 0.5;
+
+  & + ${StyledList} {
+    padding-left: ${styles.getGap(0.75)};
+  }
 `
 
 const Gap = styled.span`
