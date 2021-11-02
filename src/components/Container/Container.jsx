@@ -21,8 +21,13 @@ const gridStyle = css`
   justify-content: stretch;
   align-content: start;
 `
-
+const listStyle = css`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`
 const StyledWrap = styled.div`
+  ${({ as }) => (as === 'ul' || as === 'ol') && listStyle};
   ${({ $mode }) => $mode === 'flex' && flexStyle};
   ${({ $mode }) => $mode === 'grid' && gridStyle};
 `
