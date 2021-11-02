@@ -116,6 +116,10 @@ const Pagination = ({
     return Array.from({ length }).map((_, index) => ({ page: index + 1 }))
   }, [length])
 
+  if (!length) {
+    return null
+  }
+
   return (
     <Container as="ul" gap={0.5}>
       {showTotal && (
