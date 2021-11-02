@@ -24,6 +24,8 @@ const ProTable = (
     vertical = false,
     noPagination = false,
     showMiniPagination = true,
+    enableExpand = true,
+    expandAll = false,
     children,
   },
   ref,
@@ -104,6 +106,8 @@ const ProTable = (
             pagination={!noPagination && data.pagination}
             showMiniPagination={showMiniPagination}
             utils={utils}
+            enableExpand={enableExpand}
+            expandAll={enableExpand}
             onListChange={onChange}
             onPageChange={(current, pageSize) => {
               getList(queriesFormatter({ current, pageSize, ...queries }))

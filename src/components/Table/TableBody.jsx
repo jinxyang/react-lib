@@ -12,24 +12,73 @@ const StyledBody = styled.section`
   gap: ${styles.getGap(0.75)};
 `
 
-const getRows = (list = [], props, indent = 0) => {
+const getRows = (
+  { uniqueKey, list, expandedKeys, onExpand },
+  props = {},
+  indent = 0,
+) => {
   return list.map((data, index) => [
-    <TableRow {...props} data={data} indent={indent} key={index} />,
-    data.children && getRows(data.children, props, indent + 1),
+    <TableRow
+      {...props}
+      data={data}
+      indent={indent}
+      expanded={expandedKeys.includes(data[uniqueKey])}
+      onExpand={!!data.children && onExpand}
+      key={index}
+    />,
+    data.children &&
+      expandedKeys.includes(data[uniqueKey]) &&
+      getRows(
+        { uniqueKey, list: data.children, expandedKeys, onExpand },
+        props,
+        indent + 1,
+      ),
   ])
 }
 
-const TableBody = ({ list = [], loading = false, ...props }) => {
+const TableBody = ({
+  uniqueKey,
+  list = [],
+  loading = false,
+  enableExpand = false,
+  expandAll = false,
+  ...props
+}) => {
+  const [expandedKeys, setExpandedKeys] = React.useState([])
+
+  const handleExpand = (data) => {
+    const key = data[uniqueKey]
+    setExpandedKeys((keys) => {
+      if (expandedKeys.includes(key)) {
+        return keys.filter((k) => k !== key)
+      }
+      return [...keys, key]
+    })
+  }
+
+  React.useEffect(() => {
+    expandAll && setExpandedKeys(list.map((item) => item[uniqueKey]))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <StyledBody>
       {!loading && !list.length ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       ) : (
-        getRows(list.length ? list : [{}, {}, {}], {
-          ...props,
-          list: cloneDeep(list),
-          loading,
-        })
+        getRows(
+          {
+            uniqueKey,
+            list: list.length ? list : [{}, {}, {}],
+            expandedKeys,
+            onExpand: enableExpand && handleExpand,
+          },
+          {
+            ...props,
+            list: cloneDeep(list),
+            loading,
+          },
+        )
       )}
     </StyledBody>
   )

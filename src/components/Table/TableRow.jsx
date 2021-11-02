@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { CaretRightOutlined } from '@ant-design/icons'
 import { get } from 'lodash'
 
 import styles from '../../styles'
@@ -32,6 +33,18 @@ const StyledRowInner = styled.div`
     flex-direction: column;
   }
 `
+const StyledArrow = styled.span`
+  display: flex;
+  align-items: center;
+  width: 1.5em;
+  height: 2em;
+  cursor: pointer;
+
+  & > * {
+    transform: ${({ $rotate }) => ($rotate ? 'rotate(90deg)' : 'none')};
+    transition: all 150ms;
+  }
+`
 
 const TableRow = ({
   vertical = false,
@@ -44,6 +57,8 @@ const TableRow = ({
   history = {},
   indent = 0,
   utils = {},
+  expanded = false,
+  onExpand = null,
   onSelect = null,
   onChange = () => {},
   onAction = () => {},
@@ -76,6 +91,14 @@ const TableRow = ({
               selected={!!data.SELECTED}
               onSelect={onSelect && ((v) => onSelect(data, v))}
             >
+              {onExpand && !index && (
+                <StyledArrow
+                  $rotate={expanded}
+                  onClick={() => onExpand?.(data)}
+                >
+                  <CaretRightOutlined />
+                </StyledArrow>
+              )}
               {render
                 ? render(data, { ...utils, list, history, onChange }, onAction)
                 : get(data, key)}

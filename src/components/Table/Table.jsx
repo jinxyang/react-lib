@@ -20,6 +20,7 @@ const StyledTable = styled.div`
 const showTotal = (total) => `共：${total}条`
 
 const Table = ({
+  uniqueKey = 'id',
   vertical = false,
   columns = [],
   extraColumns = [],
@@ -31,6 +32,8 @@ const Table = ({
   onSelect = null,
   style = {},
   utils = {},
+  enableExpand = true,
+  expandAll = false,
   onListChange = () => {},
   onPageChange = () => {},
   onAction = () => {},
@@ -41,6 +44,7 @@ const Table = ({
     () => (list.length ? list.every(({ SELECTED }) => !!SELECTED) : false),
     [list],
   )
+
   return (
     <StyledTable style={style}>
       {pagination && showMiniPagination && (
@@ -57,6 +61,7 @@ const Table = ({
         <TableHead columns={columns} selected={selected} onSelect={onSelect} />
       )}
       <TableBody
+        uniqueKey={uniqueKey}
         vertical={vertical}
         columns={columns}
         extraColumns={extraColumns}
@@ -65,6 +70,8 @@ const Table = ({
         background={background}
         history={history}
         utils={utils}
+        enableExpand={enableExpand}
+        expandAll={expandAll}
         onSelect={onSelect}
         onChange={onListChange}
         onAction={onAction}
