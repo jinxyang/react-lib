@@ -23,6 +23,7 @@ const ProTable = (
     onSelect = null,
     vertical = false,
     noPagination = false,
+    showMiniPagination = true,
     children,
   },
   ref,
@@ -101,6 +102,7 @@ const ProTable = (
             loading={loading}
             background={true}
             pagination={!noPagination && data.pagination}
+            showMiniPagination={showMiniPagination}
             utils={utils}
             onListChange={onChange}
             onPageChange={(current, pageSize) => {

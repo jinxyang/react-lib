@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
-// import { Pagination } from 'antd'
 
 import Pagination from '../Pagination'
 import TableHead from './TableHead'
@@ -18,6 +17,8 @@ const StyledTable = styled.div`
   transition: color 150ms;
 `
 
+const showTotal = (total) => `共：${total}条`
+
 const Table = ({
   vertical = false,
   columns = [],
@@ -26,6 +27,7 @@ const Table = ({
   loading = false,
   background = false,
   pagination = null,
+  showMiniPagination = false,
   onSelect = null,
   style = {},
   utils = {},
@@ -41,6 +43,16 @@ const Table = ({
   )
   return (
     <StyledTable style={style}>
+      {pagination && showMiniPagination && (
+        <TableFoot as="div">
+          <Pagination
+            showTotal={showTotal}
+            {...pagination}
+            mode="mini"
+            onChange={onPageChange}
+          />
+        </TableFoot>
+      )}
       {!vertical && (
         <TableHead columns={columns} selected={selected} onSelect={onSelect} />
       )}
@@ -57,17 +69,18 @@ const Table = ({
         onChange={onListChange}
         onAction={onAction}
       />
-      {!!list.length && !loading && (children || pagination) && (
-        <TableFoot>
-          {children || (
-            <Pagination
-              showTotal={(total) => `共：${total}`}
-              {...pagination}
-              onChange={onPageChange}
-            />
-          )}
-        </TableFoot>
-      )}
+      {!!list.length &&
+        !loading &&
+        (children ||
+          (pagination && (
+            <TableFoot>
+              <Pagination
+                showTotal={showTotal}
+                {...pagination}
+                onChange={onPageChange}
+              />
+            </TableFoot>
+          )))}
     </StyledTable>
   )
 }

@@ -49,7 +49,7 @@ const TableRow = ({
   onAction = () => {},
 }) => {
   return loading ? (
-    <Skeleton height="50px" duration="1.5s" />
+    <Skeleton height="38px" duration="1.5s" />
   ) : (
     <StyledRow $background={background} $indent={!!onSelect}>
       <StyledRowInner $vertical={vertical}>
