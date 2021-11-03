@@ -53,7 +53,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       )
       const token = localStorage.getItem('token')
       token && newHeaders.append('Authorization', token)
-      appState.from && newHeaders.append('share', appState.from)
+      appState?.from && newHeaders.append('share', appState?.from)
 
       const requestInitial = {
         ...others,
@@ -115,7 +115,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         return newState
       }
     },
-    [state, service, appState.from, callback, delay, actions, message],
+    [state, service, appState?.from, callback, delay, actions, message],
   )
 
   useEffect(() => {
