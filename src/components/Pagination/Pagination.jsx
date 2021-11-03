@@ -5,6 +5,10 @@ import { LeftOutlined, RightOutlined, MoreOutlined } from '@ant-design/icons'
 import Container from '../Container'
 import styles from '../../styles'
 
+const at = (array, index) => {
+  return array[array.length + index]
+}
+
 const StyledText = styled.p`
   display: flex;
   align-items: center;
@@ -38,7 +42,7 @@ const steps = 5
 
 const getList = (list, current, mode = 'normal') => {
   const firstItem = list[0]
-  const lastItem = list.at(-1)
+  const lastItem = at(list, -1)
   const prevItem = {
     page: current - 1,
     icon: <LeftOutlined />,
@@ -77,7 +81,7 @@ const getList = (list, current, mode = 'normal') => {
     icon: <MoreOutlined style={{ transform: 'rotate(90deg)' }} />,
     title: `向前${steps}页`,
   }
-  const forwardItem = lastItem.page - centerItems.at(-1).page > 1 && {
+  const forwardItem = lastItem.page - at(centerItems, -1).page > 1 && {
     page: current + steps,
     icon: <MoreOutlined style={{ transform: 'rotate(90deg)' }} />,
     title: `向后${steps}页`,
