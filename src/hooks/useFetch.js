@@ -10,6 +10,7 @@ const api = apiType ? allApi[apiType] : allApi
 
 const defaultState = {
   loading: false,
+  loaded: false,
   data: {},
   code: 0,
   message: '',
@@ -34,7 +35,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
 
       controller.current = new AbortController()
 
-      setState({ ...state, loading: true, code: 0 })
+      setState({ ...state, loading: true, loaded: false, code: 0 })
 
       const {
         url = '',
@@ -92,7 +93,8 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
 
         const newState = {
           loading: false,
-          data: code ? state.data : response.data,
+          loaded: true,
+          data: (code ? state.data : response.data) ?? {},
           code,
           message: response.message || fetchResponse.statusText,
         }
@@ -107,6 +109,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       } catch (e) {
         const newState = {
           loading: false,
+          loaded: true,
           data: { ...state.data },
           code: e.code || 1,
           message: e.message,
