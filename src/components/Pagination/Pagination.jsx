@@ -23,8 +23,10 @@ const StyledItem = styled.div`
   align-items: center;
   width: 2.5em;
   height: 2.5em;
-  color: ${({ theme, $disabled }) =>
-    $disabled ? theme.colors.transparent[3] : 'inherit'};
+  color: ${({ theme, $disabled, $active }) => {
+    if ($active) return '#fff'
+    return $disabled ? theme.colors.transparent[3] : 'inherit'
+  }};
   background: ${({ theme, $active }) =>
     $active ? theme.colors.primary.default : theme.colors.transparent[1]};
   border-radius: ${styles.getRadius(0.5)};

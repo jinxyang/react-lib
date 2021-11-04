@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import Portal from '../Portal'
 import Scroll from '../Scroll'
 import styles from '../../styles'
+import useKeypress from '../../hooks/useKeypress'
 
 const StyledMask = styled.div`
   ${styles.zIndex.mask};
@@ -39,6 +40,7 @@ const Mask = ({
   style = {},
   children,
 }) => {
+  const [keyboard, keyboardToggle] = useKeypress('Escape')
   const [innerShow, setShow] = React.useState(false)
 
   const handleClick = (event) => {
@@ -46,14 +48,29 @@ const Mask = ({
     isContent && closable && onClose()
   }
 
+  const close = React.useCallback(() => {
+    keyboardToggle(false)
+    setTimeout(() => {
+      setShow(false)
+    }, 300)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [closable])
+
+  React.useEffect(() => {
+    keyboard.Escape && closable && onClose()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyboard])
+
   React.useEffect(() => {
     if (show) {
       setShow(true)
-    } else {
       setTimeout(() => {
-        setShow(false)
+        closable && keyboardToggle(true)
       }, 300)
+    } else {
+      close()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [show])
 
   return (

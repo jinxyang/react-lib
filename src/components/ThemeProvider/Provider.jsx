@@ -17,6 +17,7 @@ const Root = styled.div`
   height: 100vh;
   padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px)
     env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 20px);
+  overflow: hidden;
   background-color: ${({ theme }) => theme.background};
   transition: background-color 150ms;
 `
