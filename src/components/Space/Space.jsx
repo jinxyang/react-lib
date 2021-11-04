@@ -7,7 +7,7 @@ const StyledSpace = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${styles.getGap()};
-  align-items: flex-start;
+  align-items: center;
 `
 
 const Space = ({ gap = 0.5, children, ...props }) => {
