@@ -1,5 +1,6 @@
 // components
 export { default as ThemeProvider } from './components/ThemeProvider'
+export { default as Alfred } from './components/Alfred'
 export { default as AntIcon } from './components/AntIcon'
 export { default as App } from './components/App'
 export { default as Avatar } from './components/Avatar'
