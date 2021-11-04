@@ -22,6 +22,7 @@ const gridStyle = css`
 `
 
 const StyledWrap = styled.div`
+  overflow: ${({ $fixed }) => ($fixed ? 'hidden' : 'visible')};
   ${({ $mode }) => ($mode === 'flex' ? flexStyle : '')}
   ${({ $mode }) => ($mode === 'grid' ? gridStyle : '')}
 `
@@ -37,6 +38,7 @@ const ContainerItem = ({
   lg = 0,
   xl = 0,
   xxl = 0,
+  fixed = false,
   children,
 }) => {
   return (
@@ -51,6 +53,7 @@ const ContainerItem = ({
         $lg={lg}
         $xl={xl}
         $xxl={xxl}
+        $fixed={fixed}
       >
         {children}
       </StyledWrap>
