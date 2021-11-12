@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { useFetch } from '@jinxyang/react-lib'
+import useFetch from './useFetch'
 
 const useSSO = (url = '', key = '', onChange = () => {}) => {
   const value = new URLSearchParams(location.search).get(key)

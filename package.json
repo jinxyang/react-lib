@@ -2,7 +2,7 @@
   "name": "@jinxyang/react-lib",
   "version": "1.0.0",
   "description": "@jinxyang/react-lib",
-  "module": "./esm/index.js",
+  "module": "./src/index.js",
   "files": [
     "esm"
   ],

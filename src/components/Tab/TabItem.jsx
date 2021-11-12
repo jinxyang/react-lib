@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { styles } from '@jinxyang/react-lib'
+import styles from '../../styles'
 
 const StyledItem = styled.li`
   padding: ${styles.getGap(0.25)} ${styles.getGap(1)};
