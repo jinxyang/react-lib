@@ -42,7 +42,7 @@ const StyledItem = styled.div`
 
 const steps = 5
 
-const getList = (list, current, mode = 'normal') => {
+const getList = ({ list, current, totalPages, mode = 'normal' }) => {
   const firstItem = list[0]
   const lastItem = at(list, -1)
   const prevItem = {
@@ -84,7 +84,7 @@ const getList = (list, current, mode = 'normal') => {
     title: `向前${steps}页`,
   }
   const forwardItem = lastItem.page - at(centerItems, -1).page > 1 && {
-    page: current + steps,
+    page: current + steps < totalPages ? current + steps : totalPages,
     icon: <MoreOutlined style={{ transform: 'rotate(90deg)' }} />,
     title: `向后${steps}页`,
   }
@@ -133,7 +133,7 @@ const Pagination = ({
           <StyledText>{showTotal(total)}</StyledText>
         </Container.Item>
       )}
-      {getList(list, current, mode).map(
+      {getList({ list, current, totalPages: length, mode }).map(
         ({ page, icon, title, disabled }, index) => (
           <Container.Item key={index} as="li">
             <StyledItem
