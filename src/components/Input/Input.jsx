@@ -3,7 +3,7 @@ import { Input } from 'antd'
 
 const ProInput = ({
   value = '',
-  autoComplete = 'new-password',
+  autoComplete = 'off',
   onChange = () => {},
   ...props
 }) => {
