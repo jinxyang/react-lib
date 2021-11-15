@@ -59,6 +59,7 @@ const withForm = (WrappedComponent) => {
   if (!WrappedComponent) return null
   const WrapperComponent = (
     {
+      as = 'span',
       name = '',
       value = '',
       label = '',
@@ -90,7 +91,7 @@ const withForm = (WrappedComponent) => {
     }, [errorMessage])
 
     return (
-      <StyledWrap $labelInline={labelInline}>
+      <StyledWrap $labelInline={labelInline} as={as}>
         {!hideLabel && (
           <StyledHeader $labelInline={labelInline}>
             <StyledLabel
