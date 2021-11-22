@@ -12,6 +12,8 @@ import colorGenerator, {
 } from './colorGenerator'
 import themes from './themes'
 
+const ConfigContext = React.createContext({})
+
 const Root = styled.div`
   width: 100vw;
   height: 100vh;
@@ -22,7 +24,12 @@ const Root = styled.div`
   transition: background-color 150ms;
 `
 
-const Provider = ({ theme = 'apple', darkMode = false, children }) => {
+const Provider = ({
+  theme = 'apple',
+  darkMode = false,
+  fetchOptions = {},
+  children,
+}) => {
   const compoundTheme = React.useMemo(() => {
     const themeName = theme in themes ? theme : 'antDesign'
     const { size, gap, radius, colors } = themes[themeName]
@@ -55,13 +62,17 @@ const Provider = ({ theme = 'apple', darkMode = false, children }) => {
   }, [theme, darkMode])
 
   return (
-    <ThemeProvider theme={compoundTheme}>
-      <GlobalStyle />
-      <MessageProvider>
-        <Root theme={compoundTheme}>{children}</Root>
-      </MessageProvider>
-    </ThemeProvider>
+    <ConfigContext.Provider value={{ fetchOptions }}>
+      <ThemeProvider theme={compoundTheme}>
+        <GlobalStyle />
+        <MessageProvider>
+          <Root theme={compoundTheme}>{children}</Root>
+        </MessageProvider>
+      </ThemeProvider>
+    </ConfigContext.Provider>
   )
 }
 
 export default Provider
+
+export const useConfig = () => React.useContext(ConfigContext)

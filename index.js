@@ -1,5 +1,5 @@
 // components
-export { default as ThemeProvider } from './src/components/ThemeProvider'
+export { default as Provider } from './src/components/Provider'
 export { default as Alfred } from './src/components/Alfred'
 export { default as AntIcon } from './src/components/AntIcon'
 export { default as App } from './src/components/App'
@@ -67,6 +67,7 @@ export { default as useMessage } from './src/hooks/useMessage'
 export { default as useSSO } from './src/hooks/useSSO'
 export { default as useStateRef } from './src/hooks/useStateRef'
 // utils
+export { default as fileSelector } from './src/utils/fileSelector'
 export { default as matchRegExp } from './src/utils/matchRegExp'
 export { default as normalizer } from './src/utils/normalizer'
 export { default as selectFile } from './src/utils/selectFile'

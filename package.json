@@ -13,8 +13,9 @@
   "keywords": [
     "react",
     "react-cli",
+    "react-cli-template",
     "react-lib",
-    "react-template"
+    "antd"
   ],
   "author": "Jinxyang",
   "license": "MIT",
@@ -23,17 +24,15 @@
   },
   "homepage": "https://github.com/jinxyang/react-lib#readme",
   "sideEffects": false,
-  "peerDependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "antd": "^4.15.2",
-    "color": "^4.0.1",
-    "lodash": "^4.17.21",
-    "mime": "^2.5.2",
-    "query-string": "^7.0.1",
-    "react": "^17.0.1",
-    "react-cropper": "^2.1.8",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.2.1"
+  "scripts": {
+    "prepare": "husky install",
+    "start": "npm run dev",
+    "init": "react-cli init",
+    "dev": "react-cli dev",
+    "build": "react-cli build",
+    "transform": "react-cli transform"
+  },
+  "dependencies": {
+    "husky": "^7.0.4"
   }
 }

@@ -1,12 +1,8 @@
-import { useRef, useState, useCallback, useEffect } from 'react'
+import React from 'react'
 import { stringify, parse } from 'query-string'
 
-import { api as allApi } from 'config'
-import { useAppContext } from 'contexts'
-import useMessage from '../hooks/useMessage'
-
-const apiType = process.env.API
-const api = apiType ? allApi[apiType] : allApi
+import { useConfig } from '../components/Provider'
+import sleep from '../utils/sleep'
 
 const defaultState = {
   loading: false,
@@ -16,80 +12,84 @@ const defaultState = {
   message: '',
 }
 
-const sleep = (delay = 0) =>
-  delay
-    ? new Promise((resolve) => setTimeout(resolve, delay))
-    : Promise.resolve()
+const defaultHeaders = {
+  'Content-Type': 'application/json; charset=utf-8',
+}
 
 const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
-  const controller = useRef(null)
-  const [state, setState] = useState(defaultState)
-  const { state: appState, actions } = useAppContext()
-  const message = useMessage()
+  const controller = React.useRef(null)
+  const [state, setState] = React.useState({ ...defaultState })
+  const { fetchOptions } = useConfig()
 
-  const abort = useCallback(() => controller.current?.abort(), [])
+  const transformRequest = React.useCallback(
+    (input, init) => {
+      return fetchOptions.transformRequest?.(input, init) ?? [input, init]
+    },
+    [fetchOptions],
+  )
 
-  const start = useCallback(
+  const transformResponse = React.useCallback(
+    async (response) => {
+      return (
+        (await fetchOptions.transformResponse?.(response, defaultState)) ??
+        (await response.json())
+      )
+    },
+    [fetchOptions],
+  )
+
+  const start = React.useCallback(
     async (...payload) => {
       if (state.loading) return state
 
       controller.current = new AbortController()
-
-      setState({ ...state, loading: true, loaded: false, code: 0 })
+      setState((state) => ({ ...defaultState, data: state.data }))
 
       const {
         url = '',
         method = 'GET',
-        params = {},
         headers,
+        params = {},
         data = {},
-        transformResponse = async (response) => await response.json(),
+        transformRequest: customTransformRequest = (input, init) => [
+          input,
+          init,
+        ],
+        transformResponse: customTransformResponse,
         ...others
       } = service(...payload)
 
-      const newHeaders = new Headers(
-        headers || {
-          'Content-Type': 'application/json; charset=utf-8',
-        },
-      )
-      const token = localStorage.getItem('token')
-      token && newHeaders.append('Authorization', token)
-      appState?.from && newHeaders.append('share', appState?.from)
-
-      const requestInitial = {
+      const [path, inlineQueries = ''] = url.split('?')
+      const queries = stringify({ ...params, ...parse(inlineQueries) })
+      const requestInput = path + (queries ? `?${queries}` : '')
+      const requestInit = {
         ...others,
         method,
-        headers: newHeaders,
-        signal: controller.current.signal,
+        headers: headers || defaultHeaders,
+        signal: controller.current?.signal,
       }
+
       if (method.toUpperCase() !== 'GET') {
-        requestInitial.body =
+        requestInit.body =
           data instanceof FormData ? data : JSON.stringify(data)
       }
-      const [apiType, apiPath] = url.includes('::')
-        ? url.split('::')
-        : [null, url]
-      const [path, queries = ''] = apiPath.split('?')
+
       const newRequest = new Request(
-        api[apiType || 'default'] +
-          path +
-          `?${stringify({ ...parse(queries), ...params })}`,
-        requestInitial,
+        ...customTransformRequest(
+          ...transformRequest(requestInput, requestInit),
+        ),
       )
 
       await sleep(typeof callback === 'number' ? callback : delay)
+
       try {
         const fetchResponse = await fetch(newRequest)
-
-        const response = await transformResponse(fetchResponse)
-
-        const httpStatus = fetchResponse.status
-        const code =
-          httpStatus >= 200 && httpStatus < 300 ? response.code : httpStatus
-
-        if (code === 401) {
-          actions?.logout()
-        }
+        const response = customTransformResponse
+          ? await customTransformResponse(fetchResponse)
+          : await transformResponse(fetchResponse)
+        console.log('response', response)
+        const status = fetchResponse.status
+        const code = status >= 200 && status < 300 ? response.code : status
 
         const newState = {
           loading: false,
@@ -97,10 +97,6 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
           data: (code ? state.data : response.data) ?? {},
           code,
           message: response.message || fetchResponse.statusText,
-        }
-
-        if (code) {
-          message.error(newState.message)
         }
 
         typeof callback === 'function' && callback(newState)
@@ -118,16 +114,16 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         return newState
       }
     },
-    [state, service, appState?.from, callback, delay, actions, message],
+    [callback, delay, service, state, transformRequest, transformResponse],
   )
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
-      abort()
+      controller.current?.abort?.()
     }
-  }, [abort])
+  }, [])
 
-  return [state, start, abort]
+  return [state, start, controller.current?.abort ?? (() => {})]
 }
 
 export default useFetch
