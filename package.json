@@ -32,7 +32,7 @@
     "build": "react-cli build",
     "transform": "react-cli transform"
   },
-  "dependencies": {
+  "devDependencies": {
     "husky": "^7.0.4"
   }
 }
