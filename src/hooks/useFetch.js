@@ -87,7 +87,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         const response = customTransformResponse
           ? await customTransformResponse(fetchResponse)
           : await transformResponse(fetchResponse)
-        console.log('response', response)
+
         const status = fetchResponse.status
         const code = status >= 200 && status < 300 ? response.code : status
 

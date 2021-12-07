@@ -1,5 +1,7 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN'
 
 import MessageProvider from '../Message/Provider'
 
@@ -62,14 +64,16 @@ const Provider = ({
   }, [theme, darkMode])
 
   return (
-    <ConfigContext.Provider value={{ fetchOptions }}>
-      <ThemeProvider theme={compoundTheme}>
-        <GlobalStyle />
-        <MessageProvider>
-          <Root theme={compoundTheme}>{children}</Root>
-        </MessageProvider>
-      </ThemeProvider>
-    </ConfigContext.Provider>
+    <ConfigProvider locale={zhCN}>
+      <ConfigContext.Provider value={{ fetchOptions }}>
+        <ThemeProvider theme={compoundTheme}>
+          <GlobalStyle />
+          <MessageProvider>
+            <Root theme={compoundTheme}>{children}</Root>
+          </MessageProvider>
+        </ThemeProvider>
+      </ConfigContext.Provider>
+    </ConfigProvider>
   )
 }
 
