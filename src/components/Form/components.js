@@ -1,9 +1,9 @@
-import { InputNumber } from 'antd'
 import Checkbox from '../Checkbox'
 import Cropper from '../Cropper'
 import DatePicker from '../DatePicker'
 import IconSelect from '../IconSelect'
 import Input from '../Input'
+import Number from '../Number'
 import Radio from '../Radio'
 import RangePicker from '../RangePicker'
 import Password from '../Password'
@@ -19,7 +19,7 @@ export default {
   DatePicker,
   IconSelect,
   Input,
-  Number: InputNumber,
+  Number,
   Radio,
   RangePicker,
   Password,

@@ -67,6 +67,8 @@ export { default as useMediaQuery } from './hooks/useMediaQuery'
 export { default as useMessage } from './hooks/useMessage'
 export { default as useSSO } from './hooks/useSSO'
 export { default as useStateRef } from './hooks/useStateRef'
+// meta
+export { createElements, createFields } from './meta/fields'
 // utils
 export { default as deleteProp } from './utils/deleteProp'
 export { default as fileSelector } from './utils/fileSelector'
