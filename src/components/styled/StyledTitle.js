@@ -1,8 +1,8 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 
+import useNavigate from '../../hooks/useNavigate'
 import styles from '../../styles'
 
 const StyledHeader = styled.div`
@@ -26,10 +26,11 @@ const StyledTitle = styled.p`
   font-size: 1.8em;
 `
 
-const Header = ({ history, children }) => {
+const Header = ({ children }) => {
+  const navigate = useNavigate()
   return (
     <StyledHeader>
-      <StyledBack onClick={() => history.go(-1)}>
+      <StyledBack onClick={() => navigate(-1)}>
         <ArrowLeftOutlined />
       </StyledBack>
       <StyledTitle>{children}</StyledTitle>
@@ -37,4 +38,4 @@ const Header = ({ history, children }) => {
   )
 }
 
-export default withRouter(Header)
+export default Header

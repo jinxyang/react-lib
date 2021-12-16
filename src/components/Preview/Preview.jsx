@@ -1,9 +1,9 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { get } from 'lodash'
 
+import useNavigate from '../../hooks/useNavigate'
 import Container from '../Container'
 import StyledTitle from '../styled/StyledTitle'
 
@@ -23,14 +23,8 @@ const StyledContent = styled.div`
   padding-top: 0.2em;
 `
 
-const Preview = ({
-  title = '',
-  data = {},
-  columns = [],
-  history,
-  header,
-  children,
-}) => {
+const Preview = ({ title = '', data = {}, columns = [], header, children }) => {
+  const navigate = useNavigate()
   return (
     <Container column={true}>
       {(title || children) && (
@@ -60,7 +54,7 @@ const Preview = ({
               <StyledItem>
                 <StyledLabel>{item.label}</StyledLabel>
                 <StyledContent>
-                  {item.render?.(data, { history }) ??
+                  {item.render?.(data, { navigate }) ??
                     (get(data, item.key) || '-')}
                 </StyledContent>
               </StyledItem>
@@ -72,4 +66,4 @@ const Preview = ({
   )
 }
 
-export default withRouter(Preview)
+export default Preview

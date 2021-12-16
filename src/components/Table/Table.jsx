@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import Pagination from '../Pagination'
@@ -37,7 +36,6 @@ const Table = ({
   onListChange = () => {},
   onPageChange = () => {},
   onAction = () => {},
-  history,
   children,
 }) => {
   const selected = React.useMemo(
@@ -68,7 +66,6 @@ const Table = ({
         list={list}
         loading={loading}
         background={background}
-        history={history}
         utils={utils}
         enableExpand={enableExpand}
         expandAll={expandAll}
@@ -92,4 +89,4 @@ const Table = ({
   )
 }
 
-export default withRouter(Table)
+export default Table

@@ -2,6 +2,7 @@ import React from 'react'
 import styled, { withTheme } from 'styled-components'
 import { get } from 'lodash'
 
+import useNavigate from '../../hooks/useNavigate'
 import styles from '../../styles'
 import TableVerticalCol from './TableVerticalCol'
 import ArrowIcon from '../icons/ArrowIcon'
@@ -31,11 +32,11 @@ export const StyledExtraContent = styled.div`
 const TableExtra = ({
   columns = [],
   data = {},
-  history = {},
   indent = 0,
   theme = {},
   onAction = () => {},
 }) => {
+  const navigate = useNavigate()
   const [open, setOpen] = React.useState(false)
   return (
     <StyledExtra $indent={indent}>
@@ -52,7 +53,7 @@ const TableExtra = ({
         <StyledExtraContent>
           {columns.map(({ label, key, render }, index) => (
             <TableVerticalCol key={index} label={label}>
-              {render ? render(data, { history, onAction }) : get(data, key)}
+              {render ? render(data, { navigate, onAction }) : get(data, key)}
             </TableVerticalCol>
           ))}
         </StyledExtraContent>

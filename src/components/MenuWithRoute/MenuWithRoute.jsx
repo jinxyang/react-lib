@@ -1,14 +1,13 @@
 import React from 'react'
-import { withRouter, matchPath } from 'react-router-dom'
+import { matchPath } from 'react-router-dom'
 
+import useLocation from '../../hooks/useLocation'
+import useNavigate from '../../hooks/useNavigate'
 import Menu from '../Menu'
 
-const MenuWithRoute = ({
-  history = {},
-  location = {},
-  list = [],
-  routes = [],
-}) => {
+const MenuWithRoute = ({ list = [], routes = [] }) => {
+  const location = useLocation()
+  const navigate = useNavigate()
   const [folderState, setFolderState] = React.useState({})
 
   const folders = React.useMemo(() => {
@@ -32,7 +31,7 @@ const MenuWithRoute = ({
   }, [currentMenu.name, folders])
 
   const handleItemClick = (path) => {
-    location.pathname !== path && history.push(path)
+    location.pathname !== path && navigate(path)
   }
 
   const handleFolderClick = (title) => {
@@ -84,4 +83,4 @@ const MenuWithRoute = ({
   )
 }
 
-export default withRouter(MenuWithRoute)
+export default MenuWithRoute

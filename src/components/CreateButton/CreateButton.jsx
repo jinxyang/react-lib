@@ -1,18 +1,19 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Button } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 
+import useNavigate from '../../hooks/useNavigate'
+
 const CreateButton = ({
-  history,
   type = 'dashed',
   url = '',
   onClick = () => {},
   children,
 }) => {
+  const navigate = useNavigate()
   const handleClick = () => {
     if (url) {
-      history.push(url)
+      navigate(url)
     } else {
       onClick()
     }
@@ -25,4 +26,4 @@ const CreateButton = ({
   )
 }
 
-export default withRouter(CreateButton)
+export default CreateButton

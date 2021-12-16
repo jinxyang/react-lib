@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { CaretRightOutlined } from '@ant-design/icons'
 import { get } from 'lodash'
 
+import useNavigate from '../../hooks/useNavigate'
 import styles from '../../styles'
 
 import Skeleton from '../Skeleton'
@@ -54,7 +55,6 @@ const TableRow = ({
   data = {},
   background = false,
   loading = false,
-  history = {},
   indent = 0,
   utils = {},
   expanded = false,
@@ -63,6 +63,7 @@ const TableRow = ({
   onChange = () => {},
   onAction = () => {},
 }) => {
+  const navigate = useNavigate()
   return loading ? (
     <Skeleton height="38px" duration="1.5s" />
   ) : (
@@ -77,7 +78,7 @@ const TableRow = ({
               isLast={index === columns.length - 1}
             >
               {render
-                ? render(data, { ...utils, list, history, onChange }, onAction)
+                ? render(data, { ...utils, list, navigate, onChange }, onAction)
                 : get(data, key)}
             </TableVerticalCol>
           ) : (
@@ -100,7 +101,7 @@ const TableRow = ({
                 </StyledArrow>
               )}
               {render
-                ? render(data, { ...utils, list, history, onChange }, onAction)
+                ? render(data, { ...utils, navigate, list, onChange }, onAction)
                 : get(data, key)}
             </TableCol>
           ),
@@ -111,7 +112,7 @@ const TableRow = ({
           columns={extraColumns}
           data={data}
           loading={loading}
-          history={history}
+          navigate={navigate}
           indent={indent}
           onAction={onAction}
         />
