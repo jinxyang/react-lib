@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN'
@@ -64,16 +65,18 @@ const Provider = ({
   }, [theme, darkMode])
 
   return (
-    <ConfigProvider locale={zhCN}>
-      <ConfigContext.Provider value={{ fetchOptions }}>
-        <ThemeProvider theme={compoundTheme}>
-          <GlobalStyle />
-          <MessageProvider>
-            <Root theme={compoundTheme}>{children}</Root>
-          </MessageProvider>
-        </ThemeProvider>
-      </ConfigContext.Provider>
-    </ConfigProvider>
+    <Router>
+      <ConfigProvider locale={zhCN}>
+        <ConfigContext.Provider value={{ fetchOptions }}>
+          <ThemeProvider theme={compoundTheme}>
+            <GlobalStyle />
+            <MessageProvider>
+              <Root theme={compoundTheme}>{children}</Root>
+            </MessageProvider>
+          </ThemeProvider>
+        </ConfigContext.Provider>
+      </ConfigProvider>
+    </Router>
   )
 }
 
