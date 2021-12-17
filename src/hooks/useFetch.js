@@ -2,6 +2,7 @@ import React from 'react'
 import { stringify, parse } from 'query-string'
 
 import { useConfig } from '../components/Provider'
+import useMessage from '../hooks/useMessage'
 import sleep from '../utils/sleep'
 
 const defaultState = {
@@ -20,22 +21,32 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
   const controller = React.useRef(null)
   const [state, setState] = React.useState({ ...defaultState })
   const { fetchOptions } = useConfig()
+  const message = useMessage()
+
+  const utils = React.useMemo(() => {
+    return {
+      state: { ...defaultState },
+      message,
+    }
+  }, [message])
 
   const transformRequest = React.useCallback(
     (input, init) => {
-      return fetchOptions.transformRequest?.(input, init) ?? [input, init]
+      return (
+        fetchOptions.transformRequest?.(input, init, utils) ?? [input, init]
+      )
     },
-    [fetchOptions],
+    [fetchOptions, utils],
   )
 
   const transformResponse = React.useCallback(
     async (response) => {
       return (
-        (await fetchOptions.transformResponse?.(response, defaultState)) ??
+        (await fetchOptions.transformResponse?.(response, utils)) ??
         (await response.json())
       )
     },
-    [fetchOptions],
+    [fetchOptions, utils],
   )
 
   const start = React.useCallback(
@@ -76,7 +87,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
 
       const newRequest = new Request(
         ...customTransformRequest(
-          ...transformRequest(requestInput, requestInit),
+          ...transformRequest(requestInput, requestInit, utils),
         ),
       )
 
@@ -85,8 +96,8 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       try {
         const fetchResponse = await fetch(newRequest)
         const response = customTransformResponse
-          ? await customTransformResponse(fetchResponse)
-          : await transformResponse(fetchResponse)
+          ? await customTransformResponse(fetchResponse, utils)
+          : await transformResponse(fetchResponse, utils)
 
         const status = fetchResponse.status
         const code = status >= 200 && status < 300 ? response.code : status
@@ -114,7 +125,15 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
         return newState
       }
     },
-    [callback, delay, service, state, transformRequest, transformResponse],
+    [
+      callback,
+      delay,
+      service,
+      state,
+      transformRequest,
+      transformResponse,
+      utils,
+    ],
   )
 
   React.useEffect(() => {

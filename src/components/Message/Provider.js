@@ -4,23 +4,27 @@ import { nanoid } from 'nanoid'
 import Portal from '../Portal'
 import MessageList from './MessageList'
 
-export const MessageContext = React.createContext([])
+export const MessageContext = React.createContext({})
 
 const MessageProvider = ({ children }) => {
   const [list, setList] = React.useState([])
 
-  const push = (type, text, options = {}) => {
+  const push = React.useCallback((type, text, options = {}) => {
     const newMessage = { id: nanoid(), type, text, ...options }
-    setList([...list, newMessage])
-  }
+    setList((list) => [...list, newMessage])
+  }, [])
 
-  const info = (...args) => push('info', ...args)
-  const success = (...args) => push('success', ...args)
-  const error = (...args) => push('error', ...args)
-  const warn = (...args) => push('warn', ...args)
+  const actions = React.useMemo(() => {
+    return {
+      error: (...args) => push('error', ...args),
+      info: (...args) => push('info', ...args),
+      success: (...args) => push('success', ...args),
+      warn: (...args) => push('warn', ...args),
+    }
+  }, [push])
 
   return (
-    <MessageContext.Provider value={{ list, info, success, error, warn }}>
+    <MessageContext.Provider value={actions}>
       <Portal>
         <MessageList list={list} />
       </Portal>
