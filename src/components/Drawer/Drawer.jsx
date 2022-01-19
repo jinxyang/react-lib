@@ -8,10 +8,14 @@ const StyledDrawer = styled.div`
   height: 100%;
 `
 
-const Drawer = ({ show = false, position = 'left', children }) => {
-  // TODO: 监听尺寸变化、动画
+const Drawer = ({
+  show = false,
+  inside = false,
+  position = 'left',
+  children,
+}) => {
   return (
-    <StyledDrawer $position={position}>
+    <StyledDrawer>
       <Scroll y={true}>{children}</Scroll>
     </StyledDrawer>
   )

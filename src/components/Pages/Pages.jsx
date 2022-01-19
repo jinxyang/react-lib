@@ -7,8 +7,8 @@ import NotFound from '../NotFound'
 const createComponent = (Component) => (Component ? <Component /> : null)
 
 const renderRoutes = (routes = [], filter = () => true) =>
-  routes.filter(filter).map(({ name, path, component, children }) => (
-    <Route path={path} element={createComponent(component)} key={name}>
+  routes.filter(filter).map(({ path, component, children }) => (
+    <Route key={path} path={path} element={createComponent(component)}>
       {!!children?.length && renderRoutes(children)}
     </Route>
   ))

@@ -1,11 +1,14 @@
-const normalizer = (array, prop, options = {}) => {
+const defaultOptions = {
+  formatter: (v) => v,
+}
+const normalizer = (array, prop = 'id', customOptions) => {
+  const { formatter } = { ...defaultOptions, ...customOptions }
   return array.reduce((map, item) => {
-    if (!options?.formatter) {
-      return { ...map, [item[prop]]: item }
+    const newItem = formatter(item, map)
+    return {
+      ...map,
+      ...(newItem && { [item[prop]]: newItem }),
     }
-
-    const newItem = options?.formatter?.(item)
-    return newItem ? { ...map, [options.prop || item[prop]]: newItem } : map
   }, {})
 }
 

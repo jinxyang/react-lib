@@ -40,13 +40,13 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
   )
 
   const transformResponse = React.useCallback(
-    async (response) => {
+    async (response, ...args) => {
       return (
-        (await fetchOptions.transformResponse?.(response, utils)) ??
+        (await fetchOptions.transformResponse?.(response, ...args)) ??
         (await response.json())
       )
     },
-    [fetchOptions, utils],
+    [fetchOptions],
   )
 
   const start = React.useCallback(
@@ -54,7 +54,11 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       if (state.loading) return state
 
       controller.current = new AbortController()
-      setState((state) => ({ ...defaultState, data: state.data }))
+      setState((state) => ({
+        ...defaultState,
+        loading: true,
+        data: state.data,
+      }))
 
       const {
         url = '',
@@ -94,20 +98,20 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       await sleep(typeof callback === 'number' ? callback : delay)
 
       try {
-        const fetchResponse = await fetch(newRequest)
-        const response = customTransformResponse
-          ? await customTransformResponse(fetchResponse, utils)
-          : await transformResponse(fetchResponse, utils)
-
-        const status = fetchResponse.status
-        const code = status >= 200 && status < 300 ? response.code : status
+        const response = await fetch(newRequest)
+        const customResult = await customTransformResponse?.(response, utils)
+        const { code, data, message } = await transformResponse(
+          response,
+          utils,
+          customResult,
+        )
 
         const newState = {
           loading: false,
           loaded: true,
-          data: (code ? state.data : response.data) ?? {},
+          data: (code ? state.data : data) ?? {},
           code,
-          message: response.message || fetchResponse.statusText,
+          message: message || response.statusText,
         }
 
         typeof callback === 'function' && callback(newState)

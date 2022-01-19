@@ -1,5 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { get } from 'lodash'
+
+import { useConfig } from '../Provider'
 
 import Container from '../Container'
 import withForm from './withForm'
@@ -41,10 +44,17 @@ const Form = (
   },
   ref,
 ) => {
+  const { formComponents } = useConfig()
+
+  const allComponents = React.useMemo(() => {
+    return { ...builtInComponents, ...formComponents, ...components }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const inputs = React.useMemo(() => {
     const result = {}
-    Object.keys({ ...builtInComponents, ...components }).forEach((type) => {
-      result[type] = wrapper({ ...builtInComponents, ...components }[type])
+    Object.keys(allComponents).forEach((type) => {
+      result[type] = wrapper(allComponents[type])
     })
     return result
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,7 +145,7 @@ const Form = (
                   >
                     <InputComponent
                       name={key}
-                      value={values[key]}
+                      value={get(values, key)}
                       label={label}
                       rules={rules}
                       showError={showError}

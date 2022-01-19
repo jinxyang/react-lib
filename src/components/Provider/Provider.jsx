@@ -31,6 +31,8 @@ const Provider = ({
   theme = 'apple',
   darkMode = false,
   fetchOptions = {},
+  permissionsMap = {},
+  formComponents = {},
   children,
 }) => {
   const compoundTheme = React.useMemo(() => {
@@ -67,7 +69,9 @@ const Provider = ({
   return (
     <Router>
       <ConfigProvider locale={zhCN}>
-        <ConfigContext.Provider value={{ fetchOptions }}>
+        <ConfigContext.Provider
+          value={{ fetchOptions, permissionsMap, formComponents }}
+        >
           <ThemeProvider theme={compoundTheme}>
             <GlobalStyle />
             <MessageProvider>

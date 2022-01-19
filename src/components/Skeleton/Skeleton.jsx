@@ -36,8 +36,8 @@ const StyledSkeleton = styled.div`
 `
 
 const Skeleton = ({
-  width,
-  height,
+  width = '',
+  height = '',
   circle = false,
   duration = '1000ms',
   delay = '0s',

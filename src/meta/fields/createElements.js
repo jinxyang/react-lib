@@ -22,7 +22,7 @@ const createElements = (model = {}, fields = {}, options = {}) => {
     .reduce((elements, key) => {
       const modelField = {
         ...model[key],
-        key,
+        key: model[key].key || key,
         type: defaultTypes[model[key].type],
       }
       const fieldValue = fields[key]

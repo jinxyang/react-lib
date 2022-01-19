@@ -13,6 +13,7 @@ const ProTable = (
     service = () => {},
     list = [],
     filters = [],
+    filterComponents = {},
     columns = [],
     extraColumns = [],
     defaultQueries = {},
@@ -58,6 +59,7 @@ const ProTable = (
   )
 
   React.useEffect(() => {
+    // TODO: 带参
     getList(queriesFormatter({}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -67,7 +69,12 @@ const ProTable = (
       <Container column={true}>
         {(!!filters.length || children) && (
           <Container.Item>
-            <Filter fields={filters} values={queries} onChange={setQueries}>
+            <Filter
+              components={filterComponents}
+              fields={filters}
+              values={queries}
+              onChange={setQueries}
+            >
               <Space>
                 {!!filters.length && (
                   <Button

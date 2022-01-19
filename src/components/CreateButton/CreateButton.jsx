@@ -5,8 +5,8 @@ import { PlusOutlined } from '@ant-design/icons'
 import useNavigate from '../../hooks/useNavigate'
 
 const CreateButton = ({
-  type = 'dashed',
   url = '',
+  type = 'dashed',
   onClick = () => {},
   children,
 }) => {

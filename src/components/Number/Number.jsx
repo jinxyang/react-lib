@@ -12,7 +12,7 @@ const Number = ({
       {...props}
       value={value}
       autoComplete={autoComplete}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={onChange}
     />
   )
 }
