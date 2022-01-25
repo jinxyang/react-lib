@@ -7,7 +7,7 @@ const defaultOptions = {
 const flatTree = (
   tree = [],
   childrenProp = 'children',
-  customOptions = {},
+  customOptions = defaultOptions,
   parentIdValue,
 ) => {
   const { idProp, parentIdProp, formatter } = {

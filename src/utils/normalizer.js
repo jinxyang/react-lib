@@ -1,7 +1,7 @@
 const defaultOptions = {
   formatter: (v) => v,
 }
-const normalizer = (array, prop = 'id', customOptions) => {
+const normalizer = (array, prop = 'id', customOptions = defaultOptions) => {
   const { formatter } = { ...defaultOptions, ...customOptions }
   return array.reduce((map, item) => {
     const newItem = formatter(item, map)
