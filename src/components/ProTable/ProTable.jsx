@@ -7,6 +7,7 @@ import Container from '../Container'
 import Filter from '../Filter'
 import Table from '../Table'
 import useFetch from '../../hooks/useFetch'
+import useLocation from '../../hooks/useLocation'
 
 const ProTable = (
   {
@@ -31,6 +32,7 @@ const ProTable = (
   },
   ref,
 ) => {
+  const location = useLocation()
   const [{ data, loading }, getList] = useFetch(
     service,
     ({ code, data }) => !code && onChange(data.list),
@@ -60,9 +62,10 @@ const ProTable = (
 
   React.useEffect(() => {
     // TODO: 带参
+    console.log('TODO: ProTable', location)
     getList(queriesFormatter({}))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [location])
 
   return (
     <App fill={false}>
