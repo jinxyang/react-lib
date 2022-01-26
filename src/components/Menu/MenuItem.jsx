@@ -9,7 +9,7 @@ const StyledLink = styled.a`
   z-index: 10;
   display: flex;
   align-items: center;
-  padding: ${({ theme }) => `${theme.gap / 2}px ${theme.gapString}`};
+  padding: ${styles.getGap(0.4)} ${styles.getGap()};
   color: ${({ theme, $active }) => ($active ? '#fff' : theme.font.color)};
   white-space: nowrap;
   background-color: ${({ theme, $active }) =>

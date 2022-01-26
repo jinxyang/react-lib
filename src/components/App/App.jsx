@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { RedoOutlined } from '@ant-design/icons'
 
 import StyledBlur from '../styled/StyledBlur'
 import styles from '../../styles'
@@ -21,6 +22,17 @@ const StyledContent = styled.div`
   z-index: 1;
   padding: ${styles.getGap()};
 `
+const StyledLoading = styled.div`
+  ${styles.center};
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.transparent[2]};
+  border-radius: ${styles.getRadius()};
+`
 
 const App = ({
   as = 'div',
@@ -28,6 +40,7 @@ const App = ({
   color = '',
   opacity = 1,
   fill = true,
+  loading = false,
   children,
   ...props
 }) => {
@@ -37,6 +50,11 @@ const App = ({
       <StyledContent $fill={fill} $gap={gap}>
         {children}
       </StyledContent>
+      {loading && (
+        <StyledLoading>
+          <RedoOutlined spin />
+        </StyledLoading>
+      )}
     </StyledApp>
   )
 }

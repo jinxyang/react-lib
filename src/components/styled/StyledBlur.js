@@ -26,7 +26,7 @@ export default styled.div`
   height: 100%;
   background-color: ${({ theme, $color, $opacity }) =>
     backgroundColor(theme, $color, $opacity)};
-  border-radius: ${({ theme }) => theme.radiusString};
+  border-radius: ${styles.getRadius()};
   transition: background-color 150ms;
   ${styles.shadow};
 

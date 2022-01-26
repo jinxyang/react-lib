@@ -8,14 +8,14 @@ import styles from '../../styles'
 
 const StyledTitle = styled.p`
   margin: 0;
-  margin-bottom: ${({ theme }) => theme.gap / 2 + 'px'};
-  padding: ${({ theme }) => `0 ${theme.gapString}`};
+  margin-bottom: ${styles.getGap(0.5)};
+  padding: 0 ${styles.getGap()};
   color: ${({ theme }) => theme.colors.transparent[6]};
   font-size: 0.95em;
   cursor: default;
 
   & + ${StyledList} {
-    padding-left: ${styles.getGap(0.75)};
+    padding-left: ${styles.getGap()};
   }
 `
 
