@@ -6,7 +6,11 @@ const defaultOptions = {
   sorter: () => 0,
 }
 
-const toTree = (list = [], customOptions = {}, parentValue = '') => {
+const toTree = (
+  list = [],
+  customOptions = defaultOptions,
+  parentValue = '',
+) => {
   const { idProp, parentIdProp, childrenProp, formatter, sorter } = {
     ...defaultOptions,
     ...customOptions,
