@@ -88,7 +88,8 @@ const withForm = (WrappedComponent) => {
 
     React.useEffect(() => {
       onError(errorMessage || undefined)
-    }, [errorMessage, onError])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [errorMessage])
 
     return (
       <StyledWrap $labelInline={labelInline} as={as}>
