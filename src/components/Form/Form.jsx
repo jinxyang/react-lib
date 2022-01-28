@@ -92,14 +92,14 @@ const Form = (
     [onSubmit, errorMessage],
   )
 
-  const handleError = React.useCallback(
-    (key, message) => {
-      if (message !== errors[key]) {
-        setErrors((errors) => ({ ...errors, [key]: message }))
+  const handleError = React.useCallback((key, message) => {
+    setErrors((errors) => {
+      if (message === errors[key]) {
+        return errors
       }
-    },
-    [errors],
-  )
+      return { ...errors, [key]: message }
+    })
+  }, [])
 
   React.useEffect(() => {
     onError(errorMessage)
@@ -128,6 +128,7 @@ const Form = (
                 lg = containerSpans.lg,
                 xl = containerSpans.xl,
                 xxl = containerSpans.xxl,
+                validator,
                 props = {},
               }) => {
                 const InputComponent = inputs[type]
@@ -153,6 +154,7 @@ const Form = (
                       labelWidth={labelWidth}
                       labelLeft={labelLeft}
                       hideLabel={hideLabel}
+                      validator={validator}
                       {...(typeof props === 'function' ? props(values) : props)}
                       onChange={(value) => handleChange(key, value)}
                       onError={(message) => handleError(key, message)}

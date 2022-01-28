@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import validator from '../../utils/validator'
+import defaultValidator from '../../utils/validator'
 
 const StyledWrap = styled.label`
   position: relative;
@@ -71,13 +71,14 @@ const withForm = (WrappedComponent) => {
       hideLabel = false,
       style = {},
       onError = () => {},
+      validator = defaultValidator,
       ...props
     },
     ref,
   ) => {
     const errorMessage = React.useMemo(
-      () => validator(value, rules),
-      [value, rules],
+      () => validator?.(value, rules),
+      [validator, value, rules],
     )
 
     const required = React.useMemo(
@@ -87,8 +88,7 @@ const withForm = (WrappedComponent) => {
 
     React.useEffect(() => {
       onError(errorMessage || undefined)
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [errorMessage])
+    }, [errorMessage, onError])
 
     return (
       <StyledWrap $labelInline={labelInline} as={as}>
@@ -110,6 +110,7 @@ const withForm = (WrappedComponent) => {
             name={name}
             value={value}
             style={{ ...style, width: '100%' }}
+            onError={onError}
             {...props}
           />
           <StyledFooter>
