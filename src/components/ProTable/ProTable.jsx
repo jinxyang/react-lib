@@ -23,6 +23,7 @@ const ProTable = (
     onChange = () => {},
     utils = {},
     onSelect = null,
+    disabledSelection = () => false,
     vertical = false,
     noPagination = false,
     showMiniPagination = true,
@@ -123,6 +124,7 @@ const ProTable = (
               getList(queriesFormatter({ current, pageSize, ...queries }))
             }}
             onSelect={onSelect}
+            disabledSelection={disabledSelection}
             onAction={onAction}
           />
         </Container.Item>

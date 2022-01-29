@@ -41,6 +41,7 @@ const TableCol = ({
   isLast = false,
   selected = false,
   onSelect = null,
+  disabledSelect = false,
   theme = {},
   children,
 }) => {
@@ -50,6 +51,7 @@ const TableCol = ({
         <TableSelectionCol
           indent={indent}
           value={selected}
+          disabled={disabledSelect}
           onChange={onSelect}
         />
       )}

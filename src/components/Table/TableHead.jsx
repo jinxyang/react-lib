@@ -24,7 +24,12 @@ const StyledHead = styled.header`
   }
 `
 
-const TableHead = ({ columns = [], selected = false, onSelect = null }) => {
+const TableHead = ({
+  columns = [],
+  selected = false,
+  disabledSelect = false,
+  onSelect = null,
+}) => {
   return (
     <StyledHead $indent={!!onSelect}>
       {columns.map(({ label, align, width }, index) => (
@@ -35,6 +40,7 @@ const TableHead = ({ columns = [], selected = false, onSelect = null }) => {
           isFirst={index === 0}
           selected={selected}
           onSelect={onSelect && ((v) => onSelect(null, v))}
+          disabledSelect={disabledSelect}
         >
           {label}
         </TableCol>

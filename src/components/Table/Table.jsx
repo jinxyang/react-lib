@@ -29,6 +29,7 @@ const Table = ({
   pagination = null,
   showMiniPagination = false,
   onSelect = null,
+  disabledSelection = () => false,
   style = {},
   utils = {},
   enableExpand = true,
@@ -56,7 +57,12 @@ const Table = ({
         </TableFoot>
       )}
       {!vertical && (
-        <TableHead columns={columns} selected={selected} onSelect={onSelect} />
+        <TableHead
+          columns={columns}
+          selected={selected}
+          disabledSelect={disabledSelection(null)}
+          onSelect={onSelect}
+        />
       )}
       <TableBody
         uniqueKey={uniqueKey}
@@ -70,6 +76,7 @@ const Table = ({
         enableExpand={enableExpand}
         expandAll={expandAll}
         onSelect={onSelect}
+        disabledSelection={disabledSelection}
         onChange={onListChange}
         onAction={onAction}
       />

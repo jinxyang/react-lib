@@ -22,11 +22,16 @@ const StyledSelectionCol = styled.div`
 const TableSelectionCol = ({
   indent = 0,
   value = false,
+  disabled = false,
   onChange = () => {},
 }) => {
   return (
     <StyledSelectionCol $indent={indent}>
-      <Checkbox checked={value} onChange={(e) => onChange(e.target.checked)} />
+      <Checkbox
+        checked={value}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.checked)}
+      />
     </StyledSelectionCol>
   )
 }

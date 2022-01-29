@@ -60,6 +60,7 @@ const TableRow = ({
   expanded = false,
   onExpand = null,
   onSelect = null,
+  disabledSelection = () => false,
   onChange = () => {},
   onAction = () => {},
 }) => {
@@ -91,6 +92,7 @@ const TableRow = ({
               isLast={index === columns.length - 1}
               selected={!!data.SELECTED}
               onSelect={onSelect && ((v) => onSelect(data, v))}
+              disabledSelect={disabledSelection(data)}
             >
               {onExpand && !index && (
                 <StyledArrow
