@@ -80,7 +80,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       const requestInit = {
         ...others,
         method,
-        headers: headers || defaultHeaders,
+        headers: headers || { ...defaultHeaders },
         signal: controller.current?.signal,
       }
 
