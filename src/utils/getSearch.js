@@ -1,5 +1,7 @@
 const getSearch = (search, separator = '&') => {
-  return (typeof search === 'string' ? search : window.location.search)
+  return decodeURIComponent(
+    typeof search === 'string' ? search : window.location.search,
+  )
     .replace('?', '')
     .split(separator)
     .filter((string) => {

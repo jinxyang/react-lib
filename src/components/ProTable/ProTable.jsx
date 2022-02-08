@@ -30,6 +30,7 @@ const ProTable = (
     enableExpand = true,
     expandAll = false,
     children,
+    effect,
   },
   ref,
 ) => {
@@ -64,9 +65,9 @@ const ProTable = (
   React.useEffect(() => {
     // TODO: 带参
     console.log('TODO: ProTable', location)
-    getList(queriesFormatter({}))
+    getList(queriesFormatter(queries))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location])
+  }, [location, effect])
 
   return (
     <App fill={false}>
