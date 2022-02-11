@@ -1,10 +1,10 @@
 import { useConfig } from '../components/Provider'
 import camelCase from '../utils/camelCase'
 
-const usePermission = (permission = []) => {
+const usePermissions = (permissions = []) => {
   const { permissionsMap } = useConfig()
-  const permissions = [permission].flat(2)
-  return permissions.reduce((a, p) => {
+  const permissionList = [permissions].flat(2)
+  return permissionList.reduce((a, p) => {
     const permission = permissionsMap[p]
     return {
       ...a,
@@ -13,4 +13,4 @@ const usePermission = (permission = []) => {
   }, {})
 }
 
-export default usePermission
+export default usePermissions
