@@ -5,6 +5,7 @@ import { ConfigProvider } from 'antd'
 import zhCN from 'antd/lib/locale/zh_CN'
 
 import MessageProvider from '../Message/Provider'
+import Loading from '../Loading'
 
 import GlobalStyle from './GlobalStyle'
 import colorGenerator, {
@@ -30,6 +31,7 @@ const Root = styled.div`
 const Provider = ({
   theme = 'apple',
   darkMode = false,
+  loading = false,
   fetchOptions = {},
   permissionsMap = {},
   formComponents = {},
@@ -77,6 +79,7 @@ const Provider = ({
             <MessageProvider>
               <Root theme={compoundTheme}>{children}</Root>
             </MessageProvider>
+            {loading && <Loading text={loading} />}
           </ThemeProvider>
         </ConfigContext.Provider>
       </ConfigProvider>
