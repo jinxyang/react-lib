@@ -173,7 +173,7 @@ const Pagination = ({
         <StyledSelect
           options={sizeOptions}
           value={pageSize}
-          onChange={(size) => onChange(current, size)}
+          onChange={(size) => onChange(1, size)}
         />
       </Container.Item>
     </Container>
