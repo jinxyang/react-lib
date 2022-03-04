@@ -1,6 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import { SwitchTransition, CSSTransition } from 'react-transition-group'
 
+import useLocation from '../../hooks/useLocation'
 import Skeleton from '../Skeleton'
 import NotFound from '../NotFound'
 
@@ -19,19 +21,21 @@ const Pages = ({
   routes = [],
   skeletonProps = { height: '400px' },
 }) => {
-  return React.useMemo(
-    () =>
-      loading ? (
-        <Skeleton {...skeletonProps} />
-      ) : (
-        <React.Suspense fallback={<Skeleton {...skeletonProps} />}>
-          <Routes>
+  const location = useLocation()
+
+  return loading ? (
+    <Skeleton {...skeletonProps} />
+  ) : (
+    <React.Suspense fallback={<Skeleton {...skeletonProps} />}>
+      <SwitchTransition>
+        <CSSTransition key={location.key} classNames="fade" timeout={400}>
+          <Routes location={location}>
             {renderRoutes(routes, filter)}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </React.Suspense>
-      ),
-    [filter, loading, routes, skeletonProps],
+        </CSSTransition>
+      </SwitchTransition>
+    </React.Suspense>
   )
 }
 
