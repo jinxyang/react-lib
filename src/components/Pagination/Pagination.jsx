@@ -3,11 +3,27 @@ import styled from 'styled-components'
 import { LeftOutlined, RightOutlined, MoreOutlined } from '@ant-design/icons'
 
 import Container from '../Container'
+import Select from '../Select'
 import styles from '../../styles'
 
 const at = (array, index) => {
   return array[array.length + index]
 }
+
+const StyledSelect = styled(Select)`
+  height: 100%;
+
+  .ant-select-selector {
+    display: flex;
+    align-items: center;
+    height: 100% !important;
+    background: ${({ theme, $active }) =>
+      theme.colors.transparent[1]} !important;
+    border: none !important;
+    border-radius: ${styles.getRadius(0.5)} !important;
+    box-shadow: none !important;
+  }
+`
 
 const StyledText = styled.p`
   display: flex;
@@ -108,11 +124,11 @@ const getList = ({ list, current, totalPages, mode = 'normal' }) => {
 const Pagination = ({
   mode = 'normal',
   current = 1,
-  pageSize = 10,
   total = 0,
   showTotal = null,
+  pageSize = 10,
+  pageSizeOptions = [10, 20, 50, 100],
   onChange = () => {},
-  onPageSizeChange = () => {},
 }) => {
   const length = React.useMemo(() => {
     return Math.ceil(total / pageSize)
@@ -121,6 +137,10 @@ const Pagination = ({
   const list = React.useMemo(() => {
     return Array.from({ length }).map((_, index) => ({ page: index + 1 }))
   }, [length])
+
+  const sizeOptions = React.useMemo(() => {
+    return pageSizeOptions.map((value) => ({ label: value + '条/页', value }))
+  }, [pageSizeOptions])
 
   if (!length) {
     return null
@@ -140,13 +160,22 @@ const Pagination = ({
               $active={current === page}
               $disabled={disabled}
               title={title}
-              onClick={() => !disabled && current !== page && onChange(page)}
+              onClick={() =>
+                !disabled && current !== page && onChange(page, pageSize)
+              }
             >
               {icon || page}
             </StyledItem>
           </Container.Item>
         ),
       )}
+      <Container.Item>
+        <StyledSelect
+          options={sizeOptions}
+          value={pageSize}
+          onChange={(size) => onChange(current, size)}
+        />
+      </Container.Item>
     </Container>
   )
 }
