@@ -46,7 +46,7 @@ const Table = ({
 
   return (
     <StyledTable style={style}>
-      {pagination && showMiniPagination && (
+      {/* {pagination && showMiniPagination && (
         <TableFoot as="div">
           <Pagination
             showTotal={showTotal}
@@ -55,7 +55,7 @@ const Table = ({
             onChange={onPageChange}
           />
         </TableFoot>
-      )}
+      )} */}
       {!vertical && (
         <TableHead
           columns={columns}

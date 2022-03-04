@@ -67,7 +67,7 @@ const ProTable = (
     console.log('TODO: ProTable', location)
     getList(queriesFormatter(queries))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location, effect])
+  }, [effect])
 
   return (
     <App fill={false}>
