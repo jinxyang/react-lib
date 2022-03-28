@@ -61,7 +61,6 @@ const ProCropper = ({
       const file = new window.File([blob], 'image.' + getExtension(blob.type), {
         type: blob.type,
       })
-      console.log(file)
       upload(file, uploadProps.key)
     })
   }

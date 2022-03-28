@@ -45,7 +45,6 @@ const StyledText = styled.span`
 
 const Loading = ({ text }) => {
   const tiny = typeof text === 'string' && !!text
-  console.log(tiny)
   return (
     <StyledLoading>
       <StyledInner $tiny={tiny}>

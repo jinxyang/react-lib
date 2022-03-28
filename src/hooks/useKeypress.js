@@ -28,13 +28,11 @@ const useKeypress = (key, element = window) => {
   }, [])
 
   const addListener = React.useCallback(() => {
-    console.log('开始监听')
     element.addEventListener('keydown', handleKeydown, false)
     element.addEventListener('keyup', handleKeyup, false)
   }, [])
 
   const removeListener = React.useCallback(() => {
-    console.log('结束监听')
     element.removeEventListener('keydown', handleKeydown, false)
     element.removeEventListener('keydown', handleKeyup, false)
   }, [])
@@ -45,7 +43,6 @@ const useKeypress = (key, element = window) => {
 
   React.useEffect(() => {
     return () => {
-      console.log('unmount')
       removeListener()
     }
   }, [])
