@@ -9,13 +9,13 @@ import styles from '../../styles'
 const StyledTitle = styled.p`
   margin: 0;
   margin-bottom: ${styles.getGap(0.5)};
-  padding: 0 ${styles.getGap()};
+  padding: 0 ${styles.getGap(0.5)};
   color: ${({ theme }) => theme.colors.transparent[6]};
   font-size: 0.95em;
   cursor: default;
 
   & + ${StyledList} {
-    padding-left: ${styles.getGap()};
+    padding-left: ${styles.getGap(0.5)};
   }
 `
 
