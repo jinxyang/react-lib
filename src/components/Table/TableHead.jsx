@@ -32,11 +32,12 @@ const TableHead = ({
 }) => {
   return (
     <StyledHead $indent={!!onSelect}>
-      {columns.map(({ label, align, width }, index) => (
+      {columns.map(({ label, align, width, flex }, index) => (
         <TableCol
           key={index}
           align={align}
           width={width}
+          flex={flex}
           isFirst={index === 0}
           selected={selected}
           onSelect={onSelect && ((v) => onSelect(null, v))}

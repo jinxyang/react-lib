@@ -14,7 +14,8 @@ const positions = {
 export const StyledCol = styled.div`
   position: relative;
   display: flex;
-  flex: ${({ $width }) => ($width ? '0 0 ' + $width + 'px' : 1)};
+  flex: ${({ $width, $flex }) =>
+    $flex || ($width ? '0 0 ' + $width + 'px' : 1)};
   align-items: center;
   width: ${({ $width }) => ($width ? $width + 'px' : 'auto')};
 `
@@ -36,6 +37,7 @@ export const StyledColInner = styled.div`
 const TableCol = ({
   align = 'left',
   width = 0,
+  flex = null,
   indent = 0,
   isFirst = false,
   isLast = false,
@@ -46,7 +48,7 @@ const TableCol = ({
   children,
 }) => {
   return (
-    <StyledCol $width={width}>
+    <StyledCol $width={width} $flex={flex}>
       {isFirst && onSelect && (
         <TableSelectionCol
           indent={indent}

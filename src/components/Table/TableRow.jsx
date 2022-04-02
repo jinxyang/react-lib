@@ -70,7 +70,7 @@ const TableRow = ({
   ) : (
     <StyledRow $background={background} $indent={!!onSelect}>
       <StyledRowInner $vertical={vertical}>
-        {columns.map(({ label, key, render, align, width }, index) =>
+        {columns.map(({ label, key, render, align, width, flex }, index) =>
           vertical ? (
             <TableVerticalCol
               key={index}
@@ -86,6 +86,7 @@ const TableRow = ({
             <TableCol
               key={index}
               align={align}
+              flex={flex}
               width={width}
               indent={index === 0 ? indent : 0}
               isFirst={index === 0}
