@@ -37,6 +37,7 @@ const Mask = ({
   width = 'auto',
   closable = true,
   onClose = () => {},
+  keyboardDisabled = false,
   style = {},
   children,
 }) => {
@@ -57,7 +58,7 @@ const Mask = ({
   }, [closable])
 
   React.useEffect(() => {
-    keyboard.Escape && closable && onClose()
+    !keyboardDisabled && keyboard.Escape && closable && onClose()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyboard])
 

@@ -58,6 +58,7 @@ const Modal = ({
   title = '',
   width = '',
   hideClose = false,
+  keyboardDisabled = false,
   onClose = () => {},
   footer,
   children,
@@ -65,6 +66,7 @@ const Modal = ({
   return (
     <Mask
       show={show}
+      keyboardDisabled={keyboardDisabled}
       closable={!hideClose}
       style={{ justifyContent: 'center' }}
       onClose={onClose}
