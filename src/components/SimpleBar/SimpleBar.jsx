@@ -65,7 +65,7 @@ const Bar = ({
   const names = React.useMemo(() => {
     return _.map(value, 'name')
   }, [value])
-  console.log('value', value)
+
   const [legendOrder, legendMain] = React.useMemo(() => {
     const [vertical, horizontal] = _.kebabCase(legend).split('-')
     return [vertical === 'top' ? -1 : 1, legendMainMap[horizontal]]
