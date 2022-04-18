@@ -18,6 +18,8 @@ export const StyledCol = styled.div`
     $flex || ($width ? '0 0 ' + $width + 'px' : 1)};
   align-items: center;
   width: ${({ $width }) => ($width ? $width + 'px' : 'auto')};
+  overflow: ${({ $isFirst, isSelect }) =>
+    $isFirst && isSelect ? 'unset' : 'hidden'};
 `
 export const StyledColInner = styled.div`
   display: flex;
@@ -26,7 +28,8 @@ export const StyledColInner = styled.div`
   align-items: center;
   height: 100%;
   margin-left: ${({ $indent }) => styles.getGap($indent * 2)};
-  padding: ${styles.getGap(0.5)} ${styles.getGap(1)};
+  padding: ${styles.getGap(0.25)} ${styles.getGap(0.5)};
+  overflow: hidden;
   text-align: ${({ $align }) => $align};
   word-break: break-all;
   background-color: ${({ theme }) => theme.colors.transparent[0]};
@@ -48,7 +51,12 @@ const TableCol = ({
   children,
 }) => {
   return (
-    <StyledCol $width={width} $flex={flex}>
+    <StyledCol
+      $isFirst={isFirst}
+      isSelect={!!onSelect}
+      $width={width}
+      $flex={flex}
+    >
       {isFirst && onSelect && (
         <TableSelectionCol
           indent={indent}
@@ -67,7 +75,20 @@ const TableCol = ({
           theme.radius * Number(isFirst) + 'px',
         ]}
       >
-        {children}
+        {React.isValidElement(children) ? (
+          children
+        ) : (
+          <span
+            style={{
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+            title={children}
+          >
+            {children}
+          </span>
+        )}
       </StyledColInner>
     </StyledCol>
   )

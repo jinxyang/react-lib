@@ -10,6 +10,7 @@ const StyledBody = styled.section`
   display: grid;
   flex: 1;
   gap: ${styles.getGap(0.75)};
+  overflow: hidden;
 `
 
 const getRows = (

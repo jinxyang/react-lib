@@ -35,7 +35,7 @@ const TableHead = ({
       {columns.map(({ label, align, width, flex }, index) => (
         <TableCol
           key={index}
-          align={align}
+          align="center"
           width={width}
           flex={flex}
           isFirst={index === 0}
