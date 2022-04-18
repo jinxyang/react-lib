@@ -57,6 +57,7 @@ const useFetch = (service = () => {}, callback = () => {}, delay = 0) => {
       setState((state) => ({
         ...defaultState,
         loading: true,
+        loaded: state.loaded,
         data: state.data,
       }))
 
