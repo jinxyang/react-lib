@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, Space } from 'antd'
+import _ from 'lodash'
+import { Button } from 'antd'
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons'
 
 import App from '../App'
@@ -46,6 +47,10 @@ const ProTable = (
     getList(queriesFormatter({}))
   }
 
+  const mergedColumns = React.useMemo(() => {
+    return _.orderBy([...columns, ...(data.columns ?? [])], 'order', 'desc')
+  }, [columns, data.columns])
+
   React.useImperativeHandle(
     ref,
     () => ({
@@ -80,7 +85,7 @@ const ProTable = (
               values={queries}
               onChange={setQueries}
             >
-              <Space>
+              <Container>
                 {!!filters.length && (
                   <Button
                     htmlType="submit"
@@ -103,13 +108,13 @@ const ProTable = (
                   </Button>
                 )}
                 {children}
-              </Space>
+              </Container>
             </Filter>
           </Container.Item>
         )}
         <Container.Item>
           <Table
-            columns={columns}
+            columns={mergedColumns}
             extraColumns={extraColumns}
             list={list}
             vertical={vertical}
