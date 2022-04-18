@@ -1,5 +1,6 @@
 import React from 'react'
 import _ from 'lodash'
+import { Spin } from 'antd'
 
 import { Flex, View } from '@jinxyang/seal-react'
 
@@ -50,6 +51,7 @@ const radiusMap = {
 const transition = 'all .2s ease'
 
 const Bar = ({
+  loading = true,
   title = null,
   value = [],
   to = 'top',
@@ -63,7 +65,7 @@ const Bar = ({
   const names = React.useMemo(() => {
     return _.map(value, 'name')
   }, [value])
-
+  console.log('value', value)
   const [legendOrder, legendMain] = React.useMemo(() => {
     const [vertical, horizontal] = _.kebabCase(legend).split('-')
     return [vertical === 'top' ? -1 : 1, legendMainMap[horizontal]]
@@ -80,7 +82,7 @@ const Bar = ({
   const maxValue = React.useMemo(() => {
     return (
       _.flow(
-        _.map(?, ({ list }) => _.maxBy(list, 'value').value),
+        _.map(?, ({ list }) => _.maxBy(list, 'value')?.value),
         _.max(?),
       )(value) * 1.1
     )
@@ -100,6 +102,18 @@ const Bar = ({
       [name]: !names[name],
     }))
   }, [])
+
+  if (!data.length) {
+    return (
+      <Flex
+        main="center"
+        cross="center"
+        styles={{ width: '100%', height: '100%' }}
+      >
+        {loading ? <Spin /> : '暂无数据'}
+      </Flex>
+    )
+  }
 
   return (
     <Flex direction="column" styles={{ width: '100%', height: '100%' }}>
