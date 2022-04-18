@@ -116,7 +116,10 @@ const Bar = ({
   }
 
   return (
-    <Flex direction="column" styles={{ width: '100%', height: '100%' }}>
+    <Flex
+      direction="column"
+      styles={{ width: '100%', height: '100%', overflow: 'hidden' }}
+    >
       {title &&
         (React.isValidElement(title) ? (
           title
@@ -138,7 +141,7 @@ const Bar = ({
       <Flex
         direction={direction === 'row' ? 'column' : 'row'}
         gap={0.25}
-        styles={{ flex: 1 }}
+        styles={{ flex: 1, overflow: 'hidden' }}
       >
         <Flex
           direction={direction}
