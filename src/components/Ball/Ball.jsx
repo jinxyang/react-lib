@@ -19,6 +19,18 @@ const Ball = ({
     return customSize ?? minSize
   }, [customSize, minSize])
 
+  const [labelText, labelStyle] = React.useMemo(() => {
+    return _.isArray(label) ? label : [label, {}]
+  }, [label])
+
+  const [valueText, valueStyle] = React.useMemo(() => {
+    return _.isArray(value) ? value : [value, {}]
+  }, [value])
+
+  const [unitText, unitStyle] = React.useMemo(() => {
+    return _.isArray(unit) ? unit : [unit, {}]
+  }, [unit])
+
   return (
     <View
       ref={setNode}
@@ -56,8 +68,8 @@ const Ball = ({
             fontSize: size / 12 + 'px',
           }}
         >
-          <Title as="h3" styles={{ fontSize: '0.8em' }}>
-            {label}
+          <Title as="h3" styles={{ fontSize: '0.8em', ...labelStyle }}>
+            {labelText}
           </Title>
           <View
             styles={{
@@ -65,11 +77,12 @@ const Ball = ({
               fontFamily: 'digital',
               fontSize: '3.2em',
               lineHeight: 1,
+              ...valueStyle,
             }}
           >
-            {value}
+            {valueText}
           </View>
-          <View>{unit}</View>
+          <View styles={unitStyle}>{unitText}</View>
         </Flex>
       </View>
     </View>
