@@ -46,6 +46,7 @@ export { default as Tree } from './components/Tree'
 export { default as TreeSelect } from './components/TreeSelect'
 export { default as UploadButton } from './components/UploadButton'
 export { default as Progress } from './components/Progress'
+export { default as SingleBar } from './components/SingleBar'
 // components - shapes
 export { default as Square } from './components/Square'
 export { default as Skeleton } from './components/Skeleton'
