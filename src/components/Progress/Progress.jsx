@@ -1,8 +1,6 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
-import { Flex } from '@jinxyang/seal-react'
-
 const shake = keyframes`
   from {
     transform: rotate(-5deg);
@@ -18,9 +16,6 @@ const StyledProgress = styled.div`
   overflow: hidden;
   background: ${({ $mode, theme, $color }) =>
     $mode === 'fill' ? $color : 'none'};
-  /* background-color: ${({ $mode, theme, $color }) =>
-    $mode === 'fill' ? theme.colors[$color].default : 'none'};
-  border: 4px solid ${({ theme, $color }) => theme.colors[$color].default}; */
   border: 4px solid ${({ $color }) => $color};
   border-radius: ${({ theme }) => (theme.shape === 'circle' ? '50%' : 0)};
 `
@@ -30,7 +25,6 @@ const StyledInner = styled.div`
   left: -50%;
   width: 200%;
   height: 100%;
-  /* background: ${({ theme, $color }) => theme.colors[$color].default}; */
   background: ${({ $color }) => $color};
   transition: all 0.5s linear;
   animation: ${({ $anime }) =>
@@ -38,8 +32,6 @@ const StyledInner = styled.div`
 `
 
 const getPercent = (string) => string.replace('%', '') / 100
-
-// const position = ['top', 'center', 'bottom', 'float', 'sink']
 
 const Progress = ({
   mode = 'empty',
