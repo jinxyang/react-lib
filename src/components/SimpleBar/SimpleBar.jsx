@@ -52,11 +52,13 @@ const Bar = ({
   to = 'top',
   barWidth,
   gap = 1,
+  layoutGap = 0.5,
   itemGap = 0.5,
   boundaryGap = 0.5,
   minBar = '1px',
   legend = 'topCenter',
   colors: customColors = [],
+  grid = null,
   options = {},
 }) => {
   const { labelFormatter } = options
@@ -131,7 +133,12 @@ const Bar = ({
   }
 
   return (
-    <Flex seal direction="column" styles={{ width: '100%', height: '100%' }}>
+    <Flex
+      seal
+      direction="column"
+      gap={0}
+      styles={{ width: '100%', height: '100%' }}
+    >
       {legendVisible && (
         <Flex main={legendPosition} styles={{ order: legendOrder }}>
           <Legend
@@ -142,7 +149,11 @@ const Bar = ({
           />
         </Flex>
       )}
-      <Flex direction={layoutDirection} gap="4px" styles={{ flex: 1 }}>
+      <Flex
+        direction={layoutDirection}
+        gap={layoutGap}
+        styles={{ flex: 1, padding: grid }}
+      >
         <Flex
           direction={direction}
           gap={gap}
