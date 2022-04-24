@@ -106,8 +106,9 @@ const Bar = ({
         _.map(list, ({ value }) => ({ value, name: name ?? '' })),
       ),
       (lists) => _.zip(...lists),
+      _.map(?, (list) => _.filter(list, ({ name }) => !hideNames[name])),
     )(value)
-  }, [value])
+  }, [value, hideNames])
 
   const labels = React.useMemo(() => {
     return _.map(value[0]?.list ?? [], ({ label, unit }) => ({ label, unit }))
@@ -230,7 +231,7 @@ const Bar = ({
                   <Flex.Item
                     styles={{
                       [direction === 'row' ? 'height' : 'width']: value
-                        ? (value / maxValue) * 100 + '%'
+                        ? (Math.abs(value) / maxValue) * 100 + '%'
                         : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
                       backgroundColor: colors[index],
