@@ -121,14 +121,38 @@ const Bar = ({
     }))
   }, [])
 
+  const getColorIndex = React.useCallback(
+    (barName) => {
+      return names.findIndex((name) => barName === name)
+    },
+    [names],
+  )
+
   if (!_.flatten(data).length) {
     return (
       <Flex
-        main="center"
-        cross="center"
+        seal
+        direction="column"
+        gap={0}
         styles={{ width: '100%', height: '100%' }}
       >
-        {loading ? <Spin /> : '暂无数据'}
+        {legendVisible && (
+          <Flex main={legendPosition} styles={{ order: legendOrder }}>
+            <Legend
+              names={names}
+              hideNames={hideNames}
+              colors={colors}
+              onClick={handleLegendClick}
+            />
+          </Flex>
+        )}
+        <Flex
+          main="center"
+          cross="center"
+          styles={{ width: '100%', height: '100%' }}
+        >
+          {loading ? <Spin /> : '暂无数据'}
+        </Flex>
       </Flex>
     )
   }
@@ -234,7 +258,7 @@ const Bar = ({
                         ? (Math.abs(value) / maxValue) * 100 + '%'
                         : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
-                      backgroundColor: colors[index],
+                      backgroundColor: colors[getColorIndex(name)],
                       borderRadius: radiusMap[to],
                       transition,
                     }}
