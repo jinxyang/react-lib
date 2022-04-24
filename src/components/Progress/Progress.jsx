@@ -1,14 +1,5 @@
 import React from 'react'
-import styled, { keyframes } from 'styled-components'
-
-const shake = keyframes`
-  from {
-    transform: rotate(-5deg);
-  }
-  to {
-    transform: rotate(5deg);
-  }
-`
+import styled from 'styled-components'
 
 const StyledProgress = styled.div`
   position: relative;
@@ -20,6 +11,14 @@ const StyledProgress = styled.div`
   border-radius: ${({ theme }) => (theme.shape === 'circle' ? '50%' : 0)};
 `
 const StyledInner = styled.div`
+  @keyframes shake {
+    from {
+      transform: rotate(-5deg);
+    }
+    to {
+      transform: rotate(5deg);
+    }
+  }
   position: absolute;
   top: ${({ $percent }) => $percent};
   left: -50%;
@@ -27,8 +26,8 @@ const StyledInner = styled.div`
   height: 100%;
   background: ${({ $color }) => $color};
   transition: all 0.5s linear;
-  animation: ${({ $anime }) =>
-    $anime ? `${shake} 3s linear alternate infinite` : 'none'};
+  animation: ${({ $animate }) =>
+    $animate ? `shake 3s linear alternate infinite` : 'none'};
 `
 
 const getPercent = (string) => string.replace('%', '') / 100
