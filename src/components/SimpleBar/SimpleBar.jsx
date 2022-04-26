@@ -210,6 +210,7 @@ const Bar = ({
                     overflow: 'visible',
                     textAlign: 'center',
                     transition,
+                    fontSize: '0.8em',
                   }}
                 >
                   {value}
@@ -258,7 +259,8 @@ const Bar = ({
                         ? (Math.abs(value) / maxValue) * 100 + '%'
                         : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
-                      backgroundColor: colors[getColorIndex(name)],
+                      backgroundColor:
+                        colors[getColorIndex(name)] ?? colors[index],
                       borderRadius: radiusMap[to],
                       transition,
                     }}
