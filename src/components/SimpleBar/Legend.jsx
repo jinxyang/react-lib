@@ -10,7 +10,7 @@ const Legend = ({
   onClick = () => {},
 }) => {
   return (
-    <Flex wrap="wrap">
+    <Flex wrap="wrap" gap={0.5}>
       {_.map(names, (name, index) => (
         <Flex
           key={name}
@@ -27,8 +27,8 @@ const Legend = ({
         >
           <View
             styles={{
-              width: 24,
-              height: 12,
+              width: '1.6em',
+              height: '0.8em',
               backgroundColor: colors[index],
               borderRadius: '2px',
             }}
@@ -36,6 +36,7 @@ const Legend = ({
           <View
             styles={{
               whiteSpace: 'nowrap',
+              fontSize: '0.8em',
             }}
           >
             {name}
