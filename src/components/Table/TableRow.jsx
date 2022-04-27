@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { CaretRightOutlined } from '@ant-design/icons'
+import { CaretRightOutlined } from '@ant-design/icons'
 import { get } from 'lodash'
 
 import useNavigate from '../../hooks/useNavigate'
@@ -35,18 +35,18 @@ const StyledRowInner = styled.div`
     flex-direction: column;
   }
 `
-// const StyledArrow = styled.span`
-//   display: flex;
-//   align-items: center;
-//   width: 1.5em;
-//   height: 2em;
-//   cursor: pointer;
+const StyledArrow = styled.span`
+  display: inline-flex;
+  align-items: center;
+  width: 1.5em;
+  height: 2em;
+  cursor: pointer;
 
-//   & > * {
-//     transform: ${({ $rotate }) => ($rotate ? 'rotate(90deg)' : 'none')};
-//     transition: all 150ms;
-//   }
-// `
+  & > * {
+    transform: ${({ $rotate }) => ($rotate ? 'rotate(90deg)' : 'none')};
+    transition: all 150ms;
+  }
+`
 
 const TableRow = ({
   vertical = false,
@@ -96,14 +96,14 @@ const TableRow = ({
               onSelect={onSelect && ((v) => onSelect(data, v))}
               disabledSelect={disabledSelection(data)}
             >
-              {/* {onExpand && !index && (
+              {onExpand && !index && (
                 <StyledArrow
                   $rotate={expanded}
                   onClick={() => onExpand?.(data)}
                 >
                   <CaretRightOutlined />
                 </StyledArrow>
-              )} */}
+              )}
               {render
                 ? render(data, { ...utils, navigate, list, onChange }, onAction)
                 : get(data, key)}

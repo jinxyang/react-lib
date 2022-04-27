@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components'
+import _ from 'lodash'
 
 import styles from '../../styles'
 
@@ -84,7 +85,7 @@ const TableCol = ({
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
             }}
-            title={children}
+            title={_.isArray(children) ? children[1] : children}
           >
             {children}
           </span>
