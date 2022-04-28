@@ -61,7 +61,7 @@ const Bar = ({
   grid = null,
   options = {},
 }) => {
-  const { labelFormatter } = options
+  const { labelFormatter, valueFormatter } = options
 
   const [hideNames, setHideNames] = React.useState({})
 
@@ -195,7 +195,7 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1 }}
             >
-              {_.map(items, ({ value }, index) => (
+              {_.map(items, (item, index) => (
                 <Flex
                   key={index}
                   direction={barDirectionMap[to]}
@@ -213,7 +213,9 @@ const Bar = ({
                     fontSize: '0.8em',
                   }}
                 >
-                  {value}
+                  {_.isFunction(valueFormatter)
+                    ? valueFormatter({ ...item, ...labels[index] })
+                    : item.value}
                 </Flex>
               ))}
             </Flex>
