@@ -79,16 +79,17 @@ const TableCol = ({
         {React.isValidElement(children) ? (
           children
         ) : (
-          <span
+          <div
             style={{
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
+              width: '100%',
             }}
             title={_.isArray(children) ? children[1] : children}
           >
             {children}
-          </span>
+          </div>
         )}
       </StyledColInner>
     </StyledCol>
