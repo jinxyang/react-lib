@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import { Spin } from 'antd'
 
-import { Flex } from '@jinxyang/seal-react'
+import { Flex, View } from '@jinxyang/seal-react'
 
 import Legend from './Legend'
 
@@ -45,6 +45,28 @@ const radiusMap = {
   right: [0, '2px', '2px', 0],
 }
 const transition = 'all .2s ease'
+const valueTranslateMap = {
+  top: {
+    transform: 'translate(-50%, -100%)',
+    top: 0,
+    left: '50%',
+  },
+  bottom: {
+    transform: 'translate(-50%, 100%)',
+    bottom: 0,
+    left: '50%',
+  },
+  left: {
+    transform: 'translate(-100%, -50%)',
+    top: '50%',
+    left: 0,
+  },
+  right: {
+    transform: 'translate(100%, -50%)',
+    top: '50%',
+    right: 0,
+  },
+}
 
 const Bar = ({
   loading = true,
@@ -55,11 +77,13 @@ const Bar = ({
   layoutGap = 0.5,
   itemGap = 0.5,
   boundaryGap = 0.5,
-  minBar = '1px',
+  minBar = '2px',
   legend = 'topCenter',
   colors: customColors = [],
   grid = null,
   options = {},
+  onBarClick = () => {},
+  valueFloat = false,
 }) => {
   const { labelFormatter, valueFormatter } = options
 
@@ -158,12 +182,7 @@ const Bar = ({
   }
 
   return (
-    <Flex
-      seal
-      direction="column"
-      gap={0}
-      styles={{ width: '100%', height: '100%' }}
-    >
+    <Flex direction="column" gap={0} styles={{ width: '100%', height: '100%' }}>
       {legendVisible && (
         <Flex main={legendPosition} styles={{ order: legendOrder }}>
           <Legend
@@ -195,9 +214,9 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1 }}
             >
-              {_.map(items, (item, index) => (
+              {_.map(items, (item, dataIndex) => (
                 <Flex
-                  key={index}
+                  key={dataIndex}
                   direction={barDirectionMap[to]}
                   main="center"
                   styles={{
@@ -211,10 +230,11 @@ const Bar = ({
                     textAlign: 'center',
                     transition,
                     fontSize: '0.8em',
+                    visibility: valueFloat ? 'hidden' : 'unset',
                   }}
                 >
                   {_.isFunction(valueFormatter)
-                    ? valueFormatter({ ...item, ...labels[index] })
+                    ? valueFormatter({ ...item, ...labels[dataIndex] })
                     : item.value}
                 </Flex>
               ))}
@@ -240,9 +260,9 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1, transition }}
             >
-              {_.map(items, ({ name, value }, index) => (
+              {_.map(items, ({ name, value }, dataIndex) => (
                 <Flex
-                  key={index}
+                  key={dataIndex}
                   direction={barDirectionMap[to]}
                   main="flex-start"
                   styles={{
@@ -254,19 +274,43 @@ const Bar = ({
                     width: hideNames[name] ? 0 : 'auto',
                     transition,
                   }}
+                  onClick={() => onBarClick(dataIndex, index, maxValue)}
                 >
                   <Flex.Item
                     styles={{
-                      [direction === 'row' ? 'height' : 'width']: value
-                        ? (Math.abs(value) / maxValue) * 100 + '%'
-                        : minBar,
+                      [direction === 'row' ? 'height' : 'width']:
+                        value && !isNaN(value)
+                          ? (Math.abs(value) / maxValue) * 100 < 2
+                            ? minBar
+                            : (Math.abs(value) / maxValue) * 100 + '%'
+                          : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
                       backgroundColor:
-                        colors[getColorIndex(name)] ?? colors[index],
+                        colors[getColorIndex(name)] ?? colors[dataIndex],
                       borderRadius: radiusMap[to],
                       transition,
+                      position: valueFloat ? 'relative' : 'unset',
                     }}
-                  />
+                  >
+                    {valueFloat && (
+                      <View
+                        styles={{
+                          transition,
+                          fontSize: '0.8em',
+                          position: 'absolute',
+                          ...valueTranslateMap[to],
+                        }}
+                      >
+                        {_.isFunction(valueFormatter)
+                          ? valueFormatter({
+                              name,
+                              value,
+                              ...labels[dataIndex],
+                            })
+                          : value}
+                      </View>
+                    )}
+                  </Flex.Item>
                 </Flex>
               ))}
             </Flex>
