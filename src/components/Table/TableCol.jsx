@@ -84,9 +84,14 @@ const TableCol = ({
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
-              width: '100%',
             }}
-            title={_.isArray(children) ? children[1] : children}
+            title={
+              _.isArray(children)
+                ? _.isObject(children[1])
+                  ? ''
+                  : children[1]
+                : children
+            }
           >
             {children}
           </div>
