@@ -49,6 +49,7 @@ const StyledArrow = styled.span`
 `
 
 const TableRow = ({
+  align: commonAlign = null,
   vertical = false,
   list = [],
   columns = [],
@@ -86,7 +87,7 @@ const TableRow = ({
           ) : (
             <TableCol
               key={index}
-              align={align}
+              align={align || commonAlign}
               flex={flex}
               width={width}
               indent={index === 0 ? indent : 0}

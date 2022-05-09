@@ -32,13 +32,15 @@ const ProTable = (
     expandAll = false,
     children,
     effect,
+    align,
+    hollow = false,
   },
   ref,
 ) => {
   const location = useLocation()
   const [{ data, loading }, getList] = useFetch(
     service,
-    ({ code, data }) => !code && onChange(data.list),
+    ({ code, data }) => !code && onChange(data.list, data.extra ?? {}),
   )
   const [queries, setQueries] = React.useState(defaultQueries)
 
@@ -74,8 +76,12 @@ const ProTable = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [effect])
 
+  const [Wrapper, wrapperProps] = React.useMemo(() => {
+    return hollow ? [React.Fragment, {}] : [App, { fill: false }]
+  }, [hollow])
+
   return (
-    <App fill={false}>
+    <Wrapper {...wrapperProps}>
       <Container column={true}>
         {(!!filters.length || children) && (
           <Container.Item>
@@ -114,6 +120,7 @@ const ProTable = (
         )}
         <Container.Item>
           <Table
+            align={align}
             columns={mergedColumns}
             extraColumns={extraColumns}
             list={list}
@@ -135,7 +142,7 @@ const ProTable = (
           />
         </Container.Item>
       </Container>
-    </App>
+    </Wrapper>
   )
 }
 

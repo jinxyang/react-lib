@@ -34,6 +34,7 @@ const Table = ({
   utils = {},
   enableExpand = true,
   expandAll = false,
+  align = null,
   onListChange = () => {},
   onPageChange = () => {},
   onAction = () => {},
@@ -66,6 +67,7 @@ const Table = ({
       )}
       <TableBody
         uniqueKey={uniqueKey}
+        align={align}
         vertical={vertical}
         columns={columns}
         extraColumns={extraColumns}
