@@ -49,6 +49,7 @@ const TableCol = ({
   onSelect = null,
   disabledSelect = false,
   theme = {},
+  append = null,
   children,
 }) => {
   return (
@@ -96,6 +97,7 @@ const TableCol = ({
             {children}
           </div>
         )}
+        {append}
       </StyledColInner>
     </StyledCol>
   )

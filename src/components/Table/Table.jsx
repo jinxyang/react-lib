@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
 
 import Pagination from '../Pagination'
@@ -38,8 +39,21 @@ const Table = ({
   onListChange = () => {},
   onPageChange = () => {},
   onAction = () => {},
+  sort = null,
   children,
 }) => {
+  const [currentSort, setCurrentSort] = React.useState(null)
+
+  const sortList = React.useMemo(() => {
+    return sort && currentSort
+      ? _.orderBy(
+          list,
+          (item) => _.get(item, currentSort.key),
+          currentSort.order,
+        )
+      : list
+  }, [currentSort, list, sort])
+
   const selected = React.useMemo(
     () => (list.length ? list.every(({ SELECTED }) => !!SELECTED) : false),
     [list],
@@ -59,10 +73,13 @@ const Table = ({
       )} */}
       {!vertical && (
         <TableHead
+          sort={sort}
+          currentSort={currentSort}
           columns={columns}
           selected={selected}
           disabledSelect={disabledSelection(null)}
           onSelect={onSelect}
+          onSort={setCurrentSort}
         />
       )}
       <TableBody
@@ -71,7 +88,7 @@ const Table = ({
         vertical={vertical}
         columns={columns}
         extraColumns={extraColumns}
-        list={list}
+        list={sortList}
         loading={loading}
         background={background}
         utils={utils}
@@ -82,7 +99,7 @@ const Table = ({
         onChange={onListChange}
         onAction={onAction}
       />
-      {!!list.length &&
+      {!!sortList.length &&
         !loading &&
         (children ||
           (pagination && (

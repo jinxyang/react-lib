@@ -34,6 +34,7 @@ const ProTable = (
     effect,
     align,
     hollow = false,
+    sort = null,
   },
   ref,
 ) => {
@@ -121,6 +122,7 @@ const ProTable = (
         <Container.Item>
           <Table
             align={align}
+            sort={sort}
             columns={mergedColumns}
             extraColumns={extraColumns}
             list={list}

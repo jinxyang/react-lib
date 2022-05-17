@@ -1,8 +1,11 @@
 import React from 'react'
+import _ from 'lodash'
 import styled from 'styled-components'
+import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons'
+
+import { Flex } from '@jinxyang/seal-react'
 
 import styles from '../../styles'
-
 import TableCol, { StyledColInner } from './TableCol'
 
 const StyledHead = styled.header`
@@ -24,15 +27,68 @@ const StyledHead = styled.header`
   }
 `
 
+const SortArrow = ({ active = false, order = 'asc', onClick = () => {} }) => {
+  return (
+    <Flex
+      direction="column"
+      main="center"
+      cross="center"
+      gap={0}
+      styles={{
+        margin: [0, '-6px', 0, '4px'],
+        fontSize: '0.8em',
+        transition: 'all .3s',
+        cursor: 'pointer',
+      }}
+      onClick={onClick}
+    >
+      <CaretUpOutlined
+        style={{ opacity: active && order === 'asc' ? 1 : 0.3 }}
+      />
+      <CaretDownOutlined
+        style={{
+          opacity: active && order === 'desc' ? 1 : 0.3,
+          marginTop: '-0.3em',
+        }}
+      />
+    </Flex>
+  )
+}
+
+const getSortArrow = (sort, key, sortKey, order, onClick) => {
+  if (
+    (_.isArray(sort) && _.includes(sort, key)) ||
+    sort === 1 ||
+    sort === true
+  ) {
+    return (
+      <SortArrow
+        active={sortKey === key}
+        order={order}
+        onClick={() =>
+          onClick({
+            key,
+            order: sortKey === key && order === 'asc' ? 'desc' : 'asc',
+          })
+        }
+      />
+    )
+  }
+  return null
+}
+
 const TableHead = ({
   columns = [],
   selected = false,
   disabledSelect = false,
   onSelect = null,
+  sort = null,
+  currentSort = null,
+  onSort = () => {},
 }) => {
   return (
     <StyledHead $indent={!!onSelect}>
-      {columns.map(({ label, align, width, flex }, index) => (
+      {columns.map(({ key, label, align, width, flex }, index) => (
         <TableCol
           key={index}
           align="center"
@@ -42,6 +98,13 @@ const TableHead = ({
           selected={selected}
           onSelect={onSelect && ((v) => onSelect(null, v))}
           disabledSelect={disabledSelect}
+          append={getSortArrow(
+            sort,
+            key,
+            currentSort?.key,
+            currentSort?.order,
+            onSort,
+          )}
         >
           {label}
         </TableCol>
