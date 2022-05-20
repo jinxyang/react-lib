@@ -38,7 +38,7 @@ const App = ({
   as = 'div',
   gap = 1,
   color = '',
-  opacity = 1,
+  opacity,
   fill = true,
   loading = false,
   children,

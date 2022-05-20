@@ -31,9 +31,9 @@ const generator = (c, darkColor = '#000') => {
   }
 }
 
-const lightForeground = Color('#ffffff')
-const lightBackground = Color('#ebeff7')
-const darkForeground = Color('#2c2d34')
+const lightForeground = Color('rgba(0,0,0,0.05)')
+const lightBackground = Color('#fff')
+const darkForeground = Color('rgba(255,255,255,0.1)')
 const darkBackground = Color('#181a21')
 
 export const light = {
@@ -45,7 +45,7 @@ export const light = {
   },
 }
 export const dark = {
-  foreground: darkForeground.hex(),
+  foreground: darkForeground.rgb().string(),
   foregroundHover: darkForeground.mix(lightBackground, 0.05).hex(),
   background: darkBackground.hex(),
   font: {

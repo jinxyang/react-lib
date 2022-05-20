@@ -5,9 +5,9 @@ import styles from '../../styles'
 
 const alpha = (color, val) => Color(color).alpha(val).rgb()
 
-const backgroundColor = (theme, color = '', opacity = 1) => {
+const backgroundColor = (theme, color = '', opacity) => {
   if (!color || (color && !theme.colors[color])) {
-    return alpha(theme.foreground, opacity)
+    return alpha(theme.foreground, opacity ?? theme.darkMode ? 0.1 : 0.05)
   }
   const darkColor = theme.colors[color].dark[6]
   const lightColor = theme.colors[color].light[6]
