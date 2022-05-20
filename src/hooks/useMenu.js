@@ -12,12 +12,18 @@ const useMenu = (menus = []) => {
       ({ path }) => location.pathname.indexOf(path) === 0,
     )
 
-    if (matchedMenus.length === 1) return matchedMenus[0]
+    const matchedMenu = _.flow(
+      _.map(?, ({ path }, index) => ({
+        match: location.pathname.match(path)?.[0]?.length ?? 0,
+        index,
+        path,
+      })),
+      _.orderBy(?, 'match', 'desc'),
+    )(matchedMenus)?.[0]
 
-    const currentPath =
-      '/' + _.flow(_.split(?, '/'), _.filter(?, Boolean))(location.pathname)[0]
+    if (matchedMenu?.path === '/' && location.pathname !== '/') return null
 
-    return _.find(matchedMenus, { path: currentPath }) ?? null
+    return matchedMenus[matchedMenu?.index]
   }, [location.pathname, menus])
 }
 
