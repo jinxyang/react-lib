@@ -33,7 +33,7 @@ const StyledModal = styled.div`
 const StyledWrap = styled.div`
   width: ${({ $width }) => $width || 'auto'};
   overflow: hidden;
-  background-color: ${styles.getFore()};
+  background-color: ${({ theme }) => (theme.darkMode ? '#2c2d34' : '#eee')};
   border-radius: ${styles.getRadius()};
 `
 const StyledHeader = styled.header`
