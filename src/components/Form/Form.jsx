@@ -87,6 +87,7 @@ const Form = (
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault()
+      e.stopPropagation()
       onSubmit(errorMessage)
     },
     [onSubmit, errorMessage],
