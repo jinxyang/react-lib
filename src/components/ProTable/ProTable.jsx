@@ -35,6 +35,8 @@ const ProTable = (
     align,
     hollow = false,
     sort = null,
+    name = '',
+    tools,
   },
   ref,
 ) => {
@@ -121,6 +123,8 @@ const ProTable = (
         )}
         <Container.Item>
           <Table
+            name={name || data.name}
+            tools={tools}
             align={align}
             sort={sort}
             columns={mergedColumns}

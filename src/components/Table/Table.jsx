@@ -2,6 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import styled from 'styled-components'
 
+import TableTools from './TableTools'
 import Pagination from '../Pagination'
 import TableHead from './TableHead'
 import TableBody from './TableBody'
@@ -20,6 +21,7 @@ const StyledTable = styled.div`
 const showTotal = (total) => `共：${total}条`
 
 const Table = ({
+  name = '',
   uniqueKey = 'id',
   vertical = false,
   columns = [],
@@ -40,6 +42,7 @@ const Table = ({
   onPageChange = () => {},
   onAction = () => {},
   sort = null,
+  tools = { export: ['sheet'] },
   children,
 }) => {
   const [currentSort, setCurrentSort] = React.useState(null)
@@ -61,6 +64,9 @@ const Table = ({
 
   return (
     <StyledTable style={style}>
+      {tools && (
+        <TableTools name={name} list={list} columns={columns} tools={tools} />
+      )}
       {/* {pagination && showMiniPagination && (
         <TableFoot as="div">
           <Pagination
