@@ -22,6 +22,7 @@ const Form = (
     components = {},
     fields = [],
     values = {},
+    simpleValue = false,
     showError = false,
     flex = '0 0 auto',
     wrap = false,
@@ -148,6 +149,7 @@ const Form = (
                     <InputComponent
                       name={key}
                       value={get(values, key)}
+                      simpleValue={simpleValue}
                       label={label}
                       rules={rules}
                       showError={showError}
