@@ -19,6 +19,7 @@ const Form = (
     name = '',
     autoComplete = 'new-password',
     mode = 'grid',
+    reverse = false,
     components = {},
     fields = [],
     values = {},
@@ -116,7 +117,7 @@ const Form = (
     >
       <Container mode="flex" column={true} gap={gap}>
         <Container.Item>
-          <Container mode={mode} gap={gap} wrap={wrap}>
+          <Container mode={mode} gap={gap} wrap={wrap} reverse={reverse}>
             {fields.map(
               ({
                 type,
