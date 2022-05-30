@@ -9,7 +9,8 @@ const fillStyle = css`
 `
 const flexStyle = css`
   display: flex;
-  flex-direction: ${({ $column }) => ($column ? 'column' : 'row')};
+  flex-direction: ${({ $column, $reverse }) =>
+    $column ? 'column' : $reverse ? 'row-reverse' : 'row'};
   flex-wrap: ${({ $wrap }) => ($wrap ? 'wrap' : 'nowrap')};
   gap: ${styles.getGap()};
   ${({ $fill }) => $fill && fillStyle};
@@ -38,6 +39,7 @@ const Container = (
     mode = 'flex', // grid
     wrap = false, // for flex
     column = false, // for flex
+    reverse = false, // for flex
     fill = false,
     gap = 1,
     gapString = '',
@@ -52,6 +54,7 @@ const Container = (
       $mode={mode}
       $wrap={wrap}
       $column={column}
+      $reverse={reverse}
       $fill={fill}
       $gap={gap}
     >
