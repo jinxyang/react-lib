@@ -88,10 +88,10 @@ const TableHead = ({
 }) => {
   return (
     <StyledHead $indent={!!onSelect}>
-      {columns.map(({ key, label, align, width, flex }, index) => (
+      {columns.map(({ key, label, align = 'center', width, flex }, index) => (
         <TableCol
           key={index}
-          align="center"
+          align={align}
           width={width}
           flex={flex}
           isFirst={index === 0}
