@@ -7,7 +7,7 @@ const alpha = (color, val) => Color(color).alpha(val).rgb()
 
 const backgroundColor = (theme, color = '', opacity) => {
   if (!color || (color && !theme.colors[color])) {
-    return alpha(theme.foreground, opacity ?? theme.darkMode ? 0.1 : 0.05)
+    return alpha(theme.foreground, opacity ?? (theme.darkMode ? 0.1 : 0.05))
   }
   const darkColor = theme.colors[color].dark[6]
   const lightColor = theme.colors[color].light[6]
