@@ -35,6 +35,7 @@ const getPercent = (string) => string.replace('%', '') / 100
 const Progress = ({
   mode = 'empty',
   percent = 0,
+  max = 100,
   color = 'primary',
   value = 0,
   unit = '%',
@@ -78,7 +79,7 @@ const Progress = ({
         <StyledInner
           $color={color}
           $animate={animate}
-          $percent={100 - percent + '%'}
+          $percent={100 - (percent * 100) / max + '%'}
         />
       )}
       {children || (
