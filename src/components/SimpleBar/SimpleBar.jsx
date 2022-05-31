@@ -50,21 +50,25 @@ const valueTranslateMap = {
     transform: 'translate(-50%, -100%)',
     top: 0,
     left: '50%',
+    paddingBottom: '2px',
   },
   bottom: {
     transform: 'translate(-50%, 100%)',
     bottom: 0,
     left: '50%',
+    paddingTop: '2px',
   },
   left: {
     transform: 'translate(-100%, -50%)',
     top: '50%',
     left: 0,
+    paddingRight: '2px',
   },
   right: {
     transform: 'translate(100%, -50%)',
     top: '50%',
     right: 0,
+    paddingLeft: '2px',
   },
 }
 
@@ -119,7 +123,11 @@ const Bar = ({
 
   const maxValue = React.useMemo(() => {
     return _.flow(
-      _.map(?, ({ list }) => _.maxBy(list, 'value')?.value),
+      _.map(
+        ?,
+        ({ list }) => _.maxBy(list, ({ value }) => Math.abs(value))?.value,
+      ),
+      _.map(?, (value) => Math.abs(value)),
       _.max(?),
     )(value)
   }, [value])
@@ -127,10 +135,15 @@ const Bar = ({
   const data = React.useMemo(() => {
     return _.flow(
       _.map(?, ({ name, list }) =>
-        _.map(list, ({ value }) => ({ value, name: name ?? '' })),
+        _.map(list, ({ value, max, unit }) => ({
+          value,
+          name: name ?? '',
+          max,
+          unit,
+        })),
       ),
       (lists) => _.zip(...lists),
-      _.map(?, (list) => _.filter(list, ({ name }) => !hideNames[name])),
+      // _.map(?, (list) => _.filter(list, ({ name }) => !hideNames[name])),
     )(value)
   }, [value, hideNames])
 
@@ -230,7 +243,11 @@ const Bar = ({
                     textAlign: 'center',
                     transition,
                     fontSize: '0.8em',
-                    visibility: valueFloat ? 'hidden' : 'unset',
+                    visibility: hideNames[name]
+                      ? 'hidden'
+                      : valueFloat
+                      ? 'hidden'
+                      : 'unset',
                   }}
                 >
                   {_.isFunction(valueFormatter)
@@ -260,7 +277,7 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1, transition }}
             >
-              {_.map(items, ({ name, value }, dataIndex) => (
+              {_.map(items, ({ name, value, max, unit }, dataIndex) => (
                 <Flex
                   key={dataIndex}
                   direction={barDirectionMap[to]}
@@ -273,16 +290,21 @@ const Bar = ({
                       : 1,
                     width: hideNames[name] ? 0 : 'auto',
                     transition,
+                    cursor: 'pointer',
                   }}
-                  onClick={() => onBarClick(dataIndex, index, maxValue)}
+                  onClick={() => onBarClick(dataIndex, index)}
                 >
                   <Flex.Item
                     styles={{
                       [direction === 'row' ? 'height' : 'width']:
                         value && !isNaN(value)
-                          ? (Math.abs(value) / maxValue) * 100 < 2
+                          ? (Math.abs(value) / (Math.abs(max) || maxValue)) *
+                              100 <
+                            2
                             ? minBar
-                            : (Math.abs(value) / maxValue) * 100 + '%'
+                            : (Math.abs(value) / (Math.abs(max) || maxValue)) *
+                                100 +
+                              '%'
                           : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
                       backgroundColor:
@@ -298,6 +320,7 @@ const Bar = ({
                           transition,
                           fontSize: '0.8em',
                           position: 'absolute',
+                          visibility: hideNames[name] ? 'hidden' : 'unset',
                           ...valueTranslateMap[to],
                         }}
                       >
@@ -306,6 +329,7 @@ const Bar = ({
                               name,
                               value,
                               ...labels[dataIndex],
+                              unit,
                             })
                           : value}
                       </View>
