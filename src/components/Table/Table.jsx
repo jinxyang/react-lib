@@ -42,20 +42,46 @@ const Table = ({
   onPageChange = () => {},
   onAction = () => {},
   sort = null,
-  tools = { export: ['sheet'] },
+  tools = { search: true, export: ['sheet'] },
   children,
 }) => {
   const [currentSort, setCurrentSort] = React.useState(null)
+  const [search, setSearch] = React.useState('')
+
+  const keys = React.useMemo(() => {
+    return _.flow(_.map(?, 'key'), _.filter(?, Boolean))(columns)
+  }, [columns])
+
+  const pairList = React.useMemo(() => {
+    return _.map(list, (item) =>
+      _.flow(
+        () => _.map(keys, (key) => _.get(item, key)),
+        _.filter(?, (v) => v != null && v !== ''),
+        _.map(?, _.toLower),
+      )(),
+    )
+  }, [keys, list])
+
+  const filteredList = React.useMemo(() => {
+    const indexList = _.flow(
+      _.map(?, (values, index) => {
+        return _.some(values, _.includes(?, _.toLower(search))) && index
+      }),
+      _.filter(?, _.isNumber),
+    )(pairList)
+
+    return _.filter(list, (__, index) => indexList.includes(index))
+  }, [list, pairList, search])
 
   const sortList = React.useMemo(() => {
     return sort && currentSort
       ? _.orderBy(
-          list,
+          filteredList,
           (item) => _.get(item, currentSort.key),
           currentSort.order,
         )
-      : list
-  }, [currentSort, list, sort])
+      : filteredList
+  }, [currentSort, filteredList, sort])
 
   const selected = React.useMemo(
     () => (list.length ? list.every(({ SELECTED }) => !!SELECTED) : false),
@@ -65,7 +91,13 @@ const Table = ({
   return (
     <StyledTable style={style}>
       {tools && (
-        <TableTools name={name} list={list} columns={columns} tools={tools} />
+        <TableTools
+          name={name}
+          list={list}
+          columns={columns}
+          tools={tools}
+          onSearch={setSearch}
+        />
       )}
       {/* {pagination && showMiniPagination && (
         <TableFoot as="div">
@@ -89,6 +121,7 @@ const Table = ({
         />
       )}
       <TableBody
+        search={search}
         uniqueKey={uniqueKey}
         align={align}
         vertical={vertical}
@@ -105,7 +138,7 @@ const Table = ({
         onChange={onListChange}
         onAction={onAction}
       />
-      {!!sortList.length &&
+      {!!list.length &&
         !loading &&
         (children ||
           (pagination && (

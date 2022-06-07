@@ -49,6 +49,7 @@ const StyledArrow = styled.span`
 `
 
 const TableRow = ({
+  search = '',
   align: commonAlign = null,
   vertical = false,
   list = [],
@@ -87,6 +88,7 @@ const TableRow = ({
           ) : (
             <TableCol
               key={index}
+              search={search}
               align={align || commonAlign}
               flex={flex}
               width={width}

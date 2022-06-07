@@ -1,8 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
 import moment from 'moment'
-import { Button } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import { Button, Input } from 'antd'
+import { DownloadOutlined, FilterOutlined } from '@ant-design/icons'
 
 import { Flex } from '@jinxyang/seal-react'
 
@@ -14,7 +14,21 @@ const XLSX = window.XLSX
 //   </Menu>
 // )
 
-const TableTools = ({ name = '', list = [], columns = [] }) => {
+const TableTools = ({
+  name = '',
+  list = [],
+  columns = [],
+  onSearch = () => {},
+}) => {
+  const [search, setSearch] = React.useState('')
+
+  const handleSearch = React.useCallback((e) => {
+    const value = e.target.value
+    setSearch(value)
+    onSearch(value)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleClick = React.useCallback(() => {
     const json = _.map(list, (item) => {
       return _.reduce(
@@ -64,6 +78,16 @@ const TableTools = ({ name = '', list = [], columns = [] }) => {
 
   return XLSX ? (
     <Flex main="flex-end" cross="center">
+      <Flex.Item>
+        <Input
+          allowClear
+          size="small"
+          placeholder="过滤器"
+          value={search}
+          prefix={<FilterOutlined />}
+          onChange={handleSearch}
+        />
+      </Flex.Item>
       <Button type="link" icon={<DownloadOutlined />} onClick={handleClick} />
       {/* <Dropdown overlay={<Menus onClick={handleClick} />}>
         <DownloadOutlined style={{ fontSize: '1.2em' }} />

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { withTheme } from 'styled-components'
 import _ from 'lodash'
+import Highlighter from 'react-highlight-words'
 
 import styles from '../../styles'
 
@@ -38,7 +39,28 @@ export const StyledColInner = styled.div`
   transition: background-color 150ms;
 `
 
+const setHightLight = (children, search = '') => {
+  const [extra, child] = _.isArray(children) ? children : [false, children]
+  return [
+    extra,
+    _.isString(child) ? (
+      <Highlighter
+        highlightStyle={{
+          padding: 0,
+          backgroundColor: 'rgba(255, 236, 61, .7)',
+        }}
+        searchWords={search.split('_')}
+        autoEscape={true}
+        textToHighlight={child}
+      />
+    ) : (
+      child
+    ),
+  ]
+}
+
 const TableCol = ({
+  search = '',
   align = 'left',
   width = 0,
   flex = null,
@@ -94,7 +116,7 @@ const TableCol = ({
                 : children
             }
           >
-            {children}
+            {setHightLight(children, search)}
           </div>
         )}
         {append}
