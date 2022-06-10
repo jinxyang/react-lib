@@ -65,7 +65,7 @@ const Table = ({
   const filteredList = React.useMemo(() => {
     const indexList = _.flow(
       _.map(?, (values, index) => {
-        return _.some(values, _.includes(?, _.toLower(search))) && index
+        return _.some(values, _.includes(?, search)) && index
       }),
       _.filter(?, _.isNumber),
     )(pairList)
@@ -93,10 +93,12 @@ const Table = ({
       {tools && (
         <TableTools
           name={name}
-          list={list}
+          list={sortList}
           columns={columns}
           tools={tools}
-          onSearch={setSearch}
+          onSearch={(search) =>
+            setSearch(_.flow(_.toLower(?), _.trim(?))(search))
+          }
         />
       )}
       {/* {pagination && showMiniPagination && (

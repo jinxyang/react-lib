@@ -43,7 +43,7 @@ const setHightLight = (children, search = '') => {
   const [extra, child] = _.isArray(children) ? children : [false, children]
   return [
     extra,
-    _.isString(child) ? (
+    _.isString(child) || _.isNumber(child) ? (
       <Highlighter
         highlightStyle={{
           padding: 0,
@@ -51,7 +51,7 @@ const setHightLight = (children, search = '') => {
         }}
         searchWords={search.split('_')}
         autoEscape={true}
-        textToHighlight={child}
+        textToHighlight={String(child)}
       />
     ) : (
       child

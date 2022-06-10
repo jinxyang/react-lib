@@ -82,7 +82,7 @@ const TableTools = ({
         <Input
           allowClear
           size="small"
-          placeholder="过滤器"
+          placeholder="搜索"
           value={search}
           prefix={<FilterOutlined />}
           onChange={handleSearch}
