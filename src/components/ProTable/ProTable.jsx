@@ -36,7 +36,7 @@ const ProTable = (
     hollow = false,
     sort = null,
     name = '',
-    tools,
+    tools = { export: ['sheet'] },
   },
   ref,
 ) => {
