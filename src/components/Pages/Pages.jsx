@@ -1,16 +1,25 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
+import _ from 'lodash'
 import { SwitchTransition, CSSTransition } from 'react-transition-group'
 
 import useLocation from '../../hooks/useLocation'
 import Skeleton from '../Skeleton'
 import NotFound from '../NotFound'
 
-const createComponent = (Component) => (Component ? <Component /> : null)
+const createComponent = (Component, props = {}) =>
+  Component ? <Component {...props} /> : null
 
 const renderRoutes = (routes = [], filter = () => true) =>
-  routes.filter(filter).map(({ path, component, children }) => (
-    <Route key={path} path={path} element={createComponent(component)}>
+  routes.filter(filter).map(({ path, component, to, replace, children }) => (
+    <Route
+      key={path}
+      path={path}
+      element={createComponent(
+        component,
+        _.omitBy({ to, replace }, (v) => v == null),
+      )}
+    >
       {!!children?.length && renderRoutes(children)}
     </Route>
   ))
