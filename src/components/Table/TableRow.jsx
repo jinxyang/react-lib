@@ -73,45 +73,55 @@ const TableRow = ({
   ) : (
     <StyledRow $background={background} $indent={!!onSelect}>
       <StyledRowInner $vertical={vertical}>
-        {columns.map(({ label, key, render, align, width, flex }, index) =>
-          vertical ? (
-            <TableVerticalCol
-              key={index}
-              label={label}
-              isFirst={index === 0}
-              isLast={index === columns.length - 1}
-            >
-              {render
-                ? render(data, { ...utils, list, navigate, onChange }, onAction)
-                : get(data, key)}
-            </TableVerticalCol>
-          ) : (
-            <TableCol
-              key={index}
-              search={search}
-              align={align || commonAlign}
-              flex={flex}
-              width={width}
-              indent={index === 0 ? indent : 0}
-              isFirst={index === 0}
-              isLast={index === columns.length - 1}
-              selected={!!data.SELECTED}
-              onSelect={onSelect && ((v) => onSelect(data, v))}
-              disabledSelect={disabledSelection(data)}
-            >
-              {onExpand && !index && (
-                <StyledArrow
-                  $rotate={expanded}
-                  onClick={() => onExpand?.(data)}
-                >
-                  <CaretRightOutlined />
-                </StyledArrow>
-              )}
-              {render
-                ? render(data, { ...utils, navigate, list, onChange }, onAction)
-                : get(data, key)}
-            </TableCol>
-          ),
+        {columns.map(
+          ({ label, key, render, align, width, flex, ...column }, index) =>
+            vertical ? (
+              <TableVerticalCol
+                key={index}
+                label={label}
+                isFirst={index === 0}
+                isLast={index === columns.length - 1}
+              >
+                {render
+                  ? render(
+                      data,
+                      { ...utils, list, navigate, onChange },
+                      onAction,
+                    )
+                  : get(data, key)}
+              </TableVerticalCol>
+            ) : (
+              <TableCol
+                key={index}
+                search={search}
+                align={align || commonAlign}
+                flex={flex}
+                width={width}
+                indent={index === 0 ? indent : 0}
+                isFirst={index === 0}
+                isLast={index === columns.length - 1}
+                selected={!!data.SELECTED}
+                onSelect={onSelect && ((v) => onSelect(data, v))}
+                style={{ ...column.style, ...data.style }}
+                disabledSelect={disabledSelection(data)}
+              >
+                {onExpand && !index && (
+                  <StyledArrow
+                    $rotate={expanded}
+                    onClick={() => onExpand?.(data)}
+                  >
+                    <CaretRightOutlined />
+                  </StyledArrow>
+                )}
+                {render
+                  ? render(
+                      data,
+                      { ...utils, navigate, list, onChange },
+                      onAction,
+                    )
+                  : get(data, key)}
+              </TableCol>
+            ),
         )}
       </StyledRowInner>
       {!loading && !!extraColumns.length && (

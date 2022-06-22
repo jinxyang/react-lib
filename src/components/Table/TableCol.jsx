@@ -72,6 +72,7 @@ const TableCol = ({
   disabledSelect = false,
   theme = {},
   append = null,
+  style = {},
   children,
 }) => {
   return (
@@ -80,6 +81,7 @@ const TableCol = ({
       isSelect={!!onSelect}
       $width={width}
       $flex={flex}
+      style={style}
     >
       {isFirst && onSelect && (
         <TableSelectionCol
