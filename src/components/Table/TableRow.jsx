@@ -61,6 +61,7 @@ const TableRow = ({
   indent = 0,
   utils = {},
   expanded = false,
+  enableExpand = true,
   onExpand = null,
   onSelect = null,
   disabledSelection = () => false,
@@ -105,7 +106,7 @@ const TableRow = ({
                 style={{ ...column.style, ...data.style }}
                 disabledSelect={disabledSelection(data)}
               >
-                {onExpand && !index && (
+                {enableExpand && onExpand && !index && (
                   <StyledArrow
                     $rotate={expanded}
                     onClick={() => onExpand?.(data)}

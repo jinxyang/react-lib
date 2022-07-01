@@ -59,8 +59,7 @@ const TableBody = ({
 
   React.useEffect(() => {
     expandAll && setExpandedKeys(list.map((item) => item[uniqueKey]))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [expandAll, list, uniqueKey])
 
   return (
     <StyledBody>
