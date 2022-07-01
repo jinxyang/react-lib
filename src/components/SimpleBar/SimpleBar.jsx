@@ -292,6 +292,7 @@ const Bar = ({
                     transition,
                     cursor: 'pointer',
                   }}
+                  title={value}
                   onClick={() => onBarClick(dataIndex, index)}
                 >
                   <Flex.Item
@@ -320,6 +321,7 @@ const Bar = ({
                           transition,
                           fontSize: '0.8em',
                           position: 'absolute',
+                          zIndex: 10,
                           visibility: hideNames[name] ? 'hidden' : 'unset',
                           ...valueTranslateMap[to],
                         }}
