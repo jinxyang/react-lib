@@ -12,6 +12,8 @@ import useLocation from '../../hooks/useLocation'
 
 const ProTable = (
   {
+    sticky = false,
+    stickyStyle = {},
     service = () => {},
     list = [],
     filters = [],
@@ -123,6 +125,8 @@ const ProTable = (
         )}
         <Container.Item>
           <Table
+            sticky={sticky}
+            stickyStyle={stickyStyle}
             name={name || data.name}
             tools={tools}
             align={align}

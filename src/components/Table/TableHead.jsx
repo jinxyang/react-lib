@@ -8,6 +8,16 @@ import { Flex } from '@jinxyang/seal-react'
 import styles from '../../styles'
 import TableCol, { StyledColInner } from './TableCol'
 
+const defaultStickyStyle = {
+  position: 'sticky',
+  top: '-6px',
+  backgroundColor: 'rgba(150, 150, 150,0.2)',
+  zIndex: 10,
+  padding: '10px 0px 10px',
+  borderRadius: '10px',
+  backdropFilter: 'blur(6px)',
+}
+
 const StyledHead = styled.header`
   display: flex;
   flex: 0 0 auto;
@@ -78,6 +88,8 @@ const getSortArrow = (sort, key, sortKey, order, onClick) => {
 }
 
 const TableHead = ({
+  sticky = true,
+  stickyStyle: customStickyStyle = {},
   columns = [],
   selected = false,
   disabledSelect = false,
@@ -86,8 +98,17 @@ const TableHead = ({
   currentSort = null,
   onSort = () => {},
 }) => {
+  const stickyStyle = React.useMemo(() => {
+    return sticky
+      ? {
+          ...defaultStickyStyle,
+          ...customStickyStyle,
+        }
+      : {}
+  }, [customStickyStyle, sticky])
+
   return (
-    <StyledHead $indent={!!onSelect}>
+    <StyledHead $indent={!!onSelect} style={stickyStyle}>
       {columns.map(({ key, label, align = 'center', width, flex }, index) => (
         <TableCol
           key={index}

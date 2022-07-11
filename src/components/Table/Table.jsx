@@ -12,8 +12,7 @@ const StyledTable = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.gap / 2 + 'px'};
-  height: 100%;
-  overflow: hidden;
+  overflow: ${({ $sticky }) => ($sticky ? 'none' : 'hidden')};
   color: ${({ theme }) => theme.font.color};
   transition: color 150ms;
 `
@@ -22,6 +21,8 @@ const showTotal = (total) => `共：${total}条`
 
 const Table = ({
   name = '',
+  sticky = true,
+  stickyStyle = {},
   uniqueKey = 'id',
   vertical = false,
   columns = [],
@@ -89,7 +90,7 @@ const Table = ({
   )
 
   return (
-    <StyledTable style={style}>
+    <StyledTable style={style} $sticky={sticky}>
       {tools && (
         <TableTools
           name={name}
@@ -114,6 +115,8 @@ const Table = ({
       {!vertical && (
         <TableHead
           sort={sort}
+          sticky={sticky}
+          stickyStyle={stickyStyle}
           currentSort={currentSort}
           columns={columns}
           selected={selected}
