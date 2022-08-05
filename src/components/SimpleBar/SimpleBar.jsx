@@ -86,6 +86,7 @@ const Bar = ({
   colors: customColors = [],
   grid = null,
   options = {},
+  barStyle = {},
   onBarClick = () => {},
   valueFloat = false,
 }) => {
@@ -135,17 +136,18 @@ const Bar = ({
   const data = React.useMemo(() => {
     return _.flow(
       _.map(?, ({ name, list }) =>
-        _.map(list, ({ value, max, unit }) => ({
+        _.map(list, ({ value, max, unit, color }) => ({
           value,
           name: name ?? '',
           max,
           unit,
+          color,
         })),
       ),
       (lists) => _.zip(...lists),
       // _.map(?, (list) => _.filter(list, ({ name }) => !hideNames[name])),
     )(value)
-  }, [value, hideNames])
+  }, [value])
 
   const labels = React.useMemo(() => {
     return _.map(value[0]?.list ?? [], ({ label, unit }) => ({ label, unit }))
@@ -277,7 +279,7 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1, transition }}
             >
-              {_.map(items, ({ name, value, max, unit }, dataIndex) => (
+              {_.map(items, ({ name, value, max, unit, color }, dataIndex) => (
                 <Flex
                   key={dataIndex}
                   direction={barDirectionMap[to]}
@@ -291,6 +293,7 @@ const Bar = ({
                     width: hideNames[name] ? 0 : 'auto',
                     transition,
                     cursor: 'pointer',
+                    ...barStyle,
                   }}
                   title={value}
                   onClick={() => onBarClick(dataIndex, index)}
@@ -309,7 +312,9 @@ const Bar = ({
                           : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
                       backgroundColor:
-                        colors[getColorIndex(name)] ?? colors[dataIndex],
+                        color ??
+                        colors[getColorIndex(name)] ??
+                        colors[dataIndex],
                       borderRadius: radiusMap[to],
                       transition,
                       position: valueFloat ? 'relative' : 'unset',

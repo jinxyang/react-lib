@@ -17,7 +17,7 @@ const StyledRow = styled.div`
 
   &:hover {
     ${StyledColInner} {
-      background-color: ${({ theme }) => theme.colors.transparent[1]};
+      background-color: ${({ theme }) => theme.colors.transparent[2]};
     }
 
     ${StyledExtraContent} {
@@ -103,7 +103,10 @@ const TableRow = ({
                 isLast={index === columns.length - 1}
                 selected={!!data.SELECTED}
                 onSelect={onSelect && ((v) => onSelect(data, v))}
-                style={{ ...column.style, ...data.style }}
+                style={{
+                  ...column.style,
+                  ...(data.style?.[key] ?? data.style),
+                }}
                 disabledSelect={disabledSelection(data)}
               >
                 {enableExpand && onExpand && !index && (

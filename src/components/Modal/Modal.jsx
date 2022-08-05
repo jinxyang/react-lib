@@ -32,7 +32,8 @@ const StyledModal = styled.div`
 `
 const StyledWrap = styled.div`
   width: ${({ $width }) => $width || 'auto'};
-  overflow: hidden;
+  height: ${({ $height }) => $height || 'auto'};
+  overflow: ${({ $height }) => 'scroll' || 'hidden'};
   background-color: ${({ theme }) => (theme.darkMode ? '#2c2d34' : '#eee')};
   border-radius: ${styles.getRadius()};
 `
@@ -57,6 +58,7 @@ const Modal = ({
   show = false,
   title = '',
   width = '',
+  height = '',
   hideClose = false,
   keyboardDisabled = false,
   onClose = () => {},
@@ -72,7 +74,7 @@ const Modal = ({
       onClose={onClose}
     >
       <StyledModal $show={show}>
-        <StyledWrap $width={width}>
+        <StyledWrap $width={width} $height={height}>
           {title && (
             <StyledHeader>
               <StyledTitle>{title}</StyledTitle>
