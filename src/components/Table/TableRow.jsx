@@ -67,6 +67,7 @@ const TableRow = ({
   disabledSelection = () => false,
   onChange = () => {},
   onAction = () => {},
+  renders = {},
 }) => {
   const navigate = useNavigate()
   return loading ? (
@@ -84,9 +85,9 @@ const TableRow = ({
                 isLast={index === columns.length - 1}
               >
                 {render
-                  ? render(
+                  ? (typeof render === 'string' ? renders[render] : render)(
                       data,
-                      { ...utils, list, navigate, onChange },
+                      { ...utils, navigate, list, onChange, key },
                       onAction,
                     )
                   : get(data, key)}
@@ -118,9 +119,9 @@ const TableRow = ({
                   </StyledArrow>
                 )}
                 {render
-                  ? render(
+                  ? (typeof render === 'string' ? renders[render] : render)(
                       data,
-                      { ...utils, navigate, list, onChange },
+                      { ...utils, navigate, list, onChange, key },
                       onAction,
                     )
                   : get(data, key)}

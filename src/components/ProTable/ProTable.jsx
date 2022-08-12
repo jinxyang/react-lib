@@ -39,6 +39,7 @@ const ProTable = (
     sort = null,
     name = '',
     tools = { export: ['sheet'] },
+    renders = {},
   },
   ref,
 ) => {
@@ -149,6 +150,7 @@ const ProTable = (
             onSelect={onSelect}
             disabledSelection={disabledSelection}
             onAction={onAction}
+            renders={renders}
           />
         </Container.Item>
       </Container>

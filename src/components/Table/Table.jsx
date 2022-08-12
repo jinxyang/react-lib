@@ -44,6 +44,7 @@ const Table = ({
   onAction = () => {},
   sort = null,
   tools = { search: true, export: ['sheet'] },
+  renders = {},
   children,
 }) => {
   const [currentSort, setCurrentSort] = React.useState(null)
@@ -142,6 +143,7 @@ const Table = ({
         disabledSelection={disabledSelection}
         onChange={onListChange}
         onAction={onAction}
+        renders={renders}
       />
       {!!list.length &&
         !loading &&
