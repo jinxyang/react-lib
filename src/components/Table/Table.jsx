@@ -91,7 +91,13 @@ const Table = ({
   )
 
   return (
-    <StyledTable style={style} $sticky={sticky}>
+    <StyledTable
+      style={{
+        fontSize: '16px',
+        ...style,
+      }}
+      $sticky={sticky}
+    >
       {tools && (
         <TableTools
           name={name}
