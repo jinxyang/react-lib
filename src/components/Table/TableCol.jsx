@@ -45,6 +45,7 @@ const setHightLight = (children, search = '') => {
     extra,
     _.isString(child) || _.isNumber(child) ? (
       <Highlighter
+        key="highlighter"
         highlightStyle={{
           padding: 0,
           backgroundColor: 'rgba(255, 236, 61, .7)',
