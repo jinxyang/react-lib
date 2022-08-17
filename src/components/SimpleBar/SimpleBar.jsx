@@ -72,6 +72,16 @@ const valueTranslateMap = {
   },
 }
 
+const getBarHeight = (value, maxValue, minBar) => {
+  return value && value > maxValue
+    ? (maxValue * 100) / (2 * maxValue) > 2
+      ? (maxValue * 100) / (2 * maxValue) + '%'
+      : minBar
+    : (value * 100) / maxValue > 2
+    ? (value * 100) / maxValue + '%'
+    : minBar
+}
+
 const Bar = ({
   loading = true,
   value = [],
@@ -81,7 +91,7 @@ const Bar = ({
   layoutGap = 0.5,
   itemGap = 0.5,
   boundaryGap = 0.5,
-  minBar = '2px',
+  minBar = '4px',
   legend = 'topCenter',
   colors: customColors = [],
   grid = null,
@@ -302,13 +312,11 @@ const Bar = ({
                     styles={{
                       [direction === 'row' ? 'height' : 'width']:
                         value && !isNaN(value)
-                          ? (Math.abs(value) / (Math.abs(max) || maxValue)) *
-                              100 <
-                            2
-                            ? minBar
-                            : (Math.abs(value) / (Math.abs(max) || maxValue)) *
-                                100 +
-                              '%'
+                          ? getBarHeight(
+                              Math.abs(value),
+                              Math.abs(max) || maxValue,
+                              minBar,
+                            )
                           : minBar,
                       [direction === 'row' ? 'width' : 'height']: '100%',
                       backgroundColor:
