@@ -99,6 +99,7 @@ const Bar = ({
   barStyle = {},
   onBarClick = () => {},
   valueFloat = false,
+  disabledBar = {},
 }) => {
   const { labelFormatter, valueFormatter } = options
 
@@ -289,69 +290,75 @@ const Bar = ({
               gap={itemGap}
               styles={{ flex: 1, transition }}
             >
-              {_.map(items, ({ name, value, max, unit, color }, dataIndex) => (
-                <Flex
-                  key={dataIndex}
-                  direction={barDirectionMap[to]}
-                  main="flex-start"
-                  styles={{
-                    flex: hideNames[name]
-                      ? 0
-                      : barWidth != null
-                      ? `0 0 ${barWidth}px`
-                      : 1,
-                    width: hideNames[name] ? 0 : 'auto',
-                    transition,
-                    cursor: 'pointer',
-                    ...barStyle,
-                  }}
-                  title={value}
-                  onClick={() => onBarClick(dataIndex, index)}
-                >
-                  <Flex.Item
+              {_.map(items, ({ name, value, max, unit, color }, dataIndex) => {
+                const clickDisabled = !!disabledBar[name]
+
+                return name ? (
+                  <Flex
+                    key={dataIndex}
+                    direction={barDirectionMap[to]}
+                    main="flex-start"
                     styles={{
-                      [direction === 'row' ? 'height' : 'width']:
-                        value && !isNaN(value)
-                          ? getBarHeight(
-                              Math.abs(value),
-                              Math.abs(max) || maxValue,
-                              minBar,
-                            )
-                          : minBar,
-                      [direction === 'row' ? 'width' : 'height']: '100%',
-                      backgroundColor:
-                        color ??
-                        colors[getColorIndex(name)] ??
-                        colors[dataIndex],
-                      borderRadius: radiusMap[to],
+                      flex: hideNames[name]
+                        ? 0
+                        : barWidth != null
+                        ? `0 0 ${barWidth}px`
+                        : 1,
+                      width: hideNames[name] ? 0 : 'auto',
                       transition,
-                      position: valueFloat ? 'relative' : 'unset',
+                      cursor: clickDisabled ? 'default' : 'pointer',
+                      ...barStyle,
                     }}
+                    title={value}
+                    onClick={() =>
+                      clickDisabled ? () => {} : onBarClick(dataIndex, index)
+                    }
                   >
-                    {valueFloat && (
-                      <View
-                        styles={{
-                          transition,
-                          fontSize: '0.8em',
-                          position: 'absolute',
-                          zIndex: 10,
-                          visibility: hideNames[name] ? 'hidden' : 'unset',
-                          ...valueTranslateMap[to],
-                        }}
-                      >
-                        {_.isFunction(valueFormatter)
-                          ? valueFormatter({
-                              name,
-                              value,
-                              ...labels[dataIndex],
-                              unit,
-                            })
-                          : value}
-                      </View>
-                    )}
-                  </Flex.Item>
-                </Flex>
-              ))}
+                    <Flex.Item
+                      styles={{
+                        [direction === 'row' ? 'height' : 'width']:
+                          value && !isNaN(value)
+                            ? getBarHeight(
+                                Math.abs(value),
+                                Math.abs(max) || maxValue,
+                                minBar,
+                              )
+                            : minBar,
+                        [direction === 'row' ? 'width' : 'height']: '100%',
+                        backgroundColor:
+                          color ??
+                          colors[getColorIndex(name)] ??
+                          colors[dataIndex],
+                        borderRadius: radiusMap[to],
+                        transition,
+                        position: valueFloat ? 'relative' : 'unset',
+                      }}
+                    >
+                      {valueFloat && (
+                        <View
+                          styles={{
+                            transition,
+                            fontSize: '0.8em',
+                            position: 'absolute',
+                            zIndex: 10,
+                            visibility: hideNames[name] ? 'hidden' : 'unset',
+                            ...valueTranslateMap[to],
+                          }}
+                        >
+                          {_.isFunction(valueFormatter)
+                            ? valueFormatter({
+                                name,
+                                value,
+                                ...labels[dataIndex],
+                                unit,
+                              })
+                            : value}
+                        </View>
+                      )}
+                    </Flex.Item>
+                  </Flex>
+                ) : null
+              })}
             </Flex>
           ))}
         </Flex>
