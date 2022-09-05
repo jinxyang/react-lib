@@ -100,6 +100,8 @@ const Bar = ({
   onBarClick = () => {},
   valueFloat = false,
   disabledBar = {},
+  showLegend = true,
+  block = true,
 }) => {
   const { labelFormatter, valueFormatter } = options
 
@@ -110,8 +112,8 @@ const Bar = ({
   }, [value])
 
   const legendVisible = React.useMemo(() => {
-    return legend && !!names.length
-  }, [legend, names.length])
+    return legend && !!names.length && showLegend
+  }, [legend, names.length, showLegend])
 
   const [legendOrder, legendPosition] = React.useMemo(() => {
     const [vertical, horizontal] = _.kebabCase(legend).split('-')
@@ -261,6 +263,7 @@ const Bar = ({
                       : valueFloat
                       ? 'hidden'
                       : 'unset',
+                    display: block ? 'unset' : 'none',
                   }}
                 >
                   {_.isFunction(valueFormatter)
@@ -293,7 +296,7 @@ const Bar = ({
               {_.map(items, ({ name, value, max, unit, color }, dataIndex) => {
                 const clickDisabled = !!disabledBar[name]
 
-                return name ? (
+                return [name, !showLegend].some(Boolean) ? (
                   <Flex
                     key={dataIndex}
                     direction={barDirectionMap[to]}
