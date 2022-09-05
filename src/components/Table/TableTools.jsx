@@ -10,6 +10,7 @@ const TableTools = ({
   list = [],
   tools = {},
   columns = [],
+  renders = {},
   onSearch = () => {},
 }) => {
   const toolList = React.useMemo(() => {
@@ -24,7 +25,7 @@ const TableTools = ({
         </Flex.Item>
       )}
       {_.includes(toolList, 'export') && (
-        <Export name={name} list={list} columns={columns} />
+        <Export name={name} list={list} columns={columns} renders={renders} />
       )}
     </Flex>
   )

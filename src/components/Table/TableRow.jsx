@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { CaretRightOutlined } from '@ant-design/icons'
-import { get } from 'lodash'
+import { get, isFunction } from 'lodash'
 
 import useNavigate from '../../hooks/useNavigate'
 import styles from '../../styles'
@@ -85,7 +85,11 @@ const TableRow = ({
                 isLast={index === columns.length - 1}
               >
                 {render
-                  ? (typeof render === 'string' ? renders[render] : render)(
+                  ? (typeof render === 'string'
+                      ? isFunction(renders[render])
+                        ? renders[render]
+                        : renders[render]?.render
+                      : render)(
                       data,
                       { ...utils, navigate, list, onChange, key },
                       onAction,
@@ -119,7 +123,11 @@ const TableRow = ({
                   </StyledArrow>
                 )}
                 {render
-                  ? (typeof render === 'string' ? renders[render] : render)(
+                  ? (typeof render === 'string'
+                      ? isFunction(renders[render])
+                        ? renders[render]
+                        : renders[render]?.render
+                      : render)(
                       data,
                       { ...utils, navigate, list, onChange, key },
                       onAction,

@@ -104,6 +104,7 @@ const Table = ({
           list={sortList}
           columns={columns}
           tools={tools}
+          renders={renders}
           onSearch={(search) =>
             setSearch(_.flow(_.toLower(?), _.trim(?))(search))
           }

@@ -6,13 +6,20 @@ import { DownloadOutlined } from '@ant-design/icons'
 
 const XLSX = window.XLSX
 
-const Export = ({ name = '', columns = [], list = [] }) => {
+const Export = ({ name = '', columns = [], list = [], renders = {} }) => {
   const handleClick = React.useCallback(() => {
     const json = _.map(list, (item) => {
       return _.reduce(
         columns,
-        (result, { label, key }) => {
-          const value = _.get(item, key)
+        (result, { label, key, render }) => {
+          const value = render
+            ? (typeof render === 'string'
+                ? _.isFunction(renders[render])
+                  ? renders[render]
+                  : renders[render]?.getString
+                : render)(item, { label, key, render })
+            : _.get(item, key)
+
           return key == null || value == null
             ? result
             : {
